@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>İsa Anıl Koca — iOS & Mobile Developer</title>
+  <meta name="description" content="İsa Anıl Koca — Computer Engineer and iOS developer. Native iOS & Android apps in Swift, SwiftUI and Kotlin: MVVM, VIPER, RxSwift, SpriteKit games, Core ML, and agentic development with the Claude Code CLI." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+          },
+          colors: {
+            accent: '#0A84FF',
+            accentSoft: '#3898ff',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root { color-scheme: dark; }
+
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+    body {
+      background-color: #08080b;
+      color: #e4e4e7;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .aurora {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        radial-gradient(680px circle at 78% -8%, rgba(10, 132, 255, 0.16), transparent 60%),
+        radial-gradient(560px circle at 8% 8%, rgba(56, 152, 255, 0.08), transparent 55%),
+        radial-gradient(900px circle at 50% 120%, rgba(10, 132, 255, 0.07), transparent 60%);
+    }
+    .grain {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.5;
+      background-image: linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 100% 3px;
+      mask-image: linear-gradient(to bottom, black, transparent 70%);
+    }
+
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #6b6b78;
+    }
+
+    h1, h2, h3 { text-wrap: balance; }
+
+    .hairline { border-color: rgba(255, 255, 255, 0.07); }
+
+    .card {
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(12px);
+    }
+    .card-hover { transition: border-color .35s ease, background .35s ease, transform .35s ease; }
+    .card-hover:hover {
+      border-color: rgba(10, 132, 255, 0.35);
+      background: rgba(10, 132, 255, 0.04);
+      transform: translateY(-3px);
+    }
+
+    .chip {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.01em;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.02);
+      color: #b8b8c2;
+    }
+    a.chip:hover { border-color: rgba(10,132,255,0.4); color: #dfe7f0; }
+
+    .nav-link { transition: color .2s ease; }
+    .nav-link:hover, .nav-link.active { color: #fafafa; }
+    .nav-link.active { text-shadow: 0 0 20px rgba(10,132,255,0.5); }
+
+    .js .reveal { opacity: 0; transform: translateY(16px); }
+    .js .reveal.in { opacity: 1; transform: none; transition: opacity .7s ease, transform .7s cubic-bezier(0.22, 1, 0.36, 1); }
+    @media (prefers-reduced-motion: reduce) {
+      .js .reveal { opacity: 1 !important; transform: none !important; }
+    }
+
+    ::selection { background: rgba(10, 132, 255, 0.3); color: #fff; }
+
+    a:focus-visible, button:focus-visible, summary:focus-visible {
+      outline: 2px solid #0A84FF;
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    .swift .kw { color: #ff7ab2; }
+    .swift .ty { color: #6bd4ff; }
+    .swift .st { color: #ff8170; }
+    .swift .fn { color: #82d9d0; }
+    .swift .cm { color: #7f8c98; }
+    .swift .nu { color: #d9c97c; }
+
+    .timeline-dot::before {
+      content: "";
+      position: absolute;
+      left: -2.05rem;
+      top: 0.35rem;
+      width: 11px;
+      height: 11px;
+      border-radius: 9999px;
+      background: #0A84FF;
+      box-shadow: 0 0 0 4px rgba(10, 132, 255, 0.15);
+    }
+
+    details > summary { list-style: none; cursor: pointer; }
+    details > summary::-webkit-details-marker { display: none; }
+    details[open] .chev { transform: rotate(180deg); }
+    .chev { transition: transform .25s ease; }
+  </style>
+</head>
+<body class="font-sans antialiased">
+  <script>document.documentElement.classList.remove('dark'); document.documentElement.classList.add('dark','js');</script>
+  <div class="aurora"></div>
+  <div class="grain"></div>
+
+  <!-- NAV -->
+  <header class="fixed top-0 inset-x-0 z-50 border-b hairline bg-[#08080b]/70 backdrop-blur-xl">
+    <div class="mx-auto max-w-5xl px-5 sm:px-8 h-16 flex items-center justify-between">
+      <a href="#top" class="font-mono text-sm font-semibold tracking-tight text-zinc-100">
+        İ<span class="text-accent">.</span>A<span class="text-accent">.</span>K
+      </a>
+      <nav class="hidden md:flex items-center gap-8 text-sm text-zinc-500">
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#education" class="nav-link">Education</a>
+        <a href="#certifications" class="nav-link">Certifications</a>
+      </nav>
+      <a href="#contact" class="hidden md:inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 py-1.5 text-sm font-medium text-zinc-100 hover:bg-accent/20 transition-colors">
+        Contact
+      </a>
+      <button id="menuBtn" class="md:hidden text-zinc-300" aria-label="Open menu">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden border-t hairline bg-[#08080b]/95 backdrop-blur-xl">
+      <nav class="mx-auto max-w-5xl px-5 py-4 flex flex-col gap-4 text-sm text-zinc-400">
+        <a href="#experience" class="mobile-link">Experience</a>
+        <a href="#projects" class="mobile-link">Projects</a>
+        <a href="#skills" class="mobile-link">Skills</a>
+        <a href="#education" class="mobile-link">Education</a>
+        <a href="#certifications" class="mobile-link">Certifications</a>
+        <a href="#contact" class="mobile-link text-accentSoft">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top" class="mx-auto max-w-5xl px-5 sm:px-8">
+
+    <!-- HERO -->
+    <section class="pt-32 sm:pt-40 pb-20 sm:pb-28">
+      <p class="eyebrow mb-6">// iOS &amp; Mobile Application Developer</p>
+      <div class="grid lg:grid-cols-[1.15fr_0.85fr] gap-12 lg:gap-10 items-start">
+        <div>
+          <h1 class="text-[2.7rem] leading-[1.05] sm:text-6xl font-extrabold tracking-tight text-zinc-50">
+            İsa Anıl Koca
+          </h1>
+          <p class="mt-6 text-lg sm:text-xl text-zinc-400 leading-relaxed max-w-xl">
+            Computer Engineer and iOS developer. I build native iOS and Android apps in
+            <span class="text-zinc-200">Swift, SwiftUI and Kotlin</span> &mdash; across
+            <span class="text-zinc-200">MVVM, VIPER and RxSwift</span> architectures,
+            <span class="text-zinc-200">SpriteKit</span> games, Core ML, and an
+            agent-driven workflow with the <span class="text-zinc-200">Claude Code CLI</span>.
+          </p>
+
+          <div class="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-zinc-500 font-mono">
+            <span class="inline-flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-accent"></i>Ataşehir, İstanbul</span>
+            <span class="inline-flex items-center gap-2"><i data-lucide="circle" class="w-2.5 h-2.5 fill-emerald-400 text-emerald-400"></i>Open to opportunities</span>
+          </div>
+
+          <div class="mt-9 flex flex-wrap gap-3">
+            <a href="mailto:isaanilk@gmail.com" class="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white hover:bg-accentSoft transition-colors">
+              <i data-lucide="mail" class="w-4 h-4"></i> Email me
+            </a>
+            <a href="https://github.com/isaanilkoca" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full border hairline bg-white/[0.03] px-5 py-2.5 text-sm font-medium text-zinc-200 hover:bg-white/[0.06] transition-colors">
+              <i data-lucide="github" class="w-4 h-4"></i> GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/isa-an%C4%B1l-koca-5a4b82220/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full border hairline bg-white/[0.03] px-5 py-2.5 text-sm font-medium text-zinc-200 hover:bg-white/[0.06] transition-colors">
+              <i data-lucide="linkedin" class="w-4 h-4"></i> LinkedIn
+            </a>
+            <a href="isaanilkocacv.pdf" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full border hairline bg-white/[0.03] px-5 py-2.5 text-sm font-medium text-zinc-200 hover:bg-white/[0.06] transition-colors">
+              <i data-lucide="file-text" class="w-4 h-4"></i> CV (PDF)
+            </a>
+          </div>
+        </div>
+
+        <div class="card rounded-2xl overflow-hidden shadow-2xl shadow-black/40">
+          <div class="flex items-center gap-2 px-4 py-3 border-b hairline bg-white/[0.02]">
+            <span class="w-3 h-3 rounded-full bg-[#ff5f57]"></span>
+            <span class="w-3 h-3 rounded-full bg-[#febc2e]"></span>
+            <span class="w-3 h-3 rounded-full bg-[#28c840]"></span>
+            <span class="ml-3 font-mono text-xs text-zinc-500">Developer.swift</span>
+          </div>
+          <pre class="swift font-mono text-[12.5px] leading-relaxed p-5 overflow-x-auto text-zinc-300"><code><span class="kw">struct</span> <span class="ty">Developer</span> {
+    <span class="kw">let</span> name     = <span class="st">"İsa Anıl Koca"</span>
+    <span class="kw">let</span> role     = <span class="st">"iOS &amp; Mobile Developer"</span>
+    <span class="kw">let</span> degree   = <span class="st">"BSc Computer Engineering"</span>
+    <span class="kw">let</span> stack    = [<span class="st">"Swift"</span>, <span class="st">"SwiftUI"</span>, <span class="st">"SpriteKit"</span>]
+    <span class="kw">let</span> patterns = [<span class="st">"MVVM"</span>, <span class="st">"VIPER"</span>, <span class="st">"RxSwift"</span>, <span class="st">"POP"</span>]
+    <span class="kw">var</span> internships = <span class="nu">2</span>
+    <span class="kw">var</span> publicRepos = <span class="nu">28</span>
+
+    <span class="kw">func</span> <span class="fn">build</span>() <span class="kw">async throws</span> -&gt; <span class="ty">App</span> {
+        <span class="cm">// native, both platforms</span>
+        <span class="kw">try await</span> <span class="fn">ship</span>(iOS, android)
+    }
+}</code></pre>
+        </div>
+      </div>
+
+      <div class="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-px rounded-2xl overflow-hidden border hairline bg-white/[0.04]">
+        <div class="bg-[#08080b] p-5">
+          <div class="text-2xl font-bold text-zinc-100 tabular-nums">2</div>
+          <div class="mt-1 text-xs text-zinc-500 font-mono">software internships</div>
+        </div>
+        <div class="bg-[#08080b] p-5">
+          <div class="text-2xl font-bold text-zinc-100 tabular-nums">28</div>
+          <div class="mt-1 text-xs text-zinc-500 font-mono">GitHub repositories</div>
+        </div>
+        <div class="bg-[#08080b] p-5">
+          <div class="text-2xl font-bold text-zinc-100 tabular-nums">59.5h</div>
+          <div class="mt-1 text-xs text-zinc-500 font-mono">iOS 26 / Swift 6 course</div>
+        </div>
+        <div class="bg-[#08080b] p-5">
+          <div class="text-2xl font-bold text-zinc-100 tabular-nums">254</div>
+          <div class="mt-1 text-xs text-zinc-500 font-mono">ECTS credits completed</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="py-20 sm:py-28 border-t hairline scroll-mt-20">
+      <div class="reveal">
+        <p class="eyebrow mb-3">01 — Experience</p>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-50">Work Experience</h2>
+      </div>
+
+      <div class="mt-12 pl-8 border-l hairline space-y-12">
+        <article class="relative timeline-dot reveal">
+          <div class="flex flex-wrap items-baseline justify-between gap-2">
+            <h3 class="text-xl font-semibold text-zinc-100">Software Developer Intern</h3>
+            <span class="font-mono text-xs text-zinc-500">Jan 2026 — Feb 2026</span>
+          </div>
+          <p class="mt-1 text-accentSoft font-medium">Software Persona · Ataşehir, İstanbul</p>
+          <ul class="mt-4 space-y-2 text-sm sm:text-[15px] text-zinc-400 leading-relaxed">
+            <li class="flex gap-3"><i data-lucide="chevron-right" class="w-4 h-4 mt-0.5 shrink-0 text-accent"></i>Completed an intensive mobile development program covering UI/UX design (Figma), JavaScript and SQL.</li>
+            <li class="flex gap-3"><i data-lucide="chevron-right" class="w-4 h-4 mt-0.5 shrink-0 text-accent"></i>Built Android and iOS applications in a structured workflow; integrated AI-assisted tooling to accelerate prototyping.</li>
+            <li class="flex gap-3"><i data-lucide="chevron-right" class="w-4 h-4 mt-0.5 shrink-0 text-accent"></i>Awarded an <span class="text-zinc-200">Internship Success Certificate</span> and an official reference letter for excellence in project delivery and technical adaptation.</li>
+          </ul>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="chip rounded-md px-2 py-1">Figma</span>
+            <span class="chip rounded-md px-2 py-1">JavaScript</span>
+            <span class="chip rounded-md px-2 py-1">SQL</span>
+            <span class="chip rounded-md px-2 py-1">Android</span>
+            <span class="chip rounded-md px-2 py-1">iOS</span>
+          </div>
+        </article>
+
+        <article class="relative timeline-dot reveal">
+          <div class="flex flex-wrap items-baseline justify-between gap-2">
+            <h3 class="text-xl font-semibold text-zinc-100">Software Developer Intern</h3>
+            <span class="font-mono text-xs text-zinc-500">Jul 2024 — Aug 2024</span>
+          </div>
+          <p class="mt-1 text-accentSoft font-medium">Nabusoft Digital Solutions · Levent, İstanbul</p>
+          <ul class="mt-4 space-y-2 text-sm sm:text-[15px] text-zinc-400 leading-relaxed">
+            <li class="flex gap-3"><i data-lucide="chevron-right" class="w-4 h-4 mt-0.5 shrink-0 text-accent"></i>Developed and tested Android mobile applications and games; presented final products to technical leads.</li>
+            <li class="flex gap-3"><i data-lucide="chevron-right" class="w-4 h-4 mt-0.5 shrink-0 text-accent"></i>Leveraged AI tools (ChatGPT, Gemini) to improve efficiency in code generation, debugging and documentation.</li>
+            <li class="flex gap-3"><i data-lucide="chevron-right" class="w-4 h-4 mt-0.5 shrink-0 text-accent"></i>Received an official <span class="text-zinc-200">Internship Completion &amp; Success Certificate</span> after successful project evaluation.</li>
+          </ul>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="chip rounded-md px-2 py-1">Android</span>
+            <span class="chip rounded-md px-2 py-1">Java</span>
+            <span class="chip rounded-md px-2 py-1">Mobile Games</span>
+            <span class="chip rounded-md px-2 py-1">AI-Assisted Dev</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="py-20 sm:py-28 border-t hairline scroll-mt-20">
+      <div class="reveal">
+        <p class="eyebrow mb-3">02 — Projects</p>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-50">Projects</h2>
+        <p class="mt-4 text-zinc-500 max-w-xl text-sm sm:text-base">
+          28 public repositories on GitHub &mdash; mostly native iOS and Android apps built as
+          separate platform-specific codebases. Highlights below; the rest are grouped by area.
+        </p>
+      </div>
+
+      <!-- Featured -->
+      <div class="mt-12 grid sm:grid-cols-2 gap-4">
+
+        <article class="card card-hover rounded-2xl p-6">
+          <div class="flex items-start justify-between">
+            <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 grid place-items-center">
+              <i data-lucide="brain-circuit" class="w-5 h-5 text-accentSoft"></i>
+            </div>
+            <a href="https://github.com/isaanilkoca/iOS26--FoundationModel-CalorieHunterApp" target="_blank" rel="noopener" class="text-zinc-600 hover:text-accentSoft transition-colors" aria-label="View on GitHub"><i data-lucide="arrow-up-right" class="w-5 h-5"></i></a>
+          </div>
+          <h3 class="mt-4 text-lg font-semibold text-zinc-100">CalorieHunter — iOS 26 · Foundation Models</h3>
+          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+            A SwiftUI app that analyses food descriptions with Apple's <span class="text-zinc-300">on-device Foundation Models</span> to estimate calories and total them in real time. Fully offline and privacy-focused. A production version is in active development for App Store release.
+          </p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="chip rounded-md px-2 py-1">SwiftUI</span>
+            <span class="chip rounded-md px-2 py-1">Foundation Models</span>
+            <span class="chip rounded-md px-2 py-1">On-device AI</span>
+            <span class="chip rounded-md px-2 py-1">iOS 26</span>
+          </div>
+        </article>
+
+        <article class="card card-hover rounded-2xl p-6">
+          <div class="flex items-start justify-between">
+            <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 grid place-items-center">
+              <i data-lucide="layers" class="w-5 h-5 text-accentSoft"></i>
+            </div>
+            <a href="https://github.com/isaanilkoca?tab=repositories&q=CryptoApp" target="_blank" rel="noopener" class="text-zinc-600 hover:text-accentSoft transition-colors" aria-label="View on GitHub"><i data-lucide="arrow-up-right" class="w-5 h-5"></i></a>
+          </div>
+          <h3 class="mt-4 text-lg font-semibold text-zinc-100">Crypto App — One App, Three Architectures</h3>
+          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+            The same real-time cryptocurrency tracker built three ways:
+            <span class="text-zinc-300">MVVM + Combine</span> (SwiftUI),
+            <span class="text-zinc-300">VIPER</span> (programmatic UIKit with protocol-based DI) and
+            <span class="text-zinc-300">MVVM + RxSwift</span>. A hands-on comparison of how architecture decisions shape the codebase.
+          </p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="chip rounded-md px-2 py-1">MVVM</span>
+            <span class="chip rounded-md px-2 py-1">VIPER</span>
+            <span class="chip rounded-md px-2 py-1">RxSwift</span>
+            <span class="chip rounded-md px-2 py-1">Combine</span>
+            <span class="chip rounded-md px-2 py-1">URLSession</span>
+          </div>
+        </article>
+
+        <article class="card card-hover rounded-2xl p-6">
+          <div class="flex items-start justify-between">
+            <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 grid place-items-center">
+              <i data-lucide="scan-eye" class="w-5 h-5 text-accentSoft"></i>
+            </div>
+            <a href="https://github.com/isaanilkoca/MachineLearningImageRecognition" target="_blank" rel="noopener" class="text-zinc-600 hover:text-accentSoft transition-colors" aria-label="View on GitHub"><i data-lucide="arrow-up-right" class="w-5 h-5"></i></a>
+          </div>
+          <h3 class="mt-4 text-lg font-semibold text-zinc-100">Core ML Image Recognition</h3>
+          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+            An iOS app that classifies objects in photos with confidence scores using Apple's Vision framework (<span class="text-zinc-300">VNCoreMLModel</span>, <span class="text-zinc-300">VNCoreMLRequest</span>) and the MobileNetV2 model. Asynchronous inference keeps the UI responsive.
+          </p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="chip rounded-md px-2 py-1">Core ML</span>
+            <span class="chip rounded-md px-2 py-1">Vision</span>
+            <span class="chip rounded-md px-2 py-1">MobileNetV2</span>
+            <span class="chip rounded-md px-2 py-1">UIKit</span>
+          </div>
+        </article>
+
+        <article class="card card-hover rounded-2xl p-6">
+          <div class="flex items-start justify-between">
+            <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 grid place-items-center">
+              <i data-lucide="plug" class="w-5 h-5 text-accentSoft"></i>
+            </div>
+            <a href="https://github.com/isaanilkoca/NetworkInterchangeable-SwiftUI" target="_blank" rel="noopener" class="text-zinc-600 hover:text-accentSoft transition-colors" aria-label="View on GitHub"><i data-lucide="arrow-up-right" class="w-5 h-5"></i></a>
+          </div>
+          <h3 class="mt-4 text-lg font-semibold text-zinc-100">NetworkInterchangeable — Swappable Services</h3>
+          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+            A SwiftUI app where the data source switches between a live API and local mock JSON at runtime through a single <span class="text-zinc-300">NetworkService</span> protocol &mdash; without touching the presentation layer. Constructor-based dependency injection, <span class="text-zinc-300">async/await</span> and loose coupling for testability.
+          </p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="chip rounded-md px-2 py-1">SwiftUI</span>
+            <span class="chip rounded-md px-2 py-1">Protocol-Oriented</span>
+            <span class="chip rounded-md px-2 py-1">async/await</span>
+            <span class="chip rounded-md px-2 py-1">Dependency Injection</span>
+          </div>
+        </article>
+
+        <article class="card card-hover rounded-2xl p-6">
+          <div class="flex items-start justify-between">
+            <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 grid place-items-center">
+              <i data-lucide="camera" class="w-5 h-5 text-accentSoft"></i>
+            </div>
+            <a href="https://github.com/isaanilkoca/InstaClone-FirebaseBackend" target="_blank" rel="noopener" class="text-zinc-600 hover:text-accentSoft transition-colors" aria-label="View on GitHub"><i data-lucide="arrow-up-right" class="w-5 h-5"></i></a>
+          </div>
+          <h3 class="mt-4 text-lg font-semibold text-zinc-100">Instagram Clone — Native iOS + Android</h3>
+          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+            Separate native photo-sharing apps for iOS (Swift · Storyboard) and Android (Java/Kotlin · XML). Firebase Authentication, Realtime Database and Cloud Storage power real-time auth, feeds and media sync.
+          </p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="chip rounded-md px-2 py-1">Swift</span>
+            <span class="chip rounded-md px-2 py-1">Java / Kotlin</span>
+            <span class="chip rounded-md px-2 py-1">Firebase</span>
+            <span class="chip rounded-md px-2 py-1">Core Data</span>
+          </div>
+        </article>
+
+        <article class="card card-hover rounded-2xl p-6">
+          <div class="flex items-start justify-between">
+            <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 grid place-items-center">
+              <i data-lucide="binary" class="w-5 h-5 text-accentSoft"></i>
+            </div>
+            <a href="https://github.com/isaanilkoca/Trace-Driven-Cache-Simulator" target="_blank" rel="noopener" class="text-zinc-600 hover:text-accentSoft transition-colors" aria-label="View on GitHub"><i data-lucide="arrow-up-right" class="w-5 h-5"></i></a>
+          </div>
+          <h3 class="mt-4 text-lg font-semibold text-zinc-100">Trace-Driven Cache Simulator</h3>
+          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+            A 4-way set-associative cache simulator in C. It collects live 64-bit addresses from running Windows processes and parses them into Tag / Index / Offset to study hardware&ndash;software interaction. Computer Architecture capstone.
+          </p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="chip rounded-md px-2 py-1">C</span>
+            <span class="chip rounded-md px-2 py-1">x86-64</span>
+            <span class="chip rounded-md px-2 py-1">Cache / Memory</span>
+            <span class="chip rounded-md px-2 py-1">Makefile · MinGW</span>
+          </div>
+        </article>
+      </div>
+
+      <!-- GAMES -->
+      <div class="mt-16 rounded-3xl border border-accent/15 bg-accent/[0.03] p-6 sm:p-8">
+        <div class="flex items-center gap-3 reveal">
+          <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 grid place-items-center">
+            <i data-lucide="gamepad-2" class="w-5 h-5 text-accentSoft"></i>
+          </div>
+          <div>
+            <p class="eyebrow">Game Development</p>
+            <h3 class="text-xl font-semibold text-zinc-100">Built on Apple's native game stack</h3>
+          </div>
+        </div>
+        <p class="mt-4 text-sm text-zinc-400 leading-relaxed max-w-2xl reveal">
+          As an iOS developer, my games run on <span class="text-zinc-300">SpriteKit</span> and <span class="text-zinc-300">GameplayKit</span> &mdash;
+          custom rigid-body physics, collision filtering with bit masks, real-time vector math and scene lifecycle management,
+          bridged into UIKit through an <span class="text-zinc-300">SKView</span>.
+        </p>
+
+        <div class="mt-6 grid sm:grid-cols-2 gap-4">
+          <article class="card card-hover rounded-2xl p-6">
+            <div class="flex items-start justify-between">
+              <div class="w-10 h-10 rounded-xl bg-white/[0.04] border hairline grid place-items-center">
+                <i data-lucide="bird" class="w-5 h-5 text-accentSoft"></i>
+              </div>
+              <a href="https://github.com/isaanilkoca/AngryBirdsClone-SpriteKit" target="_blank" rel="noopener" class="text-zinc-600 hover:text-accentSoft transition-colors" aria-label="View on GitHub"><i data-lucide="arrow-up-right" class="w-5 h-5"></i></a>
+            </div>
+            <h4 class="mt-4 text-lg font-semibold text-zinc-100">Angry Birds Clone — SpriteKit</h4>
+            <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+              A physics-based slingshot game. A <span class="text-zinc-300">GameViewController</span> downcasts the root view to an SKView to bridge UIKit and the SpriteKit render loop. Finger drag is converted to launch impulse with vector math; <span class="text-zinc-300">SKPhysicsBody</span> drives mass, gravity and rotation; bitwise category masks handle collision filtering via delegate callbacks. Continuous velocity monitoring auto-resets the scene and tracks score.
+            </p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="chip rounded-md px-2 py-1">SpriteKit</span>
+              <span class="chip rounded-md px-2 py-1">GameplayKit</span>
+              <span class="chip rounded-md px-2 py-1">SKPhysicsBody</span>
+              <span class="chip rounded-md px-2 py-1">UIKit</span>
+              <span class="chip rounded-md px-2 py-1">Swift</span>
+            </div>
+          </article>
+
+          <article class="card card-hover rounded-2xl p-6">
+            <div class="flex items-start justify-between">
+              <div class="w-10 h-10 rounded-xl bg-white/[0.04] border hairline grid place-items-center">
+                <i data-lucide="joystick" class="w-5 h-5 text-accentSoft"></i>
+              </div>
+              <span class="font-mono text-xs text-zinc-600">2025</span>
+            </div>
+            <h4 class="mt-4 text-lg font-semibold text-zinc-100">Survivor Bird &amp; Catch Kenny</h4>
+            <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+              Two arcade games shipped as separate native builds &mdash; <span class="text-zinc-300">SpriteKit on iOS</span>, LibGDX on Android &mdash; with physics engines and collision detection tuned per platform. "Catch Kenny" is a timed reflex game built on each platform's native animation layer. Developed and presented during the Nabusoft internship.
+            </p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="chip rounded-md px-2 py-1">SpriteKit</span>
+              <span class="chip rounded-md px-2 py-1">LibGDX</span>
+              <span class="chip rounded-md px-2 py-1">Physics &amp; Collision</span>
+              <span class="chip rounded-md px-2 py-1">Swift</span>
+              <span class="chip rounded-md px-2 py-1">Java</span>
+            </div>
+          </article>
+        </div>
+
+        <p class="mt-4 text-xs text-zinc-500 font-mono reveal">
+          Also: <a href="https://github.com/isaanilkoca/-Swift-Learning-Path" target="_blank" rel="noopener" class="text-zinc-400 hover:text-zinc-200 underline decoration-white/20">Swift Learning Path</a> &mdash; SpriteKit mini-games ("Hunt for Gollum") and ARKit experiments.
+        </p>
+      </div>
+
+      <!-- AGENTIC / CLI -->
+      <div class="mt-8 rounded-3xl border hairline bg-white/[0.02] p-6 sm:p-8">
+        <div class="flex items-center gap-3 reveal">
+          <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 grid place-items-center">
+            <i data-lucide="terminal" class="w-5 h-5 text-accentSoft"></i>
+          </div>
+          <div>
+            <p class="eyebrow">Agentic Development</p>
+            <h3 class="text-xl font-semibold text-zinc-100">Shipping apps through the Claude Code CLI</h3>
+          </div>
+        </div>
+        <p class="mt-4 text-sm text-zinc-400 leading-relaxed max-w-2xl reveal">
+          I work with Claude through the <span class="text-zinc-300">Claude Code CLI</span> in an agent-driven workflow &mdash;
+          not autocomplete. I set the architecture and direction, and the agent explores the codebase, edits across
+          many files, compiles, runs and validates, then iterates. Some of my apps are planned, implemented and
+          published <span class="text-zinc-300">end-to-end this way, working only from the terminal</span>.
+        </p>
+
+        <div class="mt-6 grid sm:grid-cols-2 gap-4">
+          <article class="card card-hover rounded-2xl p-6">
+            <div class="flex items-start justify-between">
+              <div class="w-10 h-10 rounded-xl bg-white/[0.04] border hairline grid place-items-center">
+                <i data-lucide="circle-dot" class="w-5 h-5 text-accentSoft"></i>
+              </div>
+              <a href="https://github.com/isaanilkoca/ZikirmatikByClaude" target="_blank" rel="noopener" class="text-zinc-600 hover:text-accentSoft transition-colors" aria-label="View on GitHub"><i data-lucide="arrow-up-right" class="w-5 h-5"></i></a>
+            </div>
+            <h4 class="mt-4 text-lg font-semibold text-zinc-100">Zikirmatik — built entirely via the Claude Code CLI</h4>
+            <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+              A complete SwiftUI app (iOS 17+) for the traditional 99-bead digital tasbih: tap-to-count across three
+              phrases in 33-rep cycles, an animated circular progress ring, gradient backgrounds that shift by stage,
+              multi-level haptics and a glass-morphism stats panel &mdash; zero dependencies. Planned, implemented,
+              compiled, validated and published by directing Claude as an autonomous agent from the CLI.
+            </p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="chip rounded-md px-2 py-1">SwiftUI</span>
+              <span class="chip rounded-md px-2 py-1">iOS 17+</span>
+              <span class="chip rounded-md px-2 py-1">Claude Code CLI</span>
+              <span class="chip rounded-md px-2 py-1">Agentic workflow</span>
+              <span class="chip rounded-md px-2 py-1">Haptics</span>
+            </div>
+          </article>
+
+          <article class="card card-hover rounded-2xl p-6">
+            <div class="flex items-start justify-between">
+              <div class="w-10 h-10 rounded-xl bg-white/[0.04] border hairline grid place-items-center">
+                <i data-lucide="list-checks" class="w-5 h-5 text-accentSoft"></i>
+              </div>
+              <a href="https://github.com/isaanilkoca/QuizApp-Cursor-AI-Agent-Driven" target="_blank" rel="noopener" class="text-zinc-600 hover:text-accentSoft transition-colors" aria-label="View on GitHub"><i data-lucide="arrow-up-right" class="w-5 h-5"></i></a>
+            </div>
+            <h4 class="mt-4 text-lg font-semibold text-zinc-100">QuizApp — Cursor Composer agent</h4>
+            <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+              An MVVM SwiftUI quiz app built through AI-Driven Development. Under architectural direction, the agent ran
+              autonomous multi-file analysis (18+ files), traced a crash to background-thread suspension, and
+              consolidated styling into a unified theme catalog with fluid step animations.
+            </p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="chip rounded-md px-2 py-1">SwiftUI</span>
+              <span class="chip rounded-md px-2 py-1">MVVM</span>
+              <span class="chip rounded-md px-2 py-1">Cursor Agent</span>
+              <span class="chip rounded-md px-2 py-1">AIDD</span>
+            </div>
+          </article>
+        </div>
+
+        <p class="mt-4 text-xs text-zinc-500 font-mono reveal">
+          Day to day: Claude &amp; ChatGPT as Xcode agents · Gemini in Android Studio / Visual Studio.
+        </p>
+      </div>
+
+      <!-- More projects, categorized -->
+      <p class="eyebrow mt-14 mb-6 reveal">More projects</p>
+      <div class="grid sm:grid-cols-2 gap-4">
+
+        <div class="card rounded-2xl p-6 reveal">
+          <div class="flex items-center gap-2.5 text-zinc-200">
+            <i data-lucide="flask-conical" class="w-4 h-4 text-accent"></i>
+            <h3 class="font-semibold text-sm tracking-wide">Architecture &amp; Testing</h3>
+          </div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a href="https://github.com/isaanilkoca/ProtocolOrientedUIKit" target="_blank" rel="noopener" class="chip rounded-md px-2.5 py-1">ProtocolOrientedUIKit — MVVM + POP + XCTest</a>
+            <a href="https://github.com/isaanilkoca/SwiftTesting1" target="_blank" rel="noopener" class="chip rounded-md px-2.5 py-1">SwiftTesting1 — unit / integration / UI tests</a>
+            <a href="https://github.com/isaanilkoca/LoginProtocolOriented" target="_blank" rel="noopener" class="chip rounded-md px-2.5 py-1">LoginProtocolOriented</a>
+            <a href="https://github.com/isaanilkoca/iOS-ARC-MemoryManagement-RetainCycles" target="_blank" rel="noopener" class="chip rounded-md px-2.5 py-1">ARC &amp; Retain Cycles</a>
+            <a href="https://github.com/isaanilkoca/Swift-Advanced-Practices" target="_blank" rel="noopener" class="chip rounded-md px-2.5 py-1">Swift Advanced Practices</a>
+            <a href="https://github.com/isaanilkoca/Swift-Intermediate-Practices" target="_blank" rel="noopener" class="chip rounded-md px-2.5 py-1">Swift Intermediate Practices</a>
+          </div>
+        </div>
+
+        <div class="card rounded-2xl p-6 reveal">
+          <div class="flex items-center gap-2.5 text-zinc-200">
+            <i data-lucide="sparkles" class="w-4 h-4 text-accent"></i>
+            <h3 class="font-semibold text-sm tracking-wide">Modern iOS APIs (17–26)</h3>
+          </div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a href="https://github.com/isaanilkoca/ToDoSwiftData-" target="_blank" rel="noopener" class="chip rounded-md px-2.5 py-1">ToDoSwiftData — SwiftData (@Model / @Query)</a>
+            <a href="https://github.com/isaanilkoca/InteractiveWidgetsTrys" target="_blank" rel="noopener" class="chip rounded-md px-2.5 py-1">InteractiveWidgets — WidgetKit + App Intents</a>
+            <a href="https://github.com/isaanilkoca/iOS26--FoundationModel-CalorieHunterApp" target="_blank" rel="noopener" class="chip rounded-md px-2.5 py-1">CalorieHunter — Foundation Models</a>
+          </div>
+        </div>
+
+        <div class="card rounded-2xl p-6 reveal">
+          <div class="flex items-center gap-2.5 text-zinc-200">
+            <i data-lucide="map-pinned" class="w-4 h-4 text-accent"></i>
+            <h3 class="font-semibold text-sm tracking-wide">Location &amp; Maps</h3>
+          </div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a href="https://github.com/isaanilkoca/TravelBook-CoreData-MapKit" target="_blank" rel="noopener" class="chip rounded-md px-2.5 py-1">TravelBook — Core Data + MapKit + CoreLocation</a>
+            <a href="https://github.com/isaanilkoca/ArtBook-Maps" target="_blank" rel="noopener" class="chip rounded-md px-2.5 py-1">ArtBook-Maps — Java · Google Maps SDK</a>
+            <a href="https://github.com/isaanilkoca/FoursquareClone-ParseDashboard" target="_blank" rel="noopener" class="chip rounded-md px-2.5 py-1">Foursquare Clone — Parse Server</a>
+          </div>
+        </div>
+
+        <div class="card rounded-2xl p-6 reveal">
+          <div class="flex items-center gap-2.5 text-zinc-200">
+            <i data-lucide="arrow-left-right" class="w-4 h-4 text-accent"></i>
+            <h3 class="font-semibold text-sm tracking-wide">API Clients &amp; Clones</h3>
+          </div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a href="https://github.com/isaanilkoca/CurrencyConverter" target="_blank" rel="noopener" class="chip rounded-md px-2.5 py-1">Currency Converter — Swift · Fixer API</a>
+            <a href="https://github.com/isaanilkoca/InstagramCloneInJava" target="_blank" rel="noopener" class="chip rounded-md px-2.5 py-1">InstagramCloneInJava — Java/Kotlin · Firebase</a>
+          </div>
+        </div>
+
+        <div class="card rounded-2xl p-6 reveal">
+          <div class="flex items-center gap-2.5 text-zinc-200">
+            <i data-lucide="bar-chart-3" class="w-4 h-4 text-accent"></i>
+            <h3 class="font-semibold text-sm tracking-wide">Systems &amp; Algorithms</h3>
+          </div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a href="https://github.com/isaanilkoca/Trace-Driven-Cache-Simulator" target="_blank" rel="noopener" class="chip rounded-md px-2.5 py-1">Cache Simulator — C · x86-64</a>
+            <a href="https://github.com/isaanilkoca/Sorting-Performance-Analysis" target="_blank" rel="noopener" class="chip rounded-md px-2.5 py-1">Sorting Performance Analysis — Java 21 · JavaFX</a>
+          </div>
+        </div>
+
+        <div class="card rounded-2xl p-6 reveal">
+          <div class="flex items-center gap-2.5 text-zinc-200">
+            <i data-lucide="boxes" class="w-4 h-4 text-accent"></i>
+            <h3 class="font-semibold text-sm tracking-wide">Other Platforms &amp; Foundations</h3>
+          </div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a href="https://github.com/isaanilkoca/novastore-inventory-app" target="_blank" rel="noopener" class="chip rounded-md px-2.5 py-1">NovaStore Inventory — Flutter / Dart · Material 3</a>
+            <a href="https://github.com/isaanilkoca/nova-web-proje" target="_blank" rel="noopener" class="chip rounded-md px-2.5 py-1">nova-web — React</a>
+            <a href="https://github.com/isaanilkoca/-Swift-Learning-Path" target="_blank" rel="noopener" class="chip rounded-md px-2.5 py-1">Swift Learning Path — 16+ mini projects · ARKit</a>
+          </div>
+        </div>
+      </div>
+
+      <a href="https://github.com/isaanilkoca?tab=repositories" target="_blank" rel="noopener" class="mt-6 inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-zinc-100 transition-colors font-mono reveal">
+        <i data-lucide="github" class="w-4 h-4"></i> See all repositories on GitHub <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+      </a>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="py-20 sm:py-28 border-t hairline scroll-mt-20">
+      <div class="reveal">
+        <p class="eyebrow mb-3">03 — Skills</p>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-50">Technical Skills</h2>
+      </div>
+
+      <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="card rounded-2xl p-6 reveal">
+          <div class="flex items-center gap-2.5 text-zinc-200">
+            <i data-lucide="code-2" class="w-4 h-4 text-accent"></i>
+            <h3 class="font-semibold text-sm tracking-wide">Languages &amp; Query</h3>
+          </div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="chip rounded-md px-2.5 py-1">Swift</span>
+            <span class="chip rounded-md px-2.5 py-1">Kotlin</span>
+            <span class="chip rounded-md px-2.5 py-1">Java</span>
+            <span class="chip rounded-md px-2.5 py-1">JavaScript</span>
+            <span class="chip rounded-md px-2.5 py-1">SQL</span>
+            <span class="chip rounded-md px-2.5 py-1">C</span>
+          </div>
+        </div>
+
+        <div class="card rounded-2xl p-6 reveal">
+          <div class="flex items-center gap-2.5 text-zinc-200">
+            <i data-lucide="apple" class="w-4 h-4 text-accent"></i>
+            <h3 class="font-semibold text-sm tracking-wide">iOS Frameworks</h3>
+          </div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="chip rounded-md px-2.5 py-1">SwiftUI</span>
+            <span class="chip rounded-md px-2.5 py-1">UIKit</span>
+            <span class="chip rounded-md px-2.5 py-1">Storyboard</span>
+            <span class="chip rounded-md px-2.5 py-1">Core Data</span>
+            <span class="chip rounded-md px-2.5 py-1">SwiftData</span>
+            <span class="chip rounded-md px-2.5 py-1">Combine</span>
+          </div>
+        </div>
+
+        <div class="card rounded-2xl p-6 reveal">
+          <div class="flex items-center gap-2.5 text-zinc-200">
+            <i data-lucide="layers" class="w-4 h-4 text-accent"></i>
+            <h3 class="font-semibold text-sm tracking-wide">Architecture &amp; Testing</h3>
+          </div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="chip rounded-md px-2.5 py-1">MVVM</span>
+            <span class="chip rounded-md px-2.5 py-1">VIPER</span>
+            <span class="chip rounded-md px-2.5 py-1">MVC</span>
+            <span class="chip rounded-md px-2.5 py-1">Protocol-Oriented</span>
+            <span class="chip rounded-md px-2.5 py-1">Dependency Injection</span>
+            <span class="chip rounded-md px-2.5 py-1">XCTest</span>
+            <span class="chip rounded-md px-2.5 py-1">async/await</span>
+          </div>
+        </div>
+
+        <div class="card rounded-2xl p-6 reveal">
+          <div class="flex items-center gap-2.5 text-zinc-200">
+            <i data-lucide="sparkles" class="w-4 h-4 text-accent"></i>
+            <h3 class="font-semibold text-sm tracking-wide">Modern iOS (17–26)</h3>
+          </div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="chip rounded-md px-2.5 py-1">Swift 6</span>
+            <span class="chip rounded-md px-2.5 py-1">WidgetKit</span>
+            <span class="chip rounded-md px-2.5 py-1">App Intents</span>
+            <span class="chip rounded-md px-2.5 py-1">Foundation Models</span>
+            <span class="chip rounded-md px-2.5 py-1">RxSwift / RxCocoa</span>
+          </div>
+        </div>
+
+        <div class="card rounded-2xl p-6 reveal">
+          <div class="flex items-center gap-2.5 text-zinc-200">
+            <i data-lucide="gamepad-2" class="w-4 h-4 text-accent"></i>
+            <h3 class="font-semibold text-sm tracking-wide">Games &amp; Graphics</h3>
+          </div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="chip rounded-md px-2.5 py-1">SpriteKit</span>
+            <span class="chip rounded-md px-2.5 py-1">GameplayKit</span>
+            <span class="chip rounded-md px-2.5 py-1">SKPhysicsBody</span>
+            <span class="chip rounded-md px-2.5 py-1">LibGDX</span>
+            <span class="chip rounded-md px-2.5 py-1">Core ML · Vision</span>
+            <span class="chip rounded-md px-2.5 py-1">MapKit</span>
+          </div>
+        </div>
+
+        <div class="card rounded-2xl p-6 reveal">
+          <div class="flex items-center gap-2.5 text-zinc-200">
+            <i data-lucide="smartphone" class="w-4 h-4 text-accent"></i>
+            <h3 class="font-semibold text-sm tracking-wide">Android &amp; Cross-Platform</h3>
+          </div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="chip rounded-md px-2.5 py-1">Android SDK</span>
+            <span class="chip rounded-md px-2.5 py-1">Jetpack</span>
+            <span class="chip rounded-md px-2.5 py-1">Flutter</span>
+            <span class="chip rounded-md px-2.5 py-1">React</span>
+          </div>
+        </div>
+
+        <div class="card rounded-2xl p-6 reveal">
+          <div class="flex items-center gap-2.5 text-zinc-200">
+            <i data-lucide="cloud" class="w-4 h-4 text-accent"></i>
+            <h3 class="font-semibold text-sm tracking-wide">Backend &amp; Cloud</h3>
+          </div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="chip rounded-md px-2.5 py-1">Firebase</span>
+            <span class="chip rounded-md px-2.5 py-1">Parse Server</span>
+            <span class="chip rounded-md px-2.5 py-1">Google Cloud</span>
+            <span class="chip rounded-md px-2.5 py-1">REST · URLSession</span>
+          </div>
+        </div>
+
+        <div class="card rounded-2xl p-6 reveal">
+          <div class="flex items-center gap-2.5 text-zinc-200">
+            <i data-lucide="cpu" class="w-4 h-4 text-accent"></i>
+            <h3 class="font-semibold text-sm tracking-wide">Hardware &amp; Systems</h3>
+          </div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="chip rounded-md px-2.5 py-1">Assembly (x86/8086)</span>
+            <span class="chip rounded-md px-2.5 py-1">Computer Architecture</span>
+            <span class="chip rounded-md px-2.5 py-1">Microprocessors</span>
+            <span class="chip rounded-md px-2.5 py-1">Digital Logic Design</span>
+            <span class="chip rounded-md px-2.5 py-1">Cache / Memory Management</span>
+          </div>
+        </div>
+
+        <div class="card rounded-2xl p-6 reveal">
+          <div class="flex items-center gap-2.5 text-zinc-200">
+            <i data-lucide="terminal" class="w-4 h-4 text-accent"></i>
+            <h3 class="font-semibold text-sm tracking-wide">Agentic &amp; AI-Assisted Dev</h3>
+          </div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="chip rounded-md px-2.5 py-1">Claude Code CLI</span>
+            <span class="chip rounded-md px-2.5 py-1">Claude (Xcode)</span>
+            <span class="chip rounded-md px-2.5 py-1">Cursor Agent</span>
+            <span class="chip rounded-md px-2.5 py-1">ChatGPT</span>
+            <span class="chip rounded-md px-2.5 py-1">Gemini (Android Studio / VS)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 card rounded-2xl p-6 reveal flex flex-wrap items-center gap-x-8 gap-y-4">
+        <div class="flex items-center gap-2.5 text-zinc-200 shrink-0">
+          <i data-lucide="wrench" class="w-4 h-4 text-accent"></i>
+          <h3 class="font-semibold text-sm tracking-wide">Tools</h3>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip rounded-md px-2.5 py-1">Xcode</span>
+          <span class="chip rounded-md px-2.5 py-1">Android Studio</span>
+          <span class="chip rounded-md px-2.5 py-1">Visual Studio</span>
+          <span class="chip rounded-md px-2.5 py-1">Git</span>
+          <span class="chip rounded-md px-2.5 py-1">Figma</span>
+        </div>
+        <div class="h-5 w-px bg-white/10 hidden sm:block"></div>
+        <div class="flex items-center gap-2.5 text-zinc-200 shrink-0">
+          <i data-lucide="languages" class="w-4 h-4 text-accent"></i>
+          <h3 class="font-semibold text-sm tracking-wide">Languages</h3>
+        </div>
+        <div class="text-sm text-zinc-400">
+          Turkish <span class="text-zinc-600">— Native</span> &nbsp;·&nbsp; English <span class="text-zinc-600">— B2, prep-year exempt</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education" class="py-20 sm:py-28 border-t hairline scroll-mt-20">
+      <div class="reveal">
+        <p class="eyebrow mb-3">04 — Education</p>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-50">Education</h2>
+      </div>
+
+      <div class="mt-12 card rounded-2xl p-6 sm:p-8 reveal">
+        <div class="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <h3 class="text-xl font-semibold text-zinc-100">İstanbul Ticaret University</h3>
+            <p class="mt-1 text-accentSoft font-medium">B.Eng. Computer Engineering — Faculty of Engineering</p>
+            <p class="mt-1 text-sm text-zinc-500 font-mono">Sep 2021 — Jul 2026 · İstanbul · Instruction: English (30%)</p>
+          </div>
+          <span class="chip rounded-full px-3 py-1.5 text-emerald-300 border-emerald-500/25 bg-emerald-500/5">Graduated · 10 Jul 2026</span>
+        </div>
+
+        <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-px rounded-xl overflow-hidden border hairline bg-white/[0.05]">
+          <div class="bg-[#0b0b0f] p-4">
+            <div class="text-lg font-bold text-zinc-100 tabular-nums">2.36<span class="text-sm text-zinc-500">/4.00</span></div>
+            <div class="mt-0.5 text-[11px] text-zinc-500 font-mono">Cumulative GPA</div>
+          </div>
+          <div class="bg-[#0b0b0f] p-4">
+            <div class="text-lg font-bold text-emerald-300 tabular-nums">3.53<span class="text-sm text-zinc-500">/4.00</span></div>
+            <div class="mt-0.5 text-[11px] text-zinc-500 font-mono">Highest term GPA</div>
+          </div>
+          <div class="bg-[#0b0b0f] p-4">
+            <div class="text-lg font-bold text-zinc-100 tabular-nums">254</div>
+            <div class="mt-0.5 text-[11px] text-zinc-500 font-mono">ECTS credits completed</div>
+          </div>
+        </div>
+
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="isamezuniyet.pdf" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full border hairline bg-white/[0.03] px-4 py-2 text-sm font-medium text-zinc-200 hover:bg-white/[0.06] transition-colors">
+            <i data-lucide="award" class="w-4 h-4 text-accent"></i> Graduation Certificate (PDF)
+          </a>
+          <a href="isatranskript.pdf" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full border hairline bg-white/[0.03] px-4 py-2 text-sm font-medium text-zinc-200 hover:bg-white/[0.06] transition-colors">
+            <i data-lucide="file-text" class="w-4 h-4 text-accent"></i> Official Transcript (PDF)
+          </a>
+        </div>
+        <p class="mt-4 text-[11px] text-zinc-600 font-mono">
+          Diploma No 26.05.0098 · verified via CoHE (YÖK) graduation record
+        </p>
+      </div>
+    </section>
+
+
+    <!-- CERTIFICATIONS -->
+    <section id="certifications" class="py-20 sm:py-28 border-t hairline scroll-mt-20">
+      <div class="reveal">
+        <p class="eyebrow mb-3">05 — Certifications</p>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-50">Certifications &amp; Credentials</h2>
+      </div>
+
+      <div class="mt-12 grid sm:grid-cols-2 gap-4">
+        <article class="card rounded-2xl p-6 reveal">
+          <div class="flex items-start justify-between gap-3">
+            <h3 class="font-semibold text-zinc-100 leading-snug">iOS 26 &amp; Swift 6: Beginner to Advanced Mobile Apps</h3>
+            <i data-lucide="badge-check" class="w-5 h-5 shrink-0 text-accent"></i>
+          </div>
+          <p class="mt-2 text-sm text-zinc-400">Udemy · Atıl Samancıoğlu / Academy Club</p>
+          <p class="mt-3 font-mono text-xs text-zinc-500">Completion certificate · 59.5 hours · 8 Sep 2026</p>
+          <p class="mt-1 font-mono text-[11px] text-zinc-600 break-all">No: UC-45944a05-67d2-4064-9ca1-9b832618cb5a</p>
+        </article>
+
+        <article class="card rounded-2xl p-6 reveal">
+          <div class="flex items-start justify-between gap-3">
+            <h3 class="font-semibold text-zinc-100 leading-snug">Software Development Internship Certificate</h3>
+            <i data-lucide="badge-check" class="w-5 h-5 shrink-0 text-accent"></i>
+          </div>
+          <p class="mt-2 text-sm text-zinc-400">Software Persona · in cooperation with TNC Group</p>
+          <p class="mt-3 text-xs text-zinc-500 leading-relaxed">Database &amp; SQL · Web Development (JavaScript) · UI/UX &amp; Web Design (Figma) · Mobile App Development (Android / iOS)</p>
+          <p class="mt-2 font-mono text-xs text-zinc-600">2026</p>
+        </article>
+
+        <article class="card rounded-2xl p-6 reveal">
+          <div class="flex items-start justify-between gap-3">
+            <h3 class="font-semibold text-zinc-100 leading-snug">Internship Reference Letter</h3>
+            <i data-lucide="file-check" class="w-5 h-5 shrink-0 text-accent"></i>
+          </div>
+          <p class="mt-2 text-sm text-zinc-400">Software Persona — Brand General Coordinator, Zekiye İrem Akıcı</p>
+          <p class="mt-3 text-xs text-zinc-500 leading-relaxed">Official reference documenting analytical thinking, modular development, disciplined version control and technical adaptation.</p>
+          <p class="mt-2 font-mono text-xs text-zinc-600">12 Jan 2026 — 16 Feb 2026</p>
+        </article>
+
+        <article class="card rounded-2xl p-6 reveal">
+          <div class="flex items-start justify-between gap-3">
+            <h3 class="font-semibold text-zinc-100 leading-snug">Software Management — Certificate of Participation</h3>
+            <i data-lucide="badge-check" class="w-5 h-5 shrink-0 text-accent"></i>
+          </div>
+          <p class="mt-2 text-sm text-zinc-400">Beykoz University · Lifelong Learning Center</p>
+          <p class="mt-3 font-mono text-xs text-zinc-500">9–13 Feb 2026 · Certificate No: K26000761</p>
+        </article>
+
+        <article class="card rounded-2xl p-6 reveal">
+          <div class="flex items-start justify-between gap-3">
+            <h3 class="font-semibold text-zinc-100 leading-snug">KOSGEB Entrepreneurship Training</h3>
+            <i data-lucide="badge-check" class="w-5 h-5 shrink-0 text-accent"></i>
+          </div>
+          <p class="mt-2 text-sm text-zinc-400">Republic of Türkiye · KOSGEB · Traditional Entrepreneurship</p>
+          <p class="mt-3 font-mono text-xs text-zinc-500">Completed: 19 Jun 2025</p>
+          <p class="mt-1 font-mono text-[11px] text-zinc-600">Verification: KSB01UGE0113774139</p>
+        </article>
+
+        <article class="card rounded-2xl p-6 reveal">
+          <div class="flex items-start justify-between gap-3">
+            <h3 class="font-semibold text-zinc-100 leading-snug">Internship Completion &amp; Success Certificate</h3>
+            <i data-lucide="badge-check" class="w-5 h-5 shrink-0 text-accent"></i>
+          </div>
+          <p class="mt-2 text-sm text-zinc-400">Nabusoft Digital Solutions</p>
+          <p class="mt-3 text-xs text-zinc-500 leading-relaxed">Official certificate awarded after successful evaluation of Android app and game development projects.</p>
+          <p class="mt-2 font-mono text-xs text-zinc-600">2024</p>
+        </article>
+      </div>
+
+      <p class="mt-6 text-xs text-zinc-600 font-mono">
+        Also: Project Writing Training (LinkedIn) · CoHE (YÖK) Graduation Record (Diploma No: 26.05.0098)
+      </p>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-20 sm:py-28 border-t hairline scroll-mt-20">
+      <div class="card rounded-3xl p-8 sm:p-12 text-center reveal">
+        <p class="eyebrow mb-4">// Get in touch</p>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-50">Let's build something</h2>
+        <p class="mt-4 text-zinc-400 max-w-md mx-auto">
+          I'm available for iOS and mobile development roles. If you have a project in mind &mdash; or just want to say hi &mdash; get in touch.
+        </p>
+        <div class="mt-8 flex flex-wrap justify-center gap-3">
+          <a href="mailto:isaanilk@gmail.com" class="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white hover:bg-accentSoft transition-colors">
+            <i data-lucide="mail" class="w-4 h-4"></i> isaanilk@gmail.com
+          </a>
+          <a href="tel:+905397759955" class="inline-flex items-center gap-2 rounded-full border hairline bg-white/[0.03] px-5 py-2.5 text-sm font-medium text-zinc-200 hover:bg-white/[0.06] transition-colors">
+            <i data-lucide="phone" class="w-4 h-4"></i> +90 539 775 9955
+          </a>
+        </div>
+        <div class="mt-6 flex justify-center gap-5 text-zinc-500">
+          <a href="https://github.com/isaanilkoca" target="_blank" rel="noopener" class="hover:text-zinc-200 transition-colors" aria-label="GitHub"><i data-lucide="github" class="w-5 h-5"></i></a>
+          <a href="https://www.linkedin.com/in/isa-an%C4%B1l-koca-5a4b82220/" target="_blank" rel="noopener" class="hover:text-zinc-200 transition-colors" aria-label="LinkedIn"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t hairline">
+    <div class="mx-auto max-w-5xl px-5 sm:px-8 py-8 flex flex-wrap items-center justify-between gap-3 text-xs text-zinc-600 font-mono">
+      <span>© 2026 İsa Anıl Koca</span>
+      <span>Ataşehir, İstanbul, Türkiye</span>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    document.querySelectorAll('.mobile-link').forEach(l =>
+      l.addEventListener('click', () => mobileMenu.classList.add('hidden'))
+    );
+
+    const reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { rootMargin: '0px 0px -8% 0px' });
+      reveals.forEach(el => io.observe(el));
+    } else {
+      reveals.forEach(el => el.classList.add('in'));
+    }
+    window.addEventListener('load', () => {
+      setTimeout(() => reveals.forEach(el => el.classList.add('in')), 1400);
+    });
+
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = [...navLinks].map(l => document.querySelector(l.getAttribute('href')));
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    sections.forEach(s => s && spy.observe(s));
+  </script>
+</body>
+</html>
