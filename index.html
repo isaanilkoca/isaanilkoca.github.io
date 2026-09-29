@@ -50,7 +50,6 @@
       height: 100%;
       z-index: -2;
       pointer-events: none;
-      opacity: 0.32;
     }
 
     .aurora {
@@ -58,22 +57,13 @@
       inset: 0;
       z-index: -1;
       pointer-events: none;
+      transform: translateZ(0);
+      will-change: transform;
       background:
         radial-gradient(680px circle at 78% -8%, rgba(10, 132, 255, 0.16), transparent 60%),
         radial-gradient(560px circle at 8% 8%, rgba(56, 152, 255, 0.08), transparent 55%),
         radial-gradient(900px circle at 50% 120%, rgba(10, 132, 255, 0.07), transparent 60%);
     }
-    .grain {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      opacity: 0.5;
-      background-image: linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px);
-      background-size: 100% 3px;
-      mask-image: linear-gradient(to bottom, black, transparent 70%);
-    }
-
     .eyebrow {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.72rem;
@@ -154,7 +144,6 @@
   <script>document.documentElement.classList.remove('dark'); document.documentElement.classList.add('dark','js');</script>
   <canvas id="matrix" aria-hidden="true"></canvas>
   <div class="aurora"></div>
-  <div class="grain"></div>
 
   <!-- NAV -->
   <header class="fixed top-0 inset-x-0 z-50 border-b hairline bg-[#08080b]/90">
@@ -1026,7 +1015,7 @@
         for (let i = 0; i < columns; i++) {
           const ch = glyphs[Math.floor(Math.random() * glyphs.length)];
           const x = i * fontSize, y = drops[i] * fontSize;
-          ctx.fillStyle = Math.random() > 0.975 ? '#d4ffd9' : '#22c55e';
+          ctx.fillStyle = Math.random() > 0.975 ? '#4a5e4f' : '#104426';
           ctx.fillText(ch, x, y);
           if (y > height && Math.random() > 0.975) drops[i] = 0;
           drops[i]++;
@@ -1049,10 +1038,16 @@
       }
 
       let last = 0;
-      let running = true;
+      let running = true, scrolling = false, scrollTimer;
+      // Freeze the rain while the page scrolls so scrolling stays smooth
+      window.addEventListener('scroll', () => {
+        scrolling = true;
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(() => { scrolling = false; }, 200);
+      }, { passive: true });
       function loop(t) {
         if (!running) return;
-        if (t - last > 50) { draw(); last = t; }
+        if (!scrolling && t - last > 66) { draw(); last = t; }
         requestAnimationFrame(loop);
       }
       requestAnimationFrame(loop);
