@@ -120,6 +120,29 @@
     details > summary::-webkit-details-marker { display: none; }
     details[open] .chev { transform: rotate(180deg); }
     .chev { transition: transform .25s ease; }
+
+    .post > summary { list-style: none; cursor: pointer; }
+    .post > summary::-webkit-details-marker { display: none; }
+    .post[open] .chev { transform: rotate(180deg); }
+    .post { transition: border-color .35s ease; }
+    .post:hover, .post[open] { border-color: rgba(10, 132, 255, 0.35); }
+    .post-body { padding: 1.25rem 1.5rem 1.5rem; }
+    .post-tabs { display: inline-flex; gap: 4px; padding: 3px; border-radius: 9999px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); }
+    .post-tabs button { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; padding: 0.3rem 0.85rem; border-radius: 9999px; color: #8a8a96; transition: color .2s ease, background .2s ease; }
+    .post-tabs button[aria-selected="true"] { background: rgba(10,132,255,0.18); color: #e4e4e7; }
+    .post-scroll { margin-top: 1rem; max-height: 60vh; overflow-y: auto; overscroll-behavior: contain; padding-right: 0.5rem; }
+    .post-note { font-size: 0.75rem; font-style: italic; color: #6b6b78; margin-bottom: 1rem; }
+    .prose-post { color: #b8b8c2; font-size: 0.95rem; line-height: 1.75; }
+    .prose-post > * + * { margin-top: 0.9rem; }
+    .prose-post h3 { margin-top: 1.75rem; color: #f4f4f5; font-weight: 600; font-size: 1.05rem; }
+    .prose-post strong { color: #e4e4e7; font-weight: 600; }
+    .prose-post ul { list-style: disc; padding-left: 1.25rem; }
+    .prose-post ol { list-style: decimal; padding-left: 1.25rem; }
+    .prose-post li + li { margin-top: 0.4rem; }
+    .prose-post li::marker { color: #0A84FF; }
+    .prose-post pre { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: #82d9d0; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 0.6rem; padding: 0.7rem 1rem; overflow-x: auto; }
+    .prose-post blockquote { border-left: 2px solid #0A84FF; padding-left: 1rem; color: #d4d4d8; }
+    .post-link { margin-top: 1.25rem; }
   </style>
 </head>
 <body class="font-sans antialiased">
@@ -139,6 +162,7 @@
         <a href="#skills" class="nav-link">Skills</a>
         <a href="#education" class="nav-link">Education</a>
         <a href="#certifications" class="nav-link">Certifications</a>
+        <a href="#blog" class="nav-link">Blog</a>
       </nav>
       <a href="#contact" class="hidden md:inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 py-1.5 text-sm font-medium text-zinc-100 hover:bg-accent/20 transition-colors">
         Contact
@@ -154,6 +178,7 @@
         <a href="#skills" class="mobile-link">Skills</a>
         <a href="#education" class="mobile-link">Education</a>
         <a href="#certifications" class="mobile-link">Certifications</a>
+        <a href="#blog" class="mobile-link">Blog</a>
         <a href="#contact" class="mobile-link text-accentSoft">Contact</a>
       </nav>
     </div>
@@ -191,6 +216,9 @@
             </a>
             <a href="https://www.linkedin.com/in/isa-anıl-koca-5a4b82220" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full border hairline bg-white/[0.03] px-5 py-2.5 text-sm font-medium text-zinc-200 hover:bg-white/[0.06] transition-colors">
               <i data-lucide="linkedin" class="w-4 h-4"></i> LinkedIn
+            </a>
+            <a href="https://medium.com/@isaanilk" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full border hairline bg-white/[0.03] px-5 py-2.5 text-sm font-medium text-zinc-200 hover:bg-white/[0.06] transition-colors">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4" aria-hidden="true"><ellipse cx="6.8" cy="12" rx="6.8" ry="6.9"/><ellipse cx="17.6" cy="12" rx="3.4" ry="6.5"/><ellipse cx="22.3" cy="12" rx="1.3" ry="5.8"/></svg> Medium
             </a>
             <a href="isaanilkocacv.pdf?v=20260909" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full border hairline bg-white/[0.03] px-5 py-2.5 text-sm font-medium text-zinc-200 hover:bg-white/[0.06] transition-colors">
               <i data-lucide="file-text" class="w-4 h-4"></i> CV (PDF)
@@ -940,6 +968,96 @@
       </div>
     </section>
 
+    <!-- BLOG -->
+    <section id="blog" class="py-20 sm:py-28 border-t hairline scroll-mt-20">
+      <div class="reveal">
+        <p class="eyebrow mb-3">06 — Blog</p>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-50">Writing</h2>
+        <p class="mt-4 text-zinc-400 max-w-xl">Notes on iOS development and agentic workflows with Claude, published on Medium. Tap a post to read it here.</p>
+      </div>
+
+      <div class="mt-12 grid gap-4">
+        <details class="post card rounded-2xl reveal">
+          <summary class="p-6 block">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <p class="font-mono text-xs text-zinc-500">4 Oct 2026 · 6 min read · TR / EN</p>
+                <h3 class="mt-2 font-semibold text-zinc-100 leading-snug">0 ve 1'leri Havada Yakalamak <span class="text-zinc-500 font-medium">— Catching 0s and 1s Mid-Air</span></h3>
+                <p class="mt-2 text-sm text-zinc-400">Claude ile cebinizdeki otonom geliştirici ekibi · The autonomous dev team in your pocket</p>
+              </div>
+              <i data-lucide="chevron-down" class="chev w-5 h-5 shrink-0 text-accent"></i>
+            </div>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="chip rounded-md px-2.5 py-1">Claude Code</span>
+              <span class="chip rounded-md px-2.5 py-1">iOS Development</span>
+              <span class="chip rounded-md px-2.5 py-1">AI</span>
+              <span class="chip rounded-md px-2.5 py-1">Productivity</span>
+            </div>
+          </summary>
+          <div class="post-body border-t hairline">
+            <div class="post-tabs" role="tablist" aria-label="Language">
+              <button type="button" role="tab" data-lang="tr" aria-selected="true">Türkçe</button>
+              <button type="button" role="tab" data-lang="en" aria-selected="false">English</button>
+            </div>
+            <div class="post-scroll">
+              <p class="post-note">Bu yazı, yapay zekâ yazım asistanı Claude desteğiyle düzenlenmiştir. · This story was written with the assistance of an AI writing program (Claude).</p>
+              <article class="prose-post" lang="tr" data-lang="tr">
+<p>Bir yazılımcının başına gelebilecek en heyecan verici ve aynı zamanda en can sıkıcı an, bilgisayar başında değilken gelen o ani ilhamdır.</p>
+<p>Yürürken, metroda ya da bir kafede kahvenizi yudumlarken zihninizde birden bir arayüz fikri belirir. Belki de günlerdir peşinizi bırakmayan bug’ın çözümü tam o anda “tık” diye yerine oturur. Bu ilhamlar kanat çırpan narin kelebekler gibidir: Peşlerinden koşup hemen yakalamazsanız parmaklarınızın arasından süzülüp giderler. Eve dönüp masanıza oturduğunuzda o kıvılcımdan geriye çoğu zaman yalnızca bulanık bir hatıra kalmıştır.</p>
+<p>İşte Anthropic’in Claude ekosistemi, özellikle de <strong>Claude Code Web</strong> (claude.ai/code), tam bu noktada oyunun kurallarını değiştiriyor.</p>
+<h3>1. Doğru aracı doğru yere koymak</h3>
+<p>Geliştiricilerin en sık düştüğü yanılgı, Claude’u sıradan bir sohbet kutusu sanmaktır. Asıl güç, rolleri doğru dağıttığınızda ortaya çıkar:</p>
+<ul><li><strong>Claude Web (claude.ai):</strong> Mimariyi tartıştığınız, karmaşık algoritmaları kurguladığınız düşünce ortağınız. <em>Projects</em> özelliğiyle kalıcı bir teknik doküman hafızası da kurabilirsiniz.</li><li><strong>Claude Code CLI:</strong> Terminalinizde yaşayan yerel güç merkezi. Diskinize, build’lerinize ve testlerinize doğrudan erişir.</li><li><strong>Claude Chrome eklentisi:</strong> Tarayıcıdaki gözünüz. Açık olan API dokümantasyonunu okur, özetler, hatta sizin yerinize sayfada gezinir.</li><li><strong>Claude Code Web (claude.ai/code):</strong> Bulutta çalışan mühendisiniz. Bilgisayarınıza ya da Xcode’a bağlı kalmadan doğrudan GitHub depolarınız üzerinde çalışır.</li></ul>
+<h3>2. Kelebeği havada yakalamak: Telefondan repoya</h3>
+<p>Diyelim ki dışarıdasınız ve geliştirdiğiniz mobil uygulama için aklınıza yeni bir akış geldi: <em>“Profil sayfasına dinamik bir filtreleme alanı ekleseydim ya…”</em></p>
+<p>Eskiden yapabileceğiniz tek şey, telefonun notlar uygulamasına aceleyle bir karalama bırakmaktı. Şimdi süreç şöyle işliyor:</p>
+<ol><li><strong>Telefonda claude.ai/code’u açın</strong> ve üzerinde çalıştığınız GitHub reposunu seçin.</li><li><strong>Görevi doğal dille anlatın:</strong> “feature/profile-filter adında bir branch aç. Profil ekranındaki listeye bir segmented control ekle ve filtreleme mantığını ViewModel üzerinden kur.”</li><li><strong>Kelebeği yakalayın:</strong> Claude reponun yapısını inceler, gerekli Swift kodunu yazar, değişiklikleri yeni branch’e gönderir ve incelemenize hazır bir Pull Request çıkarır.</li></ol>
+<p>O anki kıvılcım artık unutulmaya mahkûm bir not değil; GitHub’da sizi bekleyen, yaşayan bir kod parçası.</p>
+<h3>3. Eve dönüş: Tek komutla Xcode’da canlanan fikir</h3>
+<p>Asıl büyü eve vardığınızda başlar. Yolda, telefondaki GitHub uygulamasından Pull Request’i inceleyip merge edersiniz. Masanıza oturur, MacBook’unuzun kapağını açarsınız.</p>
+<p>Dosya kopyalamak yok, notları koda dökmek yok. Terminale tek bir komut yazmanız yeterli:</p>
+<pre>git pull</pre>
+<p>Saniyeler içinde, yürürken Claude’a tarif ettiğiniz arayüz ve mimari diskinize iner. Xcode’u açıp <strong>Cmd + R</strong>’ye bastığınızda, saatler önce yalnızca kafanızın içinde uçuşan o kelebek simülatör ekranında kanat çırpmaya başlar.</p>
+<blockquote><em>Yazılım geliştirmek artık bir masaya ve sandalyeye hapsolmuş bir eylem değil. Zihninizle bulut arasında kesintisiz akan bir ortaklık.</em></blockquote>
+<p><em>Küçük bir not: Claude’un yazdığı kodu merge etmeden önce her zaman bir göz atın. Kelebeği yakalamak Claude’un işi, onu doğru kavanoza koymak hâlâ sizin.</em></p>
+<h3>Son söz: Bu yazının kendisi bir kelebek</h3>
+<p>Bu yazıda anlattığım akışın en güzel örneği, okuduğunuz bu sayfanın ta kendisi. Medium hesabımı Chrome’a eklenti olarak eklediğim Claude eşliğinde açtım. Bu yazının ilk taslağını yazdım; ardından tarayıcının yan panelindeki Claude’a düzenlettim, iki dile kavuşturttum ve doğrudan bu editöre yerleştirtip yayına hazırlattım. Bana kalan tek iş, “Publish” düğmesine basmaktı.</p>
+<p>Yani bir fikir, bir kafede değil ama bir tarayıcı sekmesinde, masadan kalkmadan yazıya dönüştü.</p>
+              </article>
+              <article class="prose-post" lang="en" data-lang="en" hidden>
+<p>One of the most thrilling, and most frustrating, moments in a developer’s life is a flash of inspiration that strikes when you’re nowhere near your desk.</p>
+<p>You’re walking down the street, riding the subway or sipping coffee at a café, and suddenly an interface idea appears. Or the fix for that bug that has haunted you for days finally clicks. These sparks are like fluttering butterflies: fragile and fleeting. If you don’t catch them right away, they slip through your fingers. By the time you get home and sit down, all that’s left is a blurry memory.</p>
+<p>This is exactly where Anthropic’s Claude ecosystem, and especially <strong>Claude Code on the web</strong> (claude.ai/code), changes the rules of the game.</p>
+<h3>1. The right tool in the right place</h3>
+<p>The most common mistake developers make is treating Claude as just another chatbot. The real leverage comes when you give each tool its own role:</p>
+<ul><li><strong>Claude Web (claude.ai):</strong> Your thinking partner for architecture discussions and tricky algorithms. With <em>Projects</em>, it keeps a persistent memory of your technical docs.</li><li><strong>Claude Code CLI:</strong> The local powerhouse in your terminal, with direct access to your disk, builds and test suites.</li><li><strong>Claude in Chrome:</strong> Your eyes in the browser. It reads the API docs you have open, summarizes them, and can even navigate pages for you.</li><li><strong>Claude Code on the web (claude.ai/code):</strong> Your engineer in the cloud. It works directly on your GitHub repositories, with no dependence on your laptop or Xcode.</li></ul>
+<h3>2. Catching the butterfly: From your phone to your repo</h3>
+<p>Say you’re out and an idea hits you for the app you’re building: <em>“What if the profile page had a dynamic filter?”</em></p>
+<p>In the past, the best you could do was scribble a quick note on your phone. Now the workflow looks like this:</p>
+<ol><li><strong>Open claude.ai/code on your phone</strong> and pick the GitHub repository you’re working on.</li><li><strong>Describe the task in plain language:</strong> “Create a branch called feature/profile-filter. Add a segmented control to the list on the profile screen and wire the filtering logic through the ViewModel.”</li><li><strong>Catch the butterfly:</strong> Claude explores the repo’s structure, writes the Swift code, pushes the changes to the new branch and gets a Pull Request ready for your review.</li></ol>
+<p>That spark is no longer a note destined to be forgotten. It’s living code, waiting for you on GitHub.</p>
+<h3>3. Back at the desk: One command, and the idea comes alive</h3>
+<p>The real magic happens when you get home. On the way, you review and merge the Pull Request in the GitHub app on your phone. You sit down and open your MacBook.</p>
+<p>No copying files, no turning notes into code. Just one command in the terminal:</p>
+<pre>git pull</pre>
+<p>Within seconds, the interface and architecture you described while walking land on your disk. You open Xcode, hit <strong>Cmd + R</strong>, and the butterfly that was only fluttering in your head a few hours ago starts flying on the simulator screen.</p>
+<blockquote><em>Software development is no longer tied to a desk and a chair. It’s a continuous partnership flowing between your mind and the cloud.</em></blockquote>
+<p><em>One small note: always review the code Claude writes before you merge it. Catching the butterfly is Claude’s job; putting it in the right jar is still yours.</em></p>
+<h3>Final word: This article is a butterfly too</h3>
+<p>The best example of the workflow described here is the very page you’re reading. I set up my Medium account with Claude in Chrome by my side. I wrote the first draft of this article, then had Claude in the browser’s side panel edit it, turn it into a bilingual piece and place it straight into this editor, ready to publish. The only thing left for me was to hit “Publish”.</p>
+<p>An idea turned into a published story without ever leaving a single browser tab.</p>
+              </article>
+            </div>
+            <a href="https://medium.com/@isaanilk/0-ve-1leri-havada-yakalamak-a92e2063f23b" target="_blank" rel="noopener" class="post-link inline-flex items-center gap-1.5 text-xs text-zinc-500 hover:text-accentSoft transition-colors"><i data-lucide="external-link" class="w-3.5 h-3.5"></i> Read on Medium</a>
+          </div>
+        </details>
+      </div>
+
+      <a href="https://medium.com/@isaanilk" target="_blank" rel="noopener" class="mt-6 inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-zinc-100 transition-colors font-mono reveal">
+        All posts on Medium <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+      </a>
+    </section>
+
     <!-- CONTACT -->
     <section id="contact" class="py-20 sm:py-28 border-t hairline scroll-mt-20">
       <div class="card rounded-3xl p-8 sm:p-12 text-center reveal">
@@ -959,6 +1077,7 @@
         <div class="mt-6 flex justify-center gap-5 text-zinc-500">
           <a href="https://github.com/isaanilkoca" target="_blank" rel="noopener" class="hover:text-zinc-200 transition-colors" aria-label="GitHub"><i data-lucide="github" class="w-5 h-5"></i></a>
           <a href="https://www.linkedin.com/in/isa-anıl-koca-5a4b82220" target="_blank" rel="noopener" class="hover:text-zinc-200 transition-colors" aria-label="LinkedIn"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+          <a href="https://medium.com/@isaanilk" target="_blank" rel="noopener" class="hover:text-zinc-200 transition-colors" aria-label="Medium"><svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5" aria-hidden="true"><ellipse cx="6.8" cy="12" rx="6.8" ry="6.9"/><ellipse cx="17.6" cy="12" rx="3.4" ry="6.5"/><ellipse cx="22.3" cy="12" rx="1.3" ry="5.8"/></svg></a>
         </div>
       </div>
     </section>
@@ -1061,6 +1180,15 @@
     }
     window.addEventListener('load', () => {
       setTimeout(() => reveals.forEach(el => el.classList.add('in')), 1400);
+    });
+
+    document.querySelectorAll('.post').forEach(post => {
+      const tabs = post.querySelectorAll('.post-tabs button');
+      tabs.forEach(tab => tab.addEventListener('click', () => {
+        tabs.forEach(t => t.setAttribute('aria-selected', t === tab));
+        post.querySelectorAll('article[data-lang]').forEach(a => { a.hidden = a.dataset.lang !== tab.dataset.lang; });
+        post.querySelector('.post-scroll').scrollTop = 0;
+      }));
     });
 
     const navLinks = document.querySelectorAll('.nav-link');
