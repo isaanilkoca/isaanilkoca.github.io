@@ -304,7 +304,7 @@
         <p class="eyebrow mb-3">02 — Projects</p>
         <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-50">Projects</h2>
         <p class="mt-4 text-zinc-500 max-w-xl text-sm sm:text-base">
-          28 public repositories on GitHub &mdash; mostly native iOS and Android apps built as
+          31 public repositories on GitHub &mdash; mostly native iOS and Android apps built as
           separate platform-specific codebases. Highlights below; the rest are grouped by area.
         </p>
       </div>
@@ -429,6 +429,33 @@
             <span class="chip rounded-md px-2 py-1">Makefile · MinGW</span>
           </div>
         </article>
+
+        <article class="card card-hover rounded-2xl p-6 sm:col-span-2">
+          <div class="flex items-start justify-between">
+            <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 grid place-items-center">
+              <i data-lucide="graduation-cap" class="w-5 h-5 text-accentSoft"></i>
+            </div>
+            <a href="https://github.com/isaanilkoca/SWIFT-BOOTCAMP1" target="_blank" rel="noopener" class="text-zinc-600 hover:text-accentSoft transition-colors" aria-label="View on GitHub"><i data-lucide="arrow-up-right" class="w-5 h-5"></i></a>
+          </div>
+          <h3 class="mt-4 text-lg font-semibold text-zinc-100">Swift Bootcamp &mdash; Playground Archive &amp; SwiftUI Projects</h3>
+          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+            The full record of my iOS bootcamp, organised as a study path. Ten Swift 6 playgrounds, each one a single topic with
+            runnable examples and inline Turkish notes: variables and type casting, control flow, optionals and optional binding,
+            arrays, sets and dictionaries with <span class="text-zinc-300">filter / sorted</span>, OOP (classes, overloading, <span class="text-zinc-300">static</span>, enums, composition),
+            inheritance, protocols, extensions and closures, then <span class="text-zinc-300">guard</span> and <span class="text-zinc-300">throws / do-try-catch</span> error handling.
+            Two graded assignments are included, along with the SwiftUI Xcode projects built during the course
+            (<span class="text-zinc-300">DesignWorks</span>, <span class="text-zinc-300">LifeCycleSWIFT</span>, <span class="text-zinc-300">WidgetsUsing</span>, <span class="text-zinc-300">odev3</span>).
+          </p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="chip rounded-md px-2 py-1">Swift 6</span>
+              <span class="chip rounded-md px-2 py-1">Playgrounds</span>
+              <span class="chip rounded-md px-2 py-1">OOP &amp; Protocols</span>
+              <span class="chip rounded-md px-2 py-1">Error Handling</span>
+              <span class="chip rounded-md px-2 py-1">SwiftUI</span>
+              <span class="chip rounded-md px-2 py-1">Xcode</span>
+          </div>
+        </article>
+
       </div>
 
       <!-- GAMES -->
@@ -449,6 +476,36 @@
         </p>
 
         <div class="mt-6 grid sm:grid-cols-2 gap-4">
+                    <article class="card card-hover rounded-2xl p-6 sm:col-span-2">
+            <div class="flex items-start justify-between">
+              <div class="w-10 h-10 rounded-xl bg-white/[0.04] border hairline grid place-items-center">
+                <i data-lucide="swords" class="w-5 h-5 text-accentSoft"></i>
+              </div>
+              <span class="font-mono text-xs text-emerald-400">Latest &middot; pre-release</span>
+            </div>
+            <h4 class="mt-4 text-lg font-semibold text-zinc-100">Precious Chase &mdash; endless runner for iPhone</h4>
+            <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+              My most recent game: a vertical endless runner where you chase a thief through five hand-built biomes
+              (Glowmoss Forest, Crystal Mines, Ember Caverns, Frostbound Hollow, Sunset Ruins). Swipe to change lanes, jump rocks, slide under branches,
+              grab rings and comets, and pick up a <span class="text-zinc-300">sword, hammer or lasso</span> to fight imps, wraiths and colossi on the way to catching the thief.
+              Courses come from a seeded <span class="text-zinc-300">mulberry32</span> generator, and difficulty was balanced with a bot simulation.
+              Gameplay runs on <span class="text-zinc-300">SpriteKit</span> inside a <span class="text-zinc-300">SwiftUI</span> shell, observed through the <span class="text-zinc-300">Observation</span> framework.
+              All artwork is drawn in code (no image assets), music and sound effects are synthesised at runtime with <span class="text-zinc-300">AVAudioEngine</span>,
+              and the shop uses <span class="text-zinc-300">StoreKit 2</span> with consumable coins and non-consumable gear.
+              No account, server, analytics or ads: progress is stored on the device. English and Turkish, around 4,300 lines of Swift.
+            </p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="chip rounded-md px-2 py-1">SpriteKit</span>
+              <span class="chip rounded-md px-2 py-1">SwiftUI</span>
+              <span class="chip rounded-md px-2 py-1">Observation</span>
+              <span class="chip rounded-md px-2 py-1">StoreKit 2</span>
+              <span class="chip rounded-md px-2 py-1">AVAudioEngine</span>
+              <span class="chip rounded-md px-2 py-1">Procedural generation</span>
+              <span class="chip rounded-md px-2 py-1">Haptics</span>
+              <span class="chip rounded-md px-2 py-1">iOS 17+</span>
+            </div>
+          </article>
+
           <article class="card card-hover rounded-2xl p-6">
             <div class="flex items-start justify-between">
               <div class="w-10 h-10 rounded-xl bg-white/[0.04] border hairline grid place-items-center">
@@ -542,6 +599,37 @@
               <span class="chip rounded-md px-2 py-1">Continuously deployed</span>
             </div>
           </article>
+
+          <article class="card card-hover rounded-2xl p-6 sm:col-span-2">
+            <div class="flex items-start justify-between">
+              <div class="w-10 h-10 rounded-xl bg-white/[0.04] border hairline grid place-items-center">
+                <i data-lucide="heart-handshake" class="w-5 h-5 text-accentSoft"></i>
+              </div>
+              <div class="flex items-center gap-3">
+                <a href="https://github.com/isaanilkoca/barisalim" target="_blank" rel="noopener" class="text-zinc-600 hover:text-accentSoft transition-colors" aria-label="View source on GitHub"><i data-lucide="github" class="w-5 h-5"></i></a>
+                <a href="https://isaanilkoca.github.io/barisalim/" target="_blank" rel="noopener" class="text-zinc-600 hover:text-accentSoft transition-colors" aria-label="Open live site"><i data-lucide="arrow-up-right" class="w-5 h-5"></i></a>
+              </div>
+            </div>
+            <h4 class="mt-4 text-lg font-semibold text-zinc-100">Bar&#305;&#351;al&#305;m m&#305;? &mdash; a make-up game you send to your partner</h4>
+            <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+              A product idea tested end-to-end for free: you write an apology, pick a theme and get a link. Your partner opens it and meets a "Still mad at me?" screen
+              where the <span class="text-zinc-300">Mad</span> button runs away from the cursor or finger with spring-damper physics, then catches falling hearts
+              (golden ones count double, with combos and particle bursts), watches an envelope open and reads the letter as it types itself out, finishing with confetti.
+              There is <span class="text-zinc-300">no backend</span>: the names, message and theme travel inside the URL fragment, so nothing is stored and hosting costs nothing.
+              Canvas parallax background, WebAudio sound effects with no audio files, and <span class="text-zinc-300">prefers-reduced-motion</span> support.
+              Built and deployed from the terminal with the Claude Code CLI, as a first step toward a custom domain and paid personalised links.
+            </p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="chip rounded-md px-2 py-1">Vanilla JS</span>
+              <span class="chip rounded-md px-2 py-1">Canvas</span>
+              <span class="chip rounded-md px-2 py-1">Spring physics</span>
+              <span class="chip rounded-md px-2 py-1">WebAudio</span>
+              <span class="chip rounded-md px-2 py-1">No backend</span>
+              <span class="chip rounded-md px-2 py-1">GitHub Pages</span>
+              <span class="chip rounded-md px-2 py-1">Claude Code CLI</span>
+            </div>
+          </article>
+
 
           <article class="card card-hover rounded-2xl p-6">
             <div class="flex items-start justify-between">
@@ -781,6 +869,8 @@
             <span class="chip rounded-md px-2.5 py-1">LibGDX</span>
             <span class="chip rounded-md px-2.5 py-1">Core ML · Vision</span>
             <span class="chip rounded-md px-2.5 py-1">MapKit</span>
+            <span class="chip rounded-md px-2.5 py-1">StoreKit 2</span>
+            <span class="chip rounded-md px-2.5 py-1">AVAudioEngine</span>
           </div>
         </div>
 
