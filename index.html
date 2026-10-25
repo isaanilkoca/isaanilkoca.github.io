@@ -679,6 +679,32 @@
           <article class="card card-hover rounded-2xl p-6 sm:col-span-2">
             <div class="flex items-start justify-between">
               <div class="w-10 h-10 rounded-xl bg-white/[0.04] border hairline grid place-items-center">
+                <i data-lucide="network" class="w-5 h-5 text-accentSoft"></i>
+              </div>
+              <a href="https://github.com/isaanilkoca/ruflo-lab" target="_blank" rel="noopener" class="text-zinc-600 hover:text-accentSoft transition-colors" aria-label="View on GitHub"><i data-lucide="github" class="w-5 h-5"></i></a>
+            </div>
+            <h4 class="mt-4 text-lg font-semibold text-zinc-100">Ruflo Lab &mdash; a hands-on lab and live monitor for multi-agent orchestration</h4>
+            <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+              A small tool for trying out <span class="text-zinc-300">Ruflo</span>, a multi-agent orchestration layer for Claude Code, by hand.
+              Every button in the web panel runs a real Ruflo command (swarm, hive-mind, agents, tasks, vector memory, security scans),
+              and a <span class="text-zinc-300">live monitor</span> shows the swarm, agent, task and memory state as it changes.
+              To prove it on real work, I used Ruflo to build a Todo app: three agents were registered (coder, tester, reviewer),
+              five tasks were assigned and closed as the code landed, and the result was checked with a security and secrets scan with zero findings.
+              Zero dependencies, 9 automated tests, servers bound to localhost only, and a command allowlist with no shell access.
+            </p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="chip rounded-md px-2 py-1">Node.js</span>
+              <span class="chip rounded-md px-2 py-1">Ruflo</span>
+              <span class="chip rounded-md px-2 py-1">Multi-agent swarm</span>
+              <span class="chip rounded-md px-2 py-1">REST API</span>
+              <span class="chip rounded-md px-2 py-1">node:test</span>
+              <span class="chip rounded-md px-2 py-1">Claude Code CLI</span>
+            </div>
+          </article>
+
+          <article class="card card-hover rounded-2xl p-6 sm:col-span-2">
+            <div class="flex items-start justify-between">
+              <div class="w-10 h-10 rounded-xl bg-white/[0.04] border hairline grid place-items-center">
                 <i data-lucide="cloud" class="w-5 h-5 text-accentSoft"></i>
               </div>
               <a href="https://medium.com/@isaanilk/0-ve-1leri-havada-yakalamak-a92e2063f23b" target="_blank" rel="noopener" class="text-zinc-600 hover:text-accentSoft transition-colors" aria-label="Read on Medium"><i data-lucide="arrow-up-right" class="w-5 h-5"></i></a>
