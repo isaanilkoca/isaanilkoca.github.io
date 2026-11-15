@@ -250,7 +250,7 @@
         <p class="eyebrow">Case study · Full-stack · Oct 25 – Nov 15, 2026</p>
         <h1>Yüküm — a freight marketplace</h1>
         <p class="cs-lead">Shippers post loads, carriers bid on them, the shipper picks an offer and the job is tracked until delivery and rated.
-        I built the native <b>SwiftUI</b> app; the <b>.NET 10 Web API</b> and <b>SQL Server</b> database were built with <b>AI coding agents</b> under my direction.</p>
+        I wrote the native <b>SwiftUI</b> app; the <b>.NET 10 Web API</b> and <b>SQL Server</b> database were built with a <b>multi-agent AI setup</b> under my direction.</p>
         <div class="yk-stats">
           <div class="yk-stat"><b>30</b><span>SwiftUI screens</span></div>
           <div class="yk-stat"><b>24</b><span>view models</span></div>
@@ -262,7 +262,7 @@
     </section>
 
     <nav class="cs-toc" aria-label="Contents">
-      <a href="#why">Why</a><a href="#brief">The brief</a><a href="#features">Features</a><a href="#ios">iOS</a><a href="#architecture">Architecture</a><a href="#backend">Backend</a><a href="#choices">Tech choices</a><a href="#database">Database</a><a href="#security">Security</a><a href="#testing">Quality</a><a href="#journey">AI agents</a><a href="#next">Source &amp; docs</a>
+      <a href="#why">Why</a><a href="#brief">The brief</a><a href="#features">Features</a><a href="#ios">iOS</a><a href="#architecture">Architecture</a><a href="#backend">Backend</a><a href="#choices">Tech choices</a><a href="#database">Database</a><a href="#security">Security</a><a href="#testing">Quality</a><a href="#journey">Multi-agent build</a><a href="#next">Source &amp; docs</a>
     </nav>
 
     <section id="why" class="cs-sec">
@@ -412,15 +412,17 @@ View ─► ViewModel ─► Service ─► APIClient ══HTTPS/JSON══► 
     </section>
 
     <section id="journey" class="cs-sec">
-      <p class="eyebrow">11 — Built with AI agents</p>
-      <h2>How it was built: me on iOS, AI agents on the backend</h2>
+      <p class="eyebrow">11 — Built with a multi-agent team</p>
+      <h2>How it was built: me on iOS, a team of AI agents on the backend</h2>
       <p>The brief asked for the backend to be built "with an agent mindset" — but not as "let the AI do it". So the work was split on purpose:</p>
       <div class="cs-grid2">
-        <div class="card rounded-2xl cs-box"><h3><i data-lucide="smartphone" class="w-4 h-4 text-accent"></i> iOS — written by me</h3><ul>
-          <li>Screen by screen in Swift: the agent explained, I wrote the code and the comments</li>
-          <li>Every file commented with what it does and what it connects to, so I can explain any line in an interview</li></ul></div>
-        <div class="card rounded-2xl cs-box"><h3><i data-lucide="bot" class="w-4 h-4 text-accent"></i> Backend &amp; DB — AI agents, directed by me</h3><ul>
-          <li>Claude Code agents implemented the .NET API, EF Core migrations and SQL in small slices</li>
+        <div class="card rounded-2xl cs-box"><h3><i data-lucide="smartphone" class="w-4 h-4 text-accent"></i> iOS — my code</h3><ul>
+          <li>I built the app screen by screen in Swift — networking, session, view models and views — with the agents explaining concepts along the way</li>
+          <li>For the later features I pair-programmed with the agents and reviewed every change before it went in</li>
+          <li>Every file is commented with what it does and what it connects to, so I can walk through any line</li></ul></div>
+        <div class="card rounded-2xl cs-box"><h3><i data-lucide="bot" class="w-4 h-4 text-accent"></i> Backend &amp; DB — a multi-agent team, directed by me</h3><ul>
+          <li><b>Claude Code CLI</b> was the main agent; <b>Codex</b>, <b>Antigravity</b> and <b>OpenCode</b> worked as its sub-agents</li>
+          <li>Together they implemented the .NET API, EF Core migrations and SQL in small slices</li>
           <li>Each slice: I approved the plan, the agent wrote code + tests, I checked it in Scalar and on the device, then it was committed</li>
           <li>Research before decisions (2026 job ads, Microsoft &amp; Apple docs) — recorded in 24 decision records</li></ul></div>
       </div>
