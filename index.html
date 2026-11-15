@@ -426,29 +426,31 @@
             <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
               An open marketplace where <span class="text-zinc-300">shippers post loads</span> and <span class="text-zinc-300">carriers bid</span> on them &mdash;
               born from my family's farm in Mersin, where carriers price in the risk of driving home empty.
-              I designed and built the whole stack: a native <span class="text-zinc-300">SwiftUI</span> app (MVVM, protocol-based DI, actor-based token refresh, Keychain auto-login, APNs push)
-              on a <span class="text-zinc-300">.NET 10 Web API</span> (Clean Architecture, CQRS-lite, EF Core 10 with Repository + Unit of Work, JWT with rotating refresh tokens)
-              backed by <span class="text-zinc-300">SQL Server</span> &mdash; with bidding, job tracking, chat, ratings, e-mail verification, report &amp; block, and CI.
+              I built the <span class="text-zinc-300">native SwiftUI app</span>: MVVM with <span class="text-zinc-300">@Observable</span>, Swift 6 concurrency with an
+              <span class="text-zinc-300">actor</span> that shares one token refresh across concurrent requests, a single generic <span class="text-zinc-300">async/await</span> API client,
+              protocol-based DI, Keychain auto-login, APNs push with deep links, CoreLocation "near me", and a RealityKit login scene.
+              The <span class="text-zinc-300">.NET 10 Web API</span> and <span class="text-zinc-300">SQL Server</span> database (Clean Architecture, EF Core + Repository, JWT with rotating refresh tokens)
+              were built with <span class="text-zinc-300">AI coding agents (Claude Code)</span> under my direction &mdash; planned, reviewed and learned slice by slice.
             </p>
             <div class="yk-stats">
-              <div class="yk-stat"><b>65</b><span>REST endpoints</span></div>
-              <div class="yk-stat"><b>449</b><span>backend tests · 96.7% cov.</span></div>
-              <div class="yk-stat"><b>200</b><span>iOS unit + UI tests</span></div>
               <div class="yk-stat"><b>30</b><span>SwiftUI screens</span></div>
+              <div class="yk-stat"><b>24</b><span>view models</span></div>
+              <div class="yk-stat"><b>65</b><span>REST endpoints</span></div>
+              <div class="yk-stat"><b>20</b><span>SQL Server tables</span></div>
             </div>
             <div class="mt-4 flex flex-wrap gap-2">
               <span class="chip rounded-md px-2 py-1">SwiftUI</span>
-              <span class="chip rounded-md px-2 py-1">Swift 6 · async/await</span>
+              <span class="chip rounded-md px-2 py-1">Swift 6 · async/await · actors</span>
               <span class="chip rounded-md px-2 py-1">MVVM · @Observable</span>
+              <span class="chip rounded-md px-2 py-1">Generic APIClient</span>
+              <span class="chip rounded-md px-2 py-1">Keychain · Auto-login</span>
+              <span class="chip rounded-md px-2 py-1">APNs · Deep links</span>
+              <span class="chip rounded-md px-2 py-1">CoreLocation</span>
+              <span class="chip rounded-md px-2 py-1">RealityKit</span>
               <span class="chip rounded-md px-2 py-1">.NET 10 Web API</span>
-              <span class="chip rounded-md px-2 py-1">EF Core 10</span>
-              <span class="chip rounded-md px-2 py-1">SQL Server</span>
-              <span class="chip rounded-md px-2 py-1">Clean Architecture</span>
+              <span class="chip rounded-md px-2 py-1">EF Core · SQL Server</span>
               <span class="chip rounded-md px-2 py-1">JWT · Refresh Rotation</span>
-              <span class="chip rounded-md px-2 py-1">APNs</span>
-              <span class="chip rounded-md px-2 py-1">Testcontainers</span>
-              <span class="chip rounded-md px-2 py-1">XCUITest</span>
-              <span class="chip rounded-md px-2 py-1">GitHub Actions · Docker</span>
+              <span class="chip rounded-md px-2 py-1">AI agents · Claude Code</span>
             </div>
             <div class="yk-links">
               <a href="yukum.html" class="yk-btn primary">Read the case study <i data-lucide="arrow-right" class="w-4 h-4"></i></a>

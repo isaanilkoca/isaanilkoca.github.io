@@ -231,6 +231,8 @@
     .cs-link:hover { color: #a9d4ff; }
     #brief .cs-table td:last-child { white-space: nowrap; }
     #brief .cs-table td:first-child, #choices .cs-table td:first-child { white-space: normal; min-width: 11rem; }
+    .cs-code { font-size: .78rem; line-height: 1.65; color: #d4d4d8; }
+    .cs-code .k { color: #ff7ab2; } .cs-code .t { color: #6bd4ff; } .cs-code .s { color: #ff8170; } .cs-code .c { color: #7f8c98; }
     .cs-steps p { margin-top: .2rem; color: #a1a1aa; font-size: .9rem; line-height: 1.6; }
   </style>
 </head>
@@ -248,19 +250,19 @@
         <p class="eyebrow">Case study · Full-stack · Oct 25 – Nov 15, 2026</p>
         <h1>Yüküm — a freight marketplace</h1>
         <p class="cs-lead">Shippers post loads, carriers bid on them, the shipper picks an offer and the job is tracked until delivery and rated.
-        A native <b>SwiftUI</b> app on a <b>.NET 10 Web API</b> and <b>SQL Server</b> — designed, built and tested end to end.</p>
+        I built the native <b>SwiftUI</b> app; the <b>.NET 10 Web API</b> and <b>SQL Server</b> database were built with <b>AI coding agents</b> under my direction.</p>
         <div class="yk-stats">
+          <div class="yk-stat"><b>30</b><span>SwiftUI screens</span></div>
+          <div class="yk-stat"><b>24</b><span>view models</span></div>
           <div class="yk-stat"><b>65</b><span>REST endpoints</span></div>
-          <div class="yk-stat"><b>20</b><span>tables · 24 migrations</span></div>
-          <div class="yk-stat"><b>649</b><span>automated tests</span></div>
-          <div class="yk-stat"><b>96.7%</b><span>backend line coverage</span></div>
+          <div class="yk-stat"><b>20</b><span>SQL Server tables</span></div>
         </div>
       </div>
       <div class="cs-hero-anim" aria-hidden="true" data-yk-truck data-yk-autoplay><img class="yk-fallback" src="yukum-truck.png" alt="" loading="lazy" decoding="async"></div>
     </section>
 
     <nav class="cs-toc" aria-label="Contents">
-      <a href="#why">Why</a><a href="#brief">The brief</a><a href="#features">Features</a><a href="#architecture">Architecture</a><a href="#backend">Backend</a><a href="#choices">Tech choices</a><a href="#database">Database</a><a href="#ios">iOS</a><a href="#security">Security</a><a href="#testing">Testing &amp; CI</a><a href="#journey">Step by step</a><a href="#next">Source &amp; docs</a>
+      <a href="#why">Why</a><a href="#brief">The brief</a><a href="#features">Features</a><a href="#ios">iOS</a><a href="#architecture">Architecture</a><a href="#backend">Backend</a><a href="#choices">Tech choices</a><a href="#database">Database</a><a href="#security">Security</a><a href="#testing">Quality</a><a href="#journey">AI agents</a><a href="#next">Source &amp; docs</a>
     </nav>
 
     <section id="why" class="cs-sec">
@@ -297,8 +299,56 @@
       <p class="cs-note">Both roles: separate sign-up flows, auto-login, e-mail verification, forgot password, profile photo, public profiles, notification centre, report &amp; block, account deletion.</p>
     </section>
 
+    <section id="ios" class="cs-sec">
+      <p class="eyebrow">04 — iOS</p>
+      <h2>The SwiftUI app — where I spent most of my time</h2>
+      <p>30 screens and 24 view models for two roles. Views only draw and forward taps; every decision lives in a view model, every request in a service,
+      and every service goes through one client. Each folder starts with a guide file listing what is inside and which endpoint it calls.</p>
+      <div class="cs-grid2">
+        <div class="card rounded-2xl cs-box"><h3><i data-lucide="layers" class="w-4 h-4 text-accent"></i> Architecture</h3><ul>
+          <li><b>MVVM</b> with <code>@MainActor @Observable</code> view models; views contain no networking or session code (audited)</li>
+          <li><b>Protocol-based DI</b>: <code>init(service: OfferServicing = OfferService())</code> — real by default, fakes in tests</li>
+          <li><b>Swift 6</b> strict concurrency, <code>async/await</code>, structured tasks (polling chat stops when the view disappears)</li>
+          <li>Folders: <code>App · Design · Models (Auth, Listings, Offers, Networking, Security…) · ViewModels · Views</code></li></ul></div>
+        <div class="card rounded-2xl cs-box"><h3><i data-lucide="plug" class="w-4 h-4 text-accent"></i> Networking &amp; session</h3><ul>
+          <li><b>One generic client</b> for every endpoint; services are one function per endpoint</li>
+          <li>Server errors (RFC 7807) decode once into <code>APIError</code> — Turkish message + machine code (e.g. <code>email_not_verified</code> opens the code screen)</li>
+          <li><b>AuthSession actor</b>: access token in memory, refresh token in <b>Keychain</b>, device-bound; five concurrent 401s → <b>one</b> refresh</li>
+          <li>Silent restore on launch = <b>remember me</b> without storing the password</li></ul></div>
+        <div class="card rounded-2xl cs-box"><h3><i data-lucide="bell-ring" class="w-4 h-4 text-accent"></i> Platform features</h3><ul>
+          <li><b>APNs push</b>: permission after login, token per device, tap → deep link to the right list, badge sync</li>
+          <li><b>CoreLocation</b> "near me" radius — asked only when switched on, never stored</li>
+          <li><b>PhotosPicker</b> profile photo, resized to a 512 px JPEG on device before upload</li>
+          <li>E-mail verification, forgot password with <code>.oneTimeCode</code> autofill, report &amp; block (App Store 1.2)</li></ul></div>
+        <div class="card rounded-2xl cs-box"><h3><i data-lucide="sparkles" class="w-4 h-4 text-accent"></i> Design &amp; motion</h3><ul>
+          <li>Design system: <code>Palette</code> (light / dark / system), shared form components, loading states</li>
+          <li>Role-based action animations: shipper — a parcel gets taped / cut; carrier — a tyre track / unloading</li>
+          <li><b>RealityKit</b> login: one box falls with physics recorded once and replayed identically, then snapshotted to an image to save battery</li>
+          <li>Accessibility identifiers drive 7 XCUITest flows (login, sign-up, forgot password, auto-login…)</li></ul></div>
+      </div>
+      <h3>Two pieces of the code</h3>
+<pre class="cs-pre cs-code"><span class="c">// One request method for every endpoint (Models/Networking/APIClient.swift)</span>
+<span class="k">func</span> send&lt;Response: <span class="t">Decodable</span>&gt;(_ method: <span class="t">HTTPMethod</span> = .get, _ path: <span class="t">String</span>,
+                             query: [<span class="t">URLQueryItem</span>] = [], body: (<span class="k">any</span> <span class="t">Encodable</span>)? = <span class="k">nil</span>,
+                             authorized: <span class="t">Bool</span> = <span class="k">true</span>, fallback: <span class="t">String</span> = <span class="s">"Bir hata oluştu."</span>)
+                             <span class="k">async throws</span> -&gt; Response
+
+<span class="k">let</span> offers: [<span class="t">CarrierOffer</span>] = <span class="k">try await</span> api.send(.get, <span class="s">"/api/v1/offers/mine"</span>)
+
+<span class="c">// Concurrent 401s share ONE refresh (Models/Networking/AuthSession.swift)</span>
+<span class="k">actor</span> <span class="t">AuthSession</span> {
+    <span class="k">private var</span> refreshTask: <span class="t">Task</span>&lt;<span class="t">LoginResponse</span>, <span class="t">Error</span>&gt;?
+    <span class="k">func</span> refresh() <span class="k">async throws</span> -&gt; <span class="t">LoginResponse</span> {
+        <span class="k">if let</span> task = refreshTask { <span class="k">return try await</span> task.value }   <span class="c">// already refreshing → wait for it</span>
+        <span class="k">let</span> task = <span class="t">Task</span> { <span class="k">try await</span> performRefresh() }
+        refreshTask = task
+        <span class="k">defer</span> { refreshTask = <span class="k">nil</span> }
+        <span class="k">return try await</span> task.value
+    }
+}</pre>
+    </section>
     <section id="architecture" class="cs-sec">
-      <p class="eyebrow">04 — Architecture</p>
+      <p class="eyebrow">05 — Architecture</p>
       <h2>Clean layers on both sides</h2>
 <pre class="cs-pre">iOS (SwiftUI)                                   .NET 10 Web API
 View ─► ViewModel ─► Service ─► APIClient ══HTTPS/JSON══► Controller ─► Handler ─► Repository / UoW ─► SQL Server
@@ -319,21 +369,21 @@ View ─► ViewModel ─► Service ─► APIClient ══HTTPS/JSON══► 
     </section>
 
     <section id="backend" class="cs-sec">
-      <p class="eyebrow">05 — Backend</p>
+      <p class="eyebrow">06 — Backend</p>
       <h2>.NET 10 Web API</h2>
       <div class="cs-table"><table><tr><th>Topic</th><th>How</th><th>Why</th></tr><tr><td>Clean Architecture</td><td>Domain / Application / Infrastructure / Api + unit &amp; integration test projects</td><td>Rules independent of DB and web framework</td></tr><tr><td>CQRS-lite</td><td><code>ICommandHandler</code> / <code>IQueryHandler</code>, auto-registered; startup fails if a command has two handlers</td><td>Clear read/write split without MediatR (now commercially licensed)</td></tr><tr><td>EF Core 10</td><td>Generic <code>IRepository&lt;T&gt;</code> + <code>IUnitOfWork</code>; dedicated read repositories where SQL matters</td><td>Repository pattern; filters compile to one SQL query</td></tr><tr><td>Entities</td><td>Central timestamps, soft-delete query filter, <code>RowVersion</code> optimistic concurrency</td><td>Two simultaneous accepts can't both win</td></tr><tr><td>Validation</td><td>FluentValidation with Turkish messages; one <code>PasswordPolicy</code> shared with Identity</td><td>Same rule everywhere, field-level errors</td></tr><tr><td>Auth</td><td>ASP.NET Identity (PBKDF2), JWT (15 min), rotating refresh token (30 days, hashed, device-bound, reuse revokes the family), lockout 10 → 5 min, rate limiting</td><td>Secure &quot;remember me&quot;</td></tr><tr><td>Search</td><td>Dynamic predicate, stable paging, price/date sorting, Haversine distance from district centroids</td><td>&quot;Near me&quot; without storing user location</td></tr><tr><td>Reference price</td><td>Median of completed jobs on the same route + vehicle, last 180 days, min 3 samples</td><td>One outlier can't mislead</td></tr><tr><td>Push</td><td>Outbox row in the same transaction → <code>PushWorker</code> → APNs HTTP/2 with an ES256 provider token</td><td>No lost notifications</td></tr><tr><td>E-mail</td><td>6-digit codes stored as SHA-256 hashes, 15 min, 5 attempts, 60 s cooldown; Resend in production</td><td>Verification &amp; reset without account enumeration</td></tr><tr><td>Contract</td><td>OpenAPI + Scalar UI, <code>/api/v1</code>, camelCase JSON, enums as strings, UTC ISO-8601</td><td>The iOS client decodes one contract</td></tr></table></div>
     </section>
 
 
     <section id="choices" class="cs-sec">
-      <p class="eyebrow">06 — Technology choices</p>
+      <p class="eyebrow">07 — Technology choices</p>
       <h2>Why these technologies</h2>
       <p>Before writing code I researched 2026 job postings and official docs (Microsoft Learn, Apple Developer) and wrote the decisions down in a technical report.
       The rule: no features beyond the brief — research only updated the technology choices.</p>
       <div class="cs-table"><table><tr><th>Topic</th><th>Choice</th><th>Why</th></tr><tr><td>Runtime</td><td>.NET 10 + EF Core 10 — both LTS (supported to Nov 2028)</td><td>Requested in the brief; long support window</td></tr><tr><td>Architecture</td><td>Clean Architecture + CQRS-lite (command/query handlers, feature folders)</td><td>Most backend job ads list both; keeps rules testable</td></tr><tr><td>Mediator / mapper</td><td>No MediatR, no AutoMapper — handlers via DI, mapping by hand</td><td>Both moved to commercial licences in 2025; knowing why I avoided them is part of the design</td></tr><tr><td>API docs</td><td>Built-in <code>Microsoft.AspNetCore.OpenApi</code> (OpenAPI 3.1) + Scalar UI</td><td>Templates dropped Swashbuckle since .NET 9</td></tr><tr><td>Auth</td><td>JWT + rotating refresh tokens + role policies</td><td>What job ads ask for (JWT, RBAC); secure remember-me</td></tr><tr><td>Tests</td><td>xUnit + NSubstitute + Testcontainers (real SQL Server)</td><td>Integration tests that hit a real database, not an in-memory fake</td></tr><tr><td>Delivery</td><td>Dockerfile + docker-compose, GitHub Actions CI</td><td>One-command environment; every push builds and tests</td></tr><tr><td>iOS UI</td><td>SwiftUI (UIKit only if needed)</td><td>Baseline expectation in 2026 iOS job ads</td></tr><tr><td>iOS architecture</td><td>MVVM + protocol-based DI; VIPER/TCA compared but not used</td><td>VIPER is overkill for most apps, TCA is niche; MVVM is the default</td></tr><tr><td>Concurrency</td><td>Swift 6 async/await, <code>@MainActor</code> view models, an actor for token refresh</td><td>Approachable concurrency in Xcode 26; actors prevent double refreshes</td></tr><tr><td>State</td><td>Observation framework (<code>@Observable</code>, <code>@State</code>, <code>@Bindable</code>)</td><td>Modern replacement for ObservableObject</td></tr><tr><td>Networking</td><td>URLSession + one generic APIClient, no third-party libraries</td><td>Exactly what the brief asked for</td></tr></table></div>
     </section>
     <section id="database" class="cs-sec">
-      <p class="eyebrow">07 — Database</p>
+      <p class="eyebrow">08 — Database</p>
       <h2>SQL Server 2025 · 20 tables · 24 migrations</h2>
       <p>Identity users and roles, shipper/carrier profiles, vehicles, refresh tokens, provinces and districts (seeded from a verified JSON),
       listings, offers, messages, reviews, favourites, daily views, notifications, device tokens, blocks, reports and verification codes.
@@ -341,11 +391,6 @@ View ─► ViewModel ─► Service ─► APIClient ══HTTPS/JSON══► 
       cascade rules and <code>RowVersion</code> columns. Integration tests run every endpoint against a real SQL Server started by Testcontainers.</p>
     </section>
 
-    <section id="ios" class="cs-sec">
-      <p class="eyebrow">08 — iOS</p>
-      <h2>SwiftUI app</h2>
-      <div class="cs-table"><table><tr><th>Topic</th><th>How</th></tr><tr><td>MVVM</td><td><code>@MainActor @Observable</code> view models; views contain no networking or session code</td></tr><tr><td>Dependency injection</td><td>Each view model depends on a protocol (<code>OfferServicing</code>, <code>AuthServicing</code>…) with a real default → fakes in tests</td></tr><tr><td>Generic networking</td><td>One <code>APIClient.send&lt;Response&gt;(method, path, query, body)</code>; services are one function per endpoint</td></tr><tr><td>Session</td><td><code>AuthSession</code> actor: access token in memory, refresh token in Keychain, single shared refresh, silent restore on launch</td></tr><tr><td>Push</td><td>Permission after login, APNs token per device, deep links, badge sync</td></tr><tr><td>Location</td><td>CoreLocation only when &quot;near me&quot; is on; coordinates sent per query, never stored</td></tr><tr><td>Design</td><td>Light / dark palette, shared form components, 2D action animations (shipper: a parcel is taped; carrier: a tyre track)</td></tr><tr><td>3D</td><td>RealityKit login scene: one box falls with physics recorded once and replayed identically, then snapshotted to an image to save battery</td></tr></table></div>
-    </section>
 
     <section id="security" class="cs-sec">
       <p class="eyebrow">09 — Security &amp; privacy</p>
@@ -360,18 +405,26 @@ View ─► ViewModel ─► Service ─► APIClient ══HTTPS/JSON══► 
     </section>
 
     <section id="testing" class="cs-sec">
-      <p class="eyebrow">10 — Testing &amp; CI</p>
-      <h2>649 automated tests</h2>
-      <div class="cs-table"><table><tr><th>Suite</th><th>Covers</th><th>Tests</th></tr><tr><td>Backend unit · xUnit + NSubstitute</td><td>validators, handlers, password &amp; phone rules, median, distance</td><td>152</td></tr><tr><td>Backend integration · WebApplicationFactory + Testcontainers</td><td>every endpoint over real HTTP + real SQL Server, authorization matrix, concurrency, Resend &amp; APNs senders</td><td>297</td></tr><tr><td>iOS unit · Swift Testing</td><td>every view-model function, actor concurrency, a contract test for every service endpoint</td><td>193</td></tr><tr><td>iOS UI · XCUITest</td><td>login, registration, forgot password, terms, wrong password, login → profile → logout, relaunch auto-login</td><td>7</td></tr></table></div>
-      <p>Backend line coverage is <b>96.7%</b>. GitHub Actions builds the solution, runs both backend suites against a disposable SQL Server and builds the Docker image on every push.</p>
+      <p class="eyebrow">10 — Quality</p>
+      <h2>Tested and continuously integrated</h2>
+      <p>Swift Testing covers every view-model function plus a contract test for each service endpoint; XCUITest drives the main flows.
+      The backend runs every endpoint against a real SQL Server in Docker (Testcontainers). GitHub Actions builds and tests on every push.</p>
     </section>
 
     <section id="journey" class="cs-sec">
-      <p class="eyebrow">11 — Step by step</p>
-      <h2>How it was built</h2>
-      <p>I wrote a technical report and a step-by-step plan first, then built in vertical slices:
-      <b>database → repository → handler → controller → API check → tests → iOS model → view model → view → device test → commit</b>.
-      Every decision (24 records) and every step is documented in the repository.</p>
+      <p class="eyebrow">11 — Built with AI agents</p>
+      <h2>How it was built: me on iOS, AI agents on the backend</h2>
+      <p>The brief asked for the backend to be built "with an agent mindset" — but not as "let the AI do it". So the work was split on purpose:</p>
+      <div class="cs-grid2">
+        <div class="card rounded-2xl cs-box"><h3><i data-lucide="smartphone" class="w-4 h-4 text-accent"></i> iOS — written by me</h3><ul>
+          <li>Screen by screen in Swift: the agent explained, I wrote the code and the comments</li>
+          <li>Every file commented with what it does and what it connects to, so I can explain any line in an interview</li></ul></div>
+        <div class="card rounded-2xl cs-box"><h3><i data-lucide="bot" class="w-4 h-4 text-accent"></i> Backend &amp; DB — AI agents, directed by me</h3><ul>
+          <li>Claude Code agents implemented the .NET API, EF Core migrations and SQL in small slices</li>
+          <li>Each slice: I approved the plan, the agent wrote code + tests, I checked it in Scalar and on the device, then it was committed</li>
+          <li>Research before decisions (2026 job ads, Microsoft &amp; Apple docs) — recorded in 24 decision records</li></ul></div>
+      </div>
+      <p>The order was fixed in a written plan: <b>database → repository → handler → controller → API check → tests → iOS model → view model → view → device test → commit</b>.</p>
       <ol class="cs-steps"><li><span class="cs-step">A</span><div><b>Setup</b><p>.NET 10 SDK, SQL Server 2025 in Docker, repository layout, product naming, written plan and technical report.</p></div></li><li><span class="cs-step">B</span><div><b>Backend foundation</b><p>Four-project Clean Architecture solution, global ProblemDetails errors, Serilog, <code>/api/v1</code> versioning, user-secrets, <code>BaseEntity</code> (timestamps, soft delete, RowVersion), DB health check, generic repository + unit of work, CQRS-lite handler pipeline.</p></div></li><li><span class="cs-step">C</span><div><b>First connection</b><p>81 provinces / 973 districts verified against multiple sources and seeded; cached anonymous endpoints; the generic iOS <code>APIClient</code> talks to the API for the first time.</p></div></li><li><span class="cs-step">D</span><div><b>Identity</b><p>Two registrations (shipper / carrier), login with lockout, rotating refresh tokens bound to a device, role policies, rate limiting, an authorization-matrix test; Keychain-based auto-login on iOS.</p></div></li><li><span class="cs-step">E</span><div><b>Listings</b><p>Create / edit / cancel loads; carrier search with dynamic filters, sorting and stable paging.</p></div></li><li><span class="cs-step">F</span><div><b>Offers — MVP</b><p>Bidding, accept / reject with optimistic concurrency (two accepts at once → only one wins), my offers, history. First full flow on a real iPhone.</p></div></li><li><span class="cs-step">G</span><div><b>Jobs & ratings</b><p>Job stages (picked up → in transit → delivered), completion, 1–5 reviews, carrier and shipper public profiles.</p></div></li><li><span class="cs-step">H</span><div><b>Engagement</b><p>Favourites, unique daily views, live counters for the listing owner.</p></div></li><li><span class="cs-step">I</span><div><b>Notifications</b><p>In-app notification centre; outbox + background worker + APNs push verified on a device; tapping a push deep-links to the right screen.</p></div></li><li><span class="cs-step">J</span><div><b>Location & price</b><p>&quot;Near me&quot; radius filter and nearest-first sorting; market reference price (180-day median).</p></div></li><li><span class="cs-step">K</span><div><b>Hardening</b><p>Account deletion (anonymisation), report &amp; block, terms of use, e-mail verification, forgot password with real e-mail (Resend), privacy manifest, CI.</p></div></li><li><span class="cs-step">L</span><div><b>Polish</b><p>Design system with dark mode, 2D action animations, a RealityKit login scene, vehicles, chat, mutual cancellation, profile page.</p></div></li></ol>
     </section>
 
