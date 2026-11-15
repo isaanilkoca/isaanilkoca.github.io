@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yüküm — Case Study · İsa Anıl Koca</title>
+  <meta name="description" content="Yüküm: a freight marketplace built end to end with SwiftUI, .NET 10 Web API, EF Core and SQL Server — architecture, backend, iOS, security, testing and the step-by-step build." />
+  <link rel="stylesheet" href="tailwind.css?v=20260929" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@0.577.0/dist/umd/lucide.min.js"></script>
+  <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }</script>
+  <style>
+    :root { color-scheme: dark; }
+
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+    body {
+      background-color: #08080b;
+      color: #e4e4e7;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    #matrix {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    .aurora {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      transform: translateZ(0);
+      will-change: transform;
+      background:
+        radial-gradient(680px circle at 78% -8%, rgba(10, 132, 255, 0.16), transparent 60%),
+        radial-gradient(560px circle at 8% 8%, rgba(56, 152, 255, 0.08), transparent 55%),
+        radial-gradient(900px circle at 50% 120%, rgba(10, 132, 255, 0.07), transparent 60%);
+    }
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #6b6b78;
+    }
+
+    h1, h2, h3 { text-wrap: balance; }
+
+    .hairline { border-color: rgba(255, 255, 255, 0.07); }
+
+    .card {
+      background: rgba(13, 13, 17, 0.86);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .card-hover { transition: border-color .35s ease, background .35s ease, transform .35s ease; }
+    .card-hover:hover {
+      border-color: rgba(10, 132, 255, 0.35);
+      background: rgba(13, 19, 30, 0.9);
+      transform: translateY(-3px);
+    }
+
+    .chip {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.01em;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.02);
+      color: #b8b8c2;
+    }
+    a.chip:hover { border-color: rgba(10,132,255,0.4); color: #dfe7f0; }
+
+    /* ── Yüküm featured card + truck-loading animation ──
+       Principles: animation stays behind/right of the text and never overlaps it, plays ONCE when the card
+       scrolls into view, ends with a loaded truck and stops; reduced-motion users see the final frame. */
+    .yk-card { position: relative; overflow: hidden; }
+    .yk-content { position: relative; z-index: 1; }
+    .yk-anim { position: relative; margin: -.5rem -1.5rem 1rem; height: 230px; pointer-events: none; }
+    .yk-anim svg { position: absolute; inset: 0; }
+    .yk-anim svg { width: 100%; height: 100%; }
+    @media (min-width: 900px) {
+      .yk-content { max-width: 52%; }
+      .yk-anim { position: absolute; top: 0; bottom: 0; right: 0; left: auto; width: 50%; margin: 0; height: auto; }
+      .yk-anim:not(.is-3d) svg { left: auto; right: 10px; top: 50%; transform: translateY(-50%); width: 45%; height: 280px; opacity: .6; }
+      .yk-card::after { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+        background: linear-gradient(90deg, rgba(13,13,17,0.95) 0%, rgba(13,13,17,0.85) 48%, rgba(13,13,17,0) 70%); }
+    }
+    .yk-badge { font-family: 'JetBrains Mono', monospace; font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
+      color: #f5a35f; border: 1px solid rgba(242,107,29,.35); background: rgba(242,107,29,.08); border-radius: 9999px; padding: .2rem .6rem; }
+    .yk-stats { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: .5rem; margin-top: 1.1rem; }
+    @media (min-width: 640px) { .yk-stats { grid-template-columns: repeat(4, minmax(0,1fr)); } }
+    .yk-stat { border: 1px solid rgba(255,255,255,.07); background: rgba(255,255,255,.02); border-radius: .75rem; padding: .55rem .7rem; }
+    .yk-stat b { display: block; font-size: 1.05rem; color: #f4f4f5; font-weight: 700; }
+    .yk-stat span { font-size: .7rem; color: #8a8a96; }
+    .yk-links { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.25rem; }
+    .yk-btn { display: inline-flex; align-items: center; gap: .45rem; font-size: .85rem; font-weight: 600; border-radius: 9999px; padding: .5rem 1rem;
+      border: 1px solid rgba(255,255,255,.1); color: #e4e4e7; transition: border-color .2s ease, background .2s ease; }
+    .yk-btn:hover { border-color: rgba(10,132,255,.5); background: rgba(10,132,255,.08); }
+    .yk-btn.primary { background: #0A84FF; border-color: #0A84FF; color: #fff; }
+    .yk-btn.primary:hover { background: #2a95ff; }
+
+    /* ── Yüküm card background: isometric logistics scene ──
+       Inspired by Spline's 3D vehicle showcases (soft gradients, glass, depth) and logistics-SaaS UI motion
+       (route drawing, live cards). Lives ONLY behind the Yüküm card, translucent, never over the text;
+       plays ONCE when the card scrolls into view and stops loaded; reduced-motion shows the final frame. */
+    .yk-iso { overflow: visible; }
+    .yk-iso .iso-grid line { stroke: rgba(255,255,255,.045); stroke-width: 1; }
+    .yk-iso .iso-route-base { fill: none; stroke: rgba(255,255,255,.06); stroke-width: 3; }
+    .yk-iso .iso-route { fill: none; stroke: url(#ykRoute); stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 100; opacity: .9; }
+    .yk-iso .pin-dot { fill: #0A84FF; } .yk-iso .pin-b .pin-dot { fill: #F26B1D; }
+    .yk-iso .pin-pulse { fill: none; stroke: rgba(10,132,255,.45); stroke-width: 1.5; opacity: 0; transform-box: fill-box; transform-origin: center; }
+    .yk-iso .pin-b .pin-pulse { stroke: rgba(242,107,29,.5); }
+    .yk-iso .pin-label { font: 600 9px 'JetBrains Mono', monospace; letter-spacing: .08em; fill: #8a8a96; }
+    .yk-iso .iso-shadow { fill: rgba(0,0,0,.35); filter: blur(6px); }
+    .yk-iso .glass-back { fill: rgba(10,132,255,.05); stroke: rgba(90,169,255,.18); stroke-width: 1; }
+    .yk-iso .deck { fill: rgba(255,255,255,.04); stroke: rgba(255,255,255,.12); stroke-width: 1; }
+    .yk-iso .glass-front { fill: url(#ykGlass); stroke: rgba(120,185,255,.55); stroke-width: 1.2; }
+    .yk-iso .glass-rim { fill: none; stroke: rgba(120,185,255,.6); stroke-width: 1.2; }
+    .yk-iso .c-top { fill: #d6a777; } .yk-iso .c-left { fill: #b48455; } .yk-iso .c-right { fill: #8f6640; }
+    .yk-iso .cargo polygon { stroke: rgba(70,45,20,.55); stroke-width: .8; }
+    .yk-iso .c-tape { stroke: #F26B1D; stroke-width: 3; }
+    .yk-iso .cab-top { fill: #3a4558; } .yk-iso .cab-left { fill: url(#ykCab); } .yk-iso .cab-right { fill: #1b2230; }
+    .yk-iso .cab-top, .yk-iso .cab-left, .yk-iso .cab-right { stroke: rgba(255,255,255,.18); stroke-width: 1; }
+    .yk-iso .cab-glass { fill: rgba(90,169,255,.35); stroke: rgba(160,205,255,.6); stroke-width: 1; }
+    .yk-iso .wheel-t { fill: #0b0d12; stroke: rgba(255,255,255,.35); stroke-width: .08; }
+    .yk-iso .wheel-h { fill: rgba(255,255,255,.4); }
+    .yk-iso .ui-card { fill: rgba(22,26,36,.72); stroke: rgba(255,255,255,.12); stroke-width: 1; }
+    .yk-iso .ui-mono { font: 600 8px 'JetBrains Mono', monospace; letter-spacing: .14em; fill: #6b6b78; }
+    .yk-iso .ui-title { font: 600 12px Inter, sans-serif; fill: #e4e4e7; }
+    .yk-iso .ui-sub { font: 500 9px Inter, sans-serif; fill: #8a8a96; }
+    .yk-iso .ui-track { fill: rgba(255,255,255,.08); }
+    .yk-iso .ui-bar { fill: url(#ykRoute); transform-box: fill-box; transform-origin: left center; transform: scaleX(.08); }
+    .yk-iso .av { stroke: #161a24; stroke-width: 2; } .yk-iso .av1 { fill: #0A84FF; } .yk-iso .av2 { fill: #F26B1D; } .yk-iso .av3 { fill: #34c759; }
+    .yk-iso .ok { fill: rgba(52,199,89,.2); stroke: #34c759; stroke-width: 1.2; }
+    .yk-iso .ok-tick { fill: none; stroke: #34c759; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* before play */
+    .yk-iso .cargo { opacity: 0; transform: translateY(-120px); }
+    .yk-iso .ui { opacity: 0; transform: translateY(8px); }
+
+    /* play once */
+    .yk-iso.play .iso-route { animation: ykRoute 1.6s cubic-bezier(.4,0,.2,1) .2s forwards; }
+    .yk-iso.play .pin-pulse { animation: ykPulse 1.4s ease-out .4s 2 forwards; }
+    .yk-iso.play .pin-b .pin-pulse { animation-delay: 1.6s; }
+    .yk-iso.play .cargo { animation: ykDrop .5s cubic-bezier(.3,1.3,.5,1) forwards; animation-delay: calc(.6s + var(--i) * .13s); }
+    .yk-iso.play .ui-ship { animation: ykUi .5s ease-out .5s forwards; }
+    .yk-iso.play .ui-bar { animation: ykBar 2.3s cubic-bezier(.4,0,.2,1) .7s forwards; }
+    .yk-iso.play .ui-offers { animation: ykUi .5s ease-out 1.5s forwards; }
+    .yk-iso.play .ui-accepted { animation: ykUi .5s ease-out 3.1s forwards; }
+    .yk-iso.play .iso-truck { animation: ykRoll 1.3s cubic-bezier(.45,0,.2,1) 3.3s forwards; }
+    @keyframes ykRoute { to { stroke-dashoffset: 0; } }
+    @keyframes ykPulse { 0% { opacity: .9; transform: scale(.6); } 100% { opacity: 0; transform: scale(2.2); } }
+    @keyframes ykDrop { 0% { opacity: 0; transform: translateY(-120px); } 30% { opacity: 1; } 100% { opacity: 1; transform: translateY(0); } }
+    @keyframes ykUi { to { opacity: 1; transform: none; } }
+    @keyframes ykBar { to { transform: scaleX(1); } }
+    @keyframes ykRoll { to { transform: translate(29.1px, 16.8px); } }
+    @media (prefers-reduced-motion: reduce) {
+      .yk-iso .cargo, .yk-iso .ui { opacity: 1; transform: none; }
+      .yk-iso .iso-route { stroke-dashoffset: 0; }
+      .yk-iso .ui-bar { transform: scaleX(1); }
+      .yk-iso.play * { animation: none !important; }
+    }
+
+    /* real-time 3D (yukum-truck.js): canvas fills its box; the SVG stays only as a no-WebGL fallback */
+    .yk-canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block;
+      -webkit-mask-image: radial-gradient(ellipse 78% 74% at 52% 52%, #000 62%, transparent 100%); mask-image: radial-gradient(ellipse 78% 74% at 52% 52%, #000 62%, transparent 100%); }
+    .yk-anim.is-3d, .cs-hero-anim.is-3d { overflow: hidden; }
+    .yk-credit { margin-top: .9rem; font-size: .68rem; color: #5f5f6b; }
+    .yk-credit a { color: #7b8796; text-decoration: underline; text-underline-offset: 2px; }
+    .yk-fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+
+    .cs-top { position: sticky; top: 0; z-index: 10; display: flex; justify-content: space-between; gap: .75rem; padding: .9rem 1.25rem;
+      background: rgba(8,8,11,.82); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,.06); }
+    .cs-main { max-width: 64rem; margin: 0 auto; padding: 2rem 1rem 5rem; }
+    @media (min-width: 640px) { .cs-main { padding: 3rem 2rem 6rem; } }
+    .cs-hero { display: grid; gap: 1.5rem; padding: 1.5rem; }
+    @media (min-width: 900px) { .cs-hero { grid-template-columns: 1.15fr .85fr; align-items: center; padding: 2.25rem; } }
+    .cs-hero h1 { margin-top: .6rem; font-size: clamp(1.8rem, 4vw, 2.6rem); line-height: 1.12; font-weight: 800; letter-spacing: -.02em; color: #fafafa; }
+    .cs-lead { margin-top: .9rem; color: #a1a1aa; line-height: 1.7; }
+    .cs-lead b, .cs-sec b { color: #e4e4e7; font-weight: 600; }
+    .cs-hero-anim { position: relative; height: 340px; margin: 0 -1rem; }
+    .cs-hero-anim svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .cs-hero-anim svg { width: 100%; height: 100%; }
+    .cs-toc { display: flex; flex-wrap: wrap; gap: .4rem; margin: 2rem 0 1rem; }
+    .cs-toc a { font-family: 'JetBrains Mono', monospace; font-size: .74rem; color: #a1a1aa; border: 1px solid rgba(255,255,255,.08);
+      border-radius: 9999px; padding: .3rem .75rem; transition: color .2s, border-color .2s; }
+    .cs-toc a:hover { color: #fff; border-color: rgba(10,132,255,.5); }
+    .cs-sec { padding-top: 3rem; scroll-margin-top: 4.5rem; }
+    .cs-sec h2 { margin-top: .5rem; font-size: 1.6rem; font-weight: 700; color: #f4f4f5; letter-spacing: -.01em; }
+    .cs-sec h3 { margin-top: 1.6rem; font-size: 1.05rem; font-weight: 600; color: #f4f4f5; }
+    .cs-sec > p, .cs-note { margin-top: .9rem; color: #a1a1aa; line-height: 1.75; }
+    .cs-note { font-size: .9rem; }
+    .cs-sec code, .cs-table code { font-family: 'JetBrains Mono', monospace; font-size: .82em; color: #82d9d0; }
+    .cs-grid2 { display: grid; gap: 1rem; margin-top: 1.25rem; }
+    @media (min-width: 720px) { .cs-grid2 { grid-template-columns: 1fr 1fr; } }
+    .cs-box { padding: 1.25rem 1.4rem; }
+    .cs-box h3 { margin: 0; display: flex; align-items: center; gap: .5rem; }
+    .cs-box ul, .cs-ul { margin-top: .8rem; padding-left: 1.1rem; list-style: disc; color: #a1a1aa; font-size: .92rem; line-height: 1.7; }
+    .cs-box li + li, .cs-ul li + li { margin-top: .35rem; }
+    .cs-box li::marker, .cs-ul li::marker { color: #0A84FF; }
+    .cs-pre { margin-top: 1.1rem; font-family: 'JetBrains Mono', monospace; font-size: .74rem; line-height: 1.6; color: #b8c8d8;
+      background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.07); border-radius: .9rem; padding: 1rem 1.1rem; overflow-x: auto; }
+    .cs-ol { margin-top: .9rem; padding-left: 1.2rem; list-style: decimal; color: #a1a1aa; line-height: 1.7; }
+    .cs-ol li + li { margin-top: .5rem; }
+    .cs-ol li::marker { color: #0A84FF; font-weight: 600; }
+    .cs-table { margin-top: 1.2rem; overflow-x: auto; border: 1px solid rgba(255,255,255,.07); border-radius: .9rem; }
+    .cs-table table { width: 100%; border-collapse: collapse; font-size: .86rem; min-width: 560px; }
+    .cs-table th { text-align: left; font-family: 'JetBrains Mono', monospace; font-size: .7rem; letter-spacing: .12em; text-transform: uppercase;
+      color: #6b6b78; background: rgba(255,255,255,.02); padding: .7rem .9rem; }
+    .cs-table td { padding: .7rem .9rem; color: #b8b8c2; border-top: 1px solid rgba(255,255,255,.06); vertical-align: top; line-height: 1.55; }
+    .cs-table td:first-child { color: #e4e4e7; font-weight: 600; white-space: nowrap; }
+    .cs-steps { margin-top: 1.4rem; display: grid; gap: .7rem; }
+    .cs-steps li { display: flex; gap: .9rem; align-items: flex-start; border: 1px solid rgba(255,255,255,.07); background: rgba(13,13,17,.86);
+      border-radius: .9rem; padding: .85rem 1rem; }
+    .cs-step { flex: none; width: 2rem; height: 2rem; display: grid; place-items: center; border-radius: .6rem; font-weight: 700;
+      font-family: 'JetBrains Mono', monospace; color: #f5a35f; background: rgba(242,107,29,.1); border: 1px solid rgba(242,107,29,.3); }
+    .cs-steps b { color: #f4f4f5; font-weight: 600; }
+    .st { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: .68rem; padding: .15rem .5rem; border-radius: 9999px; white-space: nowrap; }
+    .st.ok { color: #6ee7a0; background: rgba(52,199,89,.1); border: 1px solid rgba(52,199,89,.3); }
+    .st.part { color: #f5c26b; background: rgba(245,166,35,.1); border: 1px solid rgba(245,166,35,.3); }
+    .st.no { color: #a1a1aa; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.12); }
+    .cs-link { color: #6cb6ff; text-decoration: underline; text-underline-offset: 3px; }
+    .cs-link:hover { color: #a9d4ff; }
+    #brief .cs-table td:last-child { white-space: nowrap; }
+    #brief .cs-table td:first-child, #choices .cs-table td:first-child { white-space: normal; min-width: 11rem; }
+    .cs-steps p { margin-top: .2rem; color: #a1a1aa; font-size: .9rem; line-height: 1.6; }
+  </style>
+</head>
+<body class="font-sans antialiased">
+  <div class="aurora" aria-hidden="true"></div>
+
+  <header class="cs-top">
+    <a href="index.html#projects" class="yk-btn"><i data-lucide="arrow-left" class="w-4 h-4"></i> Portfolio</a>
+    <a href="https://github.com/isaanilkoca/yukum" target="_blank" rel="noopener" class="yk-btn"><i data-lucide="github" class="w-4 h-4"></i> Source on GitHub</a>
+  </header>
+
+  <main class="cs-main">
+    <section class="cs-hero card rounded-2xl">
+      <div>
+        <p class="eyebrow">Case study · Full-stack · Oct 25 – Nov 15, 2026</p>
+        <h1>Yüküm — a freight marketplace</h1>
+        <p class="cs-lead">Shippers post loads, carriers bid on them, the shipper picks an offer and the job is tracked until delivery and rated.
+        A native <b>SwiftUI</b> app on a <b>.NET 10 Web API</b> and <b>SQL Server</b> — designed, built and tested end to end.</p>
+        <div class="yk-stats">
+          <div class="yk-stat"><b>65</b><span>REST endpoints</span></div>
+          <div class="yk-stat"><b>20</b><span>tables · 24 migrations</span></div>
+          <div class="yk-stat"><b>649</b><span>automated tests</span></div>
+          <div class="yk-stat"><b>96.7%</b><span>backend line coverage</span></div>
+        </div>
+      </div>
+      <div class="cs-hero-anim" aria-hidden="true" data-yk-truck data-yk-autoplay><img class="yk-fallback" src="yukum-truck.png" alt="" loading="lazy" decoding="async"></div>
+    </section>
+
+    <nav class="cs-toc" aria-label="Contents">
+      <a href="#why">Why</a><a href="#brief">The brief</a><a href="#features">Features</a><a href="#architecture">Architecture</a><a href="#backend">Backend</a><a href="#choices">Tech choices</a><a href="#database">Database</a><a href="#ios">iOS</a><a href="#security">Security</a><a href="#testing">Testing &amp; CI</a><a href="#journey">Step by step</a><a href="#next">Source &amp; docs</a>
+    </nav>
+
+    <section id="why" class="cs-sec">
+      <p class="eyebrow">01 — Why</p>
+      <h2>A real problem from home</h2>
+      <p>My family farms in Mersin. When we ship agricultural supplies, a carrier from Ankara may quote <b>8–10</b> for a trip that costs <b>5</b>:
+      if he can't find a load for the way back he drives home empty, so that risk is priced in. Carriers wait in markets for days looking for a return load.
+      Yüküm puts both sides in one open marketplace — shippers get competing offers, carriers fill empty return trips.</p>
+    </section>
+
+
+    <section id="brief" class="cs-sec">
+      <p class="eyebrow">02 — The brief</p>
+      <h2>What I was asked to build — and what was delivered</h2>
+      <p>The project started from a written brief by a senior engineer: a freight marketplace with a RESTful .NET backend, SQL Server and a SwiftUI client,
+      built step by step with a report and a roadmap rather than "let the AI do it". Every line of that brief is mapped below.</p>
+      <div class="cs-table"><table><tr><th>The brief asked for</th><th>How it was delivered</th><th>Status</th></tr><tr><td>RESTful Web API that iOS, Android and Web could all use</td><td>.NET 10 Web API, versioned <code>/api/v1</code>, OpenAPI 3.1 contract, client-agnostic JSON</td><td><span class="st ok">Done</span></td></tr><tr><td>.NET 10 / .NET Core, MSSQL, VS Code</td><td>.NET 10 + EF Core 10 (LTS) · SQL Server 2025 in Docker · built in VS Code</td><td><span class="st ok">Done</span></td></tr><tr><td>Login is checked in the API; on success it returns what the app needs as JSON</td><td>Identity + JWT; login returns access token, rotating refresh token and the user summary</td><td><span class="st ok">Done</span></td></tr><tr><td>All CRUD in the API, returned as JSON; SwiftUI integrates</td><td>65 endpoints, ProblemDetails errors, one decoding path on iOS</td><td><span class="st ok">Done</span></td></tr><tr><td>Two user types with separate registrations that can't enter each other's screens/services</td><td>Separate sign-up endpoints and forms, role policies, an authorization-matrix test on every endpoint</td><td><span class="st ok">Done</span></td></tr><tr><td>EF Core with the Repository pattern</td><td>Generic <code>IRepository&lt;T&gt;</code> + <code>IUnitOfWork</code> plus dedicated read repositories</td><td><span class="st ok">Done</span></td></tr><tr><td>SwiftUI with the patterns current job ads ask for</td><td>Swift 6, <code>@Observable</code> MVVM, async/await, actors, protocol-based DI, Swift Testing + XCUITest</td><td><span class="st ok">Done</span></td></tr><tr><td>One generic GET/POST/PUT method with request/response models, reusable everywhere</td><td><code>APIClient.send&lt;Response&gt;(method, path, query, body)</code>; every service is one function per endpoint</td><td><span class="st ok">Done</span></td></tr><tr><td>Make it work first, then a good-looking design</td><td>MVP first (stages A–F), then a design system, dark mode and action animations</td><td><span class="st ok">Done</span></td></tr><tr><td>Auto-login / remember me, the most robust way</td><td>Refresh token in Keychain, rotated on every use, stolen-token detection, silent restore on launch</td><td><span class="st ok">Done</span></td></tr><tr><td>Login / register, post a load, list loads</td><td>Done for both roles</td><td><span class="st ok">Done</span></td></tr><tr><td>Filter by location, "near me 5 km" (not a priority)</td><td>Radius filter + nearest-first sorting from district centroids; user location never stored</td><td><span class="st ok">Done</span></td></tr><tr><td>Save loads as favourites</td><td>Favourites with live counts for the owner</td><td><span class="st ok">Done</span></td></tr><tr><td>Mail or push after posting a load</td><td>Push for offers, decisions, job stages and reviews; e-mail used for verification and password reset</td><td><span class="st part">Partial</span></td></tr><tr><td>Track how many people viewed / bid (views first)</td><td>Unique daily views, favourites and offer counts on the owner's listing</td><td><span class="st ok">Done</span></td></tr><tr><td>Bid page — the carrier sets the price</td><td>Bid with amount, vehicle and estimated delivery date</td><td><span class="st ok">Done</span></td></tr><tr><td>Only the shipper can post a load</td><td>Enforced by role policy and tested (403 for carriers)</td><td><span class="st ok">Done</span></td></tr><tr><td>Profiles show past agreed jobs on both sides</td><td>Active jobs, history and public profiles for both roles</td><td><span class="st ok">Done</span></td></tr><tr><td>Filter / sort by price, location, reference price, destination</td><td>Price, destination, vehicle, date, weight, distance; reference price shown on the detail page</td><td><span class="st ok">Done</span></td></tr><tr><td>City → district selection from a ready table + service</td><td>81 provinces / 973 districts, verified and seeded, cached endpoints</td><td><span class="st ok">Done</span></td></tr><tr><td>Push when a load is liked; push when an offer arrives</td><td>Offer push done (verified on a real iPhone); favourite push not yet</td><td><span class="st part">Partial</span></td></tr><tr><td>Rate the carrier after delivery, highlight by rating</td><td>1–5 rating + comment after delivery; offers can be sorted by rating</td><td><span class="st ok">Done</span></td></tr><tr><td>Carrier profile with average rating and past reviews</td><td>Done</td><td><span class="st ok">Done</span></td></tr><tr><td>Optional: AI check for banned words</td><td>Not implemented (optional in the brief); report &amp; block added instead</td><td><span class="st no">Not done</span></td></tr><tr><td>No "just let the AI do it": notes, report, roadmap, step-by-step</td><td>Technical report, step-by-step plan, 24 decision records, daily log, commented code</td><td><span class="st ok">Done</span></td></tr><tr><td>Professional project and folder structure</td><td>Clean Architecture on the backend; documented iOS folder guides</td><td><span class="st ok">Done</span></td></tr></table></div>
+    </section>
+    <section id="features" class="cs-sec">
+      <p class="eyebrow">03 — Features</p>
+      <h2>Two roles, one product</h2>
+      <div class="cs-grid2">
+        <div class="card rounded-2xl cs-box"><h3><i data-lucide="package" class="w-4 h-4 text-accent"></i> Shipper</h3><ul>
+          <li>Post a load: origin / destination (province → district), weight, vehicle type, pickup date, budget</li>
+          <li>Compare offers with the carrier's rating, vehicle and promised delivery date; sort by 7 criteria; accept or reject</li>
+          <li>Live counters (views, favourites, offers) and a market reference price for the route</li>
+          <li>Track the job, chat, request mutual cancellation, rate the carrier</li></ul></div>
+        <div class="card rounded-2xl cs-box"><h3><i data-lucide="truck" class="w-4 h-4 text-accent"></i> Carrier</h3><ul>
+          <li>Browse open loads with route, budget, vehicle, date and weight filters, a "near me" radius and "fits my vehicles"</li>
+          <li>Bid with a chosen vehicle and an estimated delivery date; favourite loads</li>
+          <li>Manage vehicles (plate, make, model, year); advance the job stage</li>
+          <li>Get every decision instantly through push notifications</li></ul></div>
+      </div>
+      <p class="cs-note">Both roles: separate sign-up flows, auto-login, e-mail verification, forgot password, profile photo, public profiles, notification centre, report &amp; block, account deletion.</p>
+    </section>
+
+    <section id="architecture" class="cs-sec">
+      <p class="eyebrow">04 — Architecture</p>
+      <h2>Clean layers on both sides</h2>
+<pre class="cs-pre">iOS (SwiftUI)                                   .NET 10 Web API
+View ─► ViewModel ─► Service ─► APIClient ══HTTPS/JSON══► Controller ─► Handler ─► Repository / UoW ─► SQL Server
+         @Observable   1 fn = 1 endpoint                    (thin)      (rules,      (EF Core 10)
+                       AuthSession actor ◄── refresh token rotation     validation)
+                       Keychain                                                  │
+        push ◄══ APNs (HTTP/2) ◄── PushWorker (BackgroundService) ◄── outbox ◄──┘</pre>
+      <p><b>Dependency rule:</b> <code>Domain</code> knows nothing; <code>Application</code> knows only <code>Domain</code> and declares interfaces;
+      <code>Infrastructure</code> implements them (EF Core, Identity, APNs, e-mail); <code>Api</code> wires everything together. Business rules are testable without a database.</p>
+      <h3>One request, end to end — a carrier places a bid</h3>
+      <ol class="cs-ol">
+        <li>The detail screen calls <code>ListingDetailViewModel.submit()</code>, which validates the form locally.</li>
+        <li><code>OfferService.create()</code> → <code>APIClient.send(.post, "/api/v1/listings/{id}/offers")</code> adds the Bearer token. On a 401 the <code>AuthSession</code> actor refreshes <b>once</b> — even if five requests fail at the same moment — and retries.</li>
+        <li><code>CreateOfferHandler</code>: FluentValidation → is the listing open? → does the carrier own a complete vehicle? → is the delivery date within pickup + 90 days? → has either side blocked the other?</li>
+        <li>The offer and a notification row are saved <b>in one transaction</b> (outbox). A background worker sends the APNs push; tapping it deep-links the shipper to the offers screen.</li>
+        <li>Any failure returns RFC 7807 <b>ProblemDetails</b> with a Turkish message, decoded in one place and shown to the user.</li>
+      </ol>
+    </section>
+
+    <section id="backend" class="cs-sec">
+      <p class="eyebrow">05 — Backend</p>
+      <h2>.NET 10 Web API</h2>
+      <div class="cs-table"><table><tr><th>Topic</th><th>How</th><th>Why</th></tr><tr><td>Clean Architecture</td><td>Domain / Application / Infrastructure / Api + unit &amp; integration test projects</td><td>Rules independent of DB and web framework</td></tr><tr><td>CQRS-lite</td><td><code>ICommandHandler</code> / <code>IQueryHandler</code>, auto-registered; startup fails if a command has two handlers</td><td>Clear read/write split without MediatR (now commercially licensed)</td></tr><tr><td>EF Core 10</td><td>Generic <code>IRepository&lt;T&gt;</code> + <code>IUnitOfWork</code>; dedicated read repositories where SQL matters</td><td>Repository pattern; filters compile to one SQL query</td></tr><tr><td>Entities</td><td>Central timestamps, soft-delete query filter, <code>RowVersion</code> optimistic concurrency</td><td>Two simultaneous accepts can't both win</td></tr><tr><td>Validation</td><td>FluentValidation with Turkish messages; one <code>PasswordPolicy</code> shared with Identity</td><td>Same rule everywhere, field-level errors</td></tr><tr><td>Auth</td><td>ASP.NET Identity (PBKDF2), JWT (15 min), rotating refresh token (30 days, hashed, device-bound, reuse revokes the family), lockout 10 → 5 min, rate limiting</td><td>Secure &quot;remember me&quot;</td></tr><tr><td>Search</td><td>Dynamic predicate, stable paging, price/date sorting, Haversine distance from district centroids</td><td>&quot;Near me&quot; without storing user location</td></tr><tr><td>Reference price</td><td>Median of completed jobs on the same route + vehicle, last 180 days, min 3 samples</td><td>One outlier can't mislead</td></tr><tr><td>Push</td><td>Outbox row in the same transaction → <code>PushWorker</code> → APNs HTTP/2 with an ES256 provider token</td><td>No lost notifications</td></tr><tr><td>E-mail</td><td>6-digit codes stored as SHA-256 hashes, 15 min, 5 attempts, 60 s cooldown; Resend in production</td><td>Verification &amp; reset without account enumeration</td></tr><tr><td>Contract</td><td>OpenAPI + Scalar UI, <code>/api/v1</code>, camelCase JSON, enums as strings, UTC ISO-8601</td><td>The iOS client decodes one contract</td></tr></table></div>
+    </section>
+
+
+    <section id="choices" class="cs-sec">
+      <p class="eyebrow">06 — Technology choices</p>
+      <h2>Why these technologies</h2>
+      <p>Before writing code I researched 2026 job postings and official docs (Microsoft Learn, Apple Developer) and wrote the decisions down in a technical report.
+      The rule: no features beyond the brief — research only updated the technology choices.</p>
+      <div class="cs-table"><table><tr><th>Topic</th><th>Choice</th><th>Why</th></tr><tr><td>Runtime</td><td>.NET 10 + EF Core 10 — both LTS (supported to Nov 2028)</td><td>Requested in the brief; long support window</td></tr><tr><td>Architecture</td><td>Clean Architecture + CQRS-lite (command/query handlers, feature folders)</td><td>Most backend job ads list both; keeps rules testable</td></tr><tr><td>Mediator / mapper</td><td>No MediatR, no AutoMapper — handlers via DI, mapping by hand</td><td>Both moved to commercial licences in 2025; knowing why I avoided them is part of the design</td></tr><tr><td>API docs</td><td>Built-in <code>Microsoft.AspNetCore.OpenApi</code> (OpenAPI 3.1) + Scalar UI</td><td>Templates dropped Swashbuckle since .NET 9</td></tr><tr><td>Auth</td><td>JWT + rotating refresh tokens + role policies</td><td>What job ads ask for (JWT, RBAC); secure remember-me</td></tr><tr><td>Tests</td><td>xUnit + NSubstitute + Testcontainers (real SQL Server)</td><td>Integration tests that hit a real database, not an in-memory fake</td></tr><tr><td>Delivery</td><td>Dockerfile + docker-compose, GitHub Actions CI</td><td>One-command environment; every push builds and tests</td></tr><tr><td>iOS UI</td><td>SwiftUI (UIKit only if needed)</td><td>Baseline expectation in 2026 iOS job ads</td></tr><tr><td>iOS architecture</td><td>MVVM + protocol-based DI; VIPER/TCA compared but not used</td><td>VIPER is overkill for most apps, TCA is niche; MVVM is the default</td></tr><tr><td>Concurrency</td><td>Swift 6 async/await, <code>@MainActor</code> view models, an actor for token refresh</td><td>Approachable concurrency in Xcode 26; actors prevent double refreshes</td></tr><tr><td>State</td><td>Observation framework (<code>@Observable</code>, <code>@State</code>, <code>@Bindable</code>)</td><td>Modern replacement for ObservableObject</td></tr><tr><td>Networking</td><td>URLSession + one generic APIClient, no third-party libraries</td><td>Exactly what the brief asked for</td></tr></table></div>
+    </section>
+    <section id="database" class="cs-sec">
+      <p class="eyebrow">07 — Database</p>
+      <h2>SQL Server 2025 · 20 tables · 24 migrations</h2>
+      <p>Identity users and roles, shipper/carrier profiles, vehicles, refresh tokens, provinces and districts (seeded from a verified JSON),
+      listings, offers, messages, reviews, favourites, daily views, notifications, device tokens, blocks, reports and verification codes.
+      Integrity is enforced in the database as well: <b>filtered unique indexes</b> (one active offer per carrier per listing), unique favourite / view / block pairs,
+      cascade rules and <code>RowVersion</code> columns. Integration tests run every endpoint against a real SQL Server started by Testcontainers.</p>
+    </section>
+
+    <section id="ios" class="cs-sec">
+      <p class="eyebrow">08 — iOS</p>
+      <h2>SwiftUI app</h2>
+      <div class="cs-table"><table><tr><th>Topic</th><th>How</th></tr><tr><td>MVVM</td><td><code>@MainActor @Observable</code> view models; views contain no networking or session code</td></tr><tr><td>Dependency injection</td><td>Each view model depends on a protocol (<code>OfferServicing</code>, <code>AuthServicing</code>…) with a real default → fakes in tests</td></tr><tr><td>Generic networking</td><td>One <code>APIClient.send&lt;Response&gt;(method, path, query, body)</code>; services are one function per endpoint</td></tr><tr><td>Session</td><td><code>AuthSession</code> actor: access token in memory, refresh token in Keychain, single shared refresh, silent restore on launch</td></tr><tr><td>Push</td><td>Permission after login, APNs token per device, deep links, badge sync</td></tr><tr><td>Location</td><td>CoreLocation only when &quot;near me&quot; is on; coordinates sent per query, never stored</td></tr><tr><td>Design</td><td>Light / dark palette, shared form components, 2D action animations (shipper: a parcel is taped; carrier: a tyre track)</td></tr><tr><td>3D</td><td>RealityKit login scene: one box falls with physics recorded once and replayed identically, then snapshotted to an image to save battery</td></tr></table></div>
+    </section>
+
+    <section id="security" class="cs-sec">
+      <p class="eyebrow">09 — Security &amp; privacy</p>
+      <h2>Built in, not bolted on</h2>
+      <ul class="cs-ul">
+        <li>Secrets never in the repo: user-secrets locally, environment variables in production; the API refuses to start with a missing JWT key or a development e-mail sink in production.</li>
+        <li>Role and ownership checks on the server; an authorization-matrix test fails the build if an endpoint is accidentally anonymous.</li>
+        <li>Identical responses for "unknown user" and "wrong password" (plus a dummy hash check) — no account enumeration.</li>
+        <li>KVKK/GDPR: consent timestamps, separate terms of use, account deletion by anonymisation, profile photo deleted with the account.</li>
+        <li>App Store guideline 1.2: report &amp; block with two-way effects, zero-tolerance terms.</li>
+      </ul>
+    </section>
+
+    <section id="testing" class="cs-sec">
+      <p class="eyebrow">10 — Testing &amp; CI</p>
+      <h2>649 automated tests</h2>
+      <div class="cs-table"><table><tr><th>Suite</th><th>Covers</th><th>Tests</th></tr><tr><td>Backend unit · xUnit + NSubstitute</td><td>validators, handlers, password &amp; phone rules, median, distance</td><td>152</td></tr><tr><td>Backend integration · WebApplicationFactory + Testcontainers</td><td>every endpoint over real HTTP + real SQL Server, authorization matrix, concurrency, Resend &amp; APNs senders</td><td>297</td></tr><tr><td>iOS unit · Swift Testing</td><td>every view-model function, actor concurrency, a contract test for every service endpoint</td><td>193</td></tr><tr><td>iOS UI · XCUITest</td><td>login, registration, forgot password, terms, wrong password, login → profile → logout, relaunch auto-login</td><td>7</td></tr></table></div>
+      <p>Backend line coverage is <b>96.7%</b>. GitHub Actions builds the solution, runs both backend suites against a disposable SQL Server and builds the Docker image on every push.</p>
+    </section>
+
+    <section id="journey" class="cs-sec">
+      <p class="eyebrow">11 — Step by step</p>
+      <h2>How it was built</h2>
+      <p>I wrote a technical report and a step-by-step plan first, then built in vertical slices:
+      <b>database → repository → handler → controller → API check → tests → iOS model → view model → view → device test → commit</b>.
+      Every decision (24 records) and every step is documented in the repository.</p>
+      <ol class="cs-steps"><li><span class="cs-step">A</span><div><b>Setup</b><p>.NET 10 SDK, SQL Server 2025 in Docker, repository layout, product naming, written plan and technical report.</p></div></li><li><span class="cs-step">B</span><div><b>Backend foundation</b><p>Four-project Clean Architecture solution, global ProblemDetails errors, Serilog, <code>/api/v1</code> versioning, user-secrets, <code>BaseEntity</code> (timestamps, soft delete, RowVersion), DB health check, generic repository + unit of work, CQRS-lite handler pipeline.</p></div></li><li><span class="cs-step">C</span><div><b>First connection</b><p>81 provinces / 973 districts verified against multiple sources and seeded; cached anonymous endpoints; the generic iOS <code>APIClient</code> talks to the API for the first time.</p></div></li><li><span class="cs-step">D</span><div><b>Identity</b><p>Two registrations (shipper / carrier), login with lockout, rotating refresh tokens bound to a device, role policies, rate limiting, an authorization-matrix test; Keychain-based auto-login on iOS.</p></div></li><li><span class="cs-step">E</span><div><b>Listings</b><p>Create / edit / cancel loads; carrier search with dynamic filters, sorting and stable paging.</p></div></li><li><span class="cs-step">F</span><div><b>Offers — MVP</b><p>Bidding, accept / reject with optimistic concurrency (two accepts at once → only one wins), my offers, history. First full flow on a real iPhone.</p></div></li><li><span class="cs-step">G</span><div><b>Jobs & ratings</b><p>Job stages (picked up → in transit → delivered), completion, 1–5 reviews, carrier and shipper public profiles.</p></div></li><li><span class="cs-step">H</span><div><b>Engagement</b><p>Favourites, unique daily views, live counters for the listing owner.</p></div></li><li><span class="cs-step">I</span><div><b>Notifications</b><p>In-app notification centre; outbox + background worker + APNs push verified on a device; tapping a push deep-links to the right screen.</p></div></li><li><span class="cs-step">J</span><div><b>Location & price</b><p>&quot;Near me&quot; radius filter and nearest-first sorting; market reference price (180-day median).</p></div></li><li><span class="cs-step">K</span><div><b>Hardening</b><p>Account deletion (anonymisation), report &amp; block, terms of use, e-mail verification, forgot password with real e-mail (Resend), privacy manifest, CI.</p></div></li><li><span class="cs-step">L</span><div><b>Polish</b><p>Design system with dark mode, 2D action animations, a RealityKit login scene, vehicles, chat, mutual cancellation, profile page.</p></div></li></ol>
+    </section>
+
+    <section id="next" class="cs-sec">
+      <p class="eyebrow">12 — What's next</p>
+      <h2>Honest status, source &amp; docs</h2>
+      <p>Feature-complete and running end to end on a real iPhone against the API. Deliberately not done yet: public hosting (server, domain, HTTPS),
+      an admin panel for reviewing reports, TestFlight / App Store submission, OpenTelemetry tracing and a Bayesian rating score.</p>
+
+      <h3>Source and documentation</h3>
+      <ul class="cs-ul">
+        <li><a class="cs-link" href="https://github.com/isaanilkoca/yukum" target="_blank" rel="noopener">github.com/isaanilkoca/yukum</a> — full source, step-by-step README, CI status</li>
+        <li><a class="cs-link" href="https://github.com/isaanilkoca/yukum/blob/main/docs/Backend_Rehberi.md" target="_blank" rel="noopener">Backend guide</a> — folder map, every endpoint with its role, naming rules (Turkish)</li>
+        <li><a class="cs-link" href="https://github.com/isaanilkoca/yukum/blob/main/docs/Kod_Anlatimi.md" target="_blank" rel="noopener">How to read the code</a> — three real requests traced file by file (Turkish)</li>
+        <li><a class="cs-link" href="https://github.com/isaanilkoca/yukum/blob/main/docs/Karar_Kayitlari.md" target="_blank" rel="noopener">Decision records</a> · <a class="cs-link" href="https://github.com/isaanilkoca/yukum/blob/main/docs/Ilerleme_Gunlugu.md" target="_blank" rel="noopener">daily log</a> · <a class="cs-link" href="https://github.com/isaanilkoca/yukum/blob/main/docs/Yukum_Teknik_Rapor.pdf" target="_blank" rel="noopener">technical report (PDF)</a> · <a class="cs-link" href="https://github.com/isaanilkoca/yukum/blob/main/docs/Yukum_Adim_Adim_Uygulama_Plani.pdf" target="_blank" rel="noopener">step-by-step plan (PDF)</a></li>
+        <li><a class="cs-link" href="https://github.com/isaanilkoca/yukum/tree/main/docs/api" target="_blank" rel="noopener">API contract cards</a> · <a class="cs-link" href="https://github.com/isaanilkoca/yukum/blob/main/docs/Eposta_Sistemi.md" target="_blank" rel="noopener">e-mail verification design</a></li>
+      </ul>
+      <div class="yk-links">
+        <a href="https://github.com/isaanilkoca/yukum" target="_blank" rel="noopener" class="yk-btn primary"><i data-lucide="github" class="w-4 h-4"></i> Read the README</a>
+        <a href="index.html#projects" class="yk-btn"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to projects</a>
+      </div>
+      <p class="yk-credit">3D model: &ldquo;Truck&rdquo; by ROY (Sketchfab), <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> &mdash; recoloured, glass cargo box and load added.</p>
+    </section>
+  </main>
+
+  <script>
+    lucide.createIcons();
+    // hero truck: plays once on load (it is already in view), then stays loaded
+    requestAnimationFrame(function () { var t = document.querySelector('.cs-hero-anim .yk-truck'); if (t) t.classList.add('play'); });
+  </script>
+  <script type="module" src="yukum-truck.js"></script>
+</body>
+</html>

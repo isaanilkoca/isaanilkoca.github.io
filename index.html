@@ -143,7 +143,107 @@
     .prose-post pre { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: #82d9d0; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 0.6rem; padding: 0.7rem 1rem; overflow-x: auto; }
     .prose-post blockquote { border-left: 2px solid #0A84FF; padding-left: 1rem; color: #d4d4d8; }
     .post-link { margin-top: 1.25rem; }
+
+    /* ── Yüküm featured card + truck-loading animation ──
+       Principles: animation stays behind/right of the text and never overlaps it, plays ONCE when the card
+       scrolls into view, ends with a loaded truck and stops; reduced-motion users see the final frame. */
+    .yk-card { position: relative; overflow: hidden; }
+    .yk-content { position: relative; z-index: 1; }
+    .yk-anim { position: relative; margin: -.5rem -1.5rem 1rem; height: 230px; pointer-events: none; }
+    .yk-anim svg { position: absolute; inset: 0; }
+    .yk-anim svg { width: 100%; height: 100%; }
+    @media (min-width: 900px) {
+      .yk-content { max-width: 52%; }
+      .yk-anim { position: absolute; top: 0; bottom: 0; right: 0; left: auto; width: 50%; margin: 0; height: auto; }
+      .yk-anim:not(.is-3d) svg { left: auto; right: 10px; top: 50%; transform: translateY(-50%); width: 45%; height: 280px; opacity: .6; }
+      .yk-card::after { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+        background: linear-gradient(90deg, rgba(13,13,17,0.95) 0%, rgba(13,13,17,0.85) 48%, rgba(13,13,17,0) 70%); }
+    }
+    .yk-badge { font-family: 'JetBrains Mono', monospace; font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
+      color: #f5a35f; border: 1px solid rgba(242,107,29,.35); background: rgba(242,107,29,.08); border-radius: 9999px; padding: .2rem .6rem; }
+    .yk-stats { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: .5rem; margin-top: 1.1rem; }
+    @media (min-width: 640px) { .yk-stats { grid-template-columns: repeat(4, minmax(0,1fr)); } }
+    .yk-stat { border: 1px solid rgba(255,255,255,.07); background: rgba(255,255,255,.02); border-radius: .75rem; padding: .55rem .7rem; }
+    .yk-stat b { display: block; font-size: 1.05rem; color: #f4f4f5; font-weight: 700; }
+    .yk-stat span { font-size: .7rem; color: #8a8a96; }
+    .yk-links { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.25rem; }
+    .yk-btn { display: inline-flex; align-items: center; gap: .45rem; font-size: .85rem; font-weight: 600; border-radius: 9999px; padding: .5rem 1rem;
+      border: 1px solid rgba(255,255,255,.1); color: #e4e4e7; transition: border-color .2s ease, background .2s ease; }
+    .yk-btn:hover { border-color: rgba(10,132,255,.5); background: rgba(10,132,255,.08); }
+    .yk-btn.primary { background: #0A84FF; border-color: #0A84FF; color: #fff; }
+    .yk-btn.primary:hover { background: #2a95ff; }
+
+    /* ── Yüküm card background: isometric logistics scene ──
+       Inspired by Spline's 3D vehicle showcases (soft gradients, glass, depth) and logistics-SaaS UI motion
+       (route drawing, live cards). Lives ONLY behind the Yüküm card, translucent, never over the text;
+       plays ONCE when the card scrolls into view and stops loaded; reduced-motion shows the final frame. */
+    .yk-iso { overflow: visible; }
+    .yk-iso .iso-grid line { stroke: rgba(255,255,255,.045); stroke-width: 1; }
+    .yk-iso .iso-route-base { fill: none; stroke: rgba(255,255,255,.06); stroke-width: 3; }
+    .yk-iso .iso-route { fill: none; stroke: url(#ykRoute); stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 100; opacity: .9; }
+    .yk-iso .pin-dot { fill: #0A84FF; } .yk-iso .pin-b .pin-dot { fill: #F26B1D; }
+    .yk-iso .pin-pulse { fill: none; stroke: rgba(10,132,255,.45); stroke-width: 1.5; opacity: 0; transform-box: fill-box; transform-origin: center; }
+    .yk-iso .pin-b .pin-pulse { stroke: rgba(242,107,29,.5); }
+    .yk-iso .pin-label { font: 600 9px 'JetBrains Mono', monospace; letter-spacing: .08em; fill: #8a8a96; }
+    .yk-iso .iso-shadow { fill: rgba(0,0,0,.35); filter: blur(6px); }
+    .yk-iso .glass-back { fill: rgba(10,132,255,.05); stroke: rgba(90,169,255,.18); stroke-width: 1; }
+    .yk-iso .deck { fill: rgba(255,255,255,.04); stroke: rgba(255,255,255,.12); stroke-width: 1; }
+    .yk-iso .glass-front { fill: url(#ykGlass); stroke: rgba(120,185,255,.55); stroke-width: 1.2; }
+    .yk-iso .glass-rim { fill: none; stroke: rgba(120,185,255,.6); stroke-width: 1.2; }
+    .yk-iso .c-top { fill: #d6a777; } .yk-iso .c-left { fill: #b48455; } .yk-iso .c-right { fill: #8f6640; }
+    .yk-iso .cargo polygon { stroke: rgba(70,45,20,.55); stroke-width: .8; }
+    .yk-iso .c-tape { stroke: #F26B1D; stroke-width: 3; }
+    .yk-iso .cab-top { fill: #3a4558; } .yk-iso .cab-left { fill: url(#ykCab); } .yk-iso .cab-right { fill: #1b2230; }
+    .yk-iso .cab-top, .yk-iso .cab-left, .yk-iso .cab-right { stroke: rgba(255,255,255,.18); stroke-width: 1; }
+    .yk-iso .cab-glass { fill: rgba(90,169,255,.35); stroke: rgba(160,205,255,.6); stroke-width: 1; }
+    .yk-iso .wheel-t { fill: #0b0d12; stroke: rgba(255,255,255,.35); stroke-width: .08; }
+    .yk-iso .wheel-h { fill: rgba(255,255,255,.4); }
+    .yk-iso .ui-card { fill: rgba(22,26,36,.72); stroke: rgba(255,255,255,.12); stroke-width: 1; }
+    .yk-iso .ui-mono { font: 600 8px 'JetBrains Mono', monospace; letter-spacing: .14em; fill: #6b6b78; }
+    .yk-iso .ui-title { font: 600 12px Inter, sans-serif; fill: #e4e4e7; }
+    .yk-iso .ui-sub { font: 500 9px Inter, sans-serif; fill: #8a8a96; }
+    .yk-iso .ui-track { fill: rgba(255,255,255,.08); }
+    .yk-iso .ui-bar { fill: url(#ykRoute); transform-box: fill-box; transform-origin: left center; transform: scaleX(.08); }
+    .yk-iso .av { stroke: #161a24; stroke-width: 2; } .yk-iso .av1 { fill: #0A84FF; } .yk-iso .av2 { fill: #F26B1D; } .yk-iso .av3 { fill: #34c759; }
+    .yk-iso .ok { fill: rgba(52,199,89,.2); stroke: #34c759; stroke-width: 1.2; }
+    .yk-iso .ok-tick { fill: none; stroke: #34c759; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* before play */
+    .yk-iso .cargo { opacity: 0; transform: translateY(-120px); }
+    .yk-iso .ui { opacity: 0; transform: translateY(8px); }
+
+    /* play once */
+    .yk-iso.play .iso-route { animation: ykRoute 1.6s cubic-bezier(.4,0,.2,1) .2s forwards; }
+    .yk-iso.play .pin-pulse { animation: ykPulse 1.4s ease-out .4s 2 forwards; }
+    .yk-iso.play .pin-b .pin-pulse { animation-delay: 1.6s; }
+    .yk-iso.play .cargo { animation: ykDrop .5s cubic-bezier(.3,1.3,.5,1) forwards; animation-delay: calc(.6s + var(--i) * .13s); }
+    .yk-iso.play .ui-ship { animation: ykUi .5s ease-out .5s forwards; }
+    .yk-iso.play .ui-bar { animation: ykBar 2.3s cubic-bezier(.4,0,.2,1) .7s forwards; }
+    .yk-iso.play .ui-offers { animation: ykUi .5s ease-out 1.5s forwards; }
+    .yk-iso.play .ui-accepted { animation: ykUi .5s ease-out 3.1s forwards; }
+    .yk-iso.play .iso-truck { animation: ykRoll 1.3s cubic-bezier(.45,0,.2,1) 3.3s forwards; }
+    @keyframes ykRoute { to { stroke-dashoffset: 0; } }
+    @keyframes ykPulse { 0% { opacity: .9; transform: scale(.6); } 100% { opacity: 0; transform: scale(2.2); } }
+    @keyframes ykDrop { 0% { opacity: 0; transform: translateY(-120px); } 30% { opacity: 1; } 100% { opacity: 1; transform: translateY(0); } }
+    @keyframes ykUi { to { opacity: 1; transform: none; } }
+    @keyframes ykBar { to { transform: scaleX(1); } }
+    @keyframes ykRoll { to { transform: translate(29.1px, 16.8px); } }
+    @media (prefers-reduced-motion: reduce) {
+      .yk-iso .cargo, .yk-iso .ui { opacity: 1; transform: none; }
+      .yk-iso .iso-route { stroke-dashoffset: 0; }
+      .yk-iso .ui-bar { transform: scaleX(1); }
+      .yk-iso.play * { animation: none !important; }
+    }
+
+    /* real-time 3D (yukum-truck.js): canvas fills its box; the SVG stays only as a no-WebGL fallback */
+    .yk-canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block;
+      -webkit-mask-image: radial-gradient(ellipse 78% 74% at 52% 52%, #000 62%, transparent 100%); mask-image: radial-gradient(ellipse 78% 74% at 52% 52%, #000 62%, transparent 100%); }
+    .yk-anim.is-3d, .cs-hero-anim.is-3d { overflow: hidden; }
+    .yk-credit { margin-top: .9rem; font-size: .68rem; color: #5f5f6b; }
+    .yk-credit a { color: #7b8796; text-decoration: underline; text-underline-offset: 2px; }
+    .yk-fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
   </style>
+  <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }</script>
 </head>
 <body class="font-sans antialiased">
   <script>document.documentElement.classList.remove('dark'); document.documentElement.classList.add('dark','js');</script>
@@ -304,13 +404,59 @@
         <p class="eyebrow mb-3">02 — Projects</p>
         <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-50">Projects</h2>
         <p class="mt-4 text-zinc-500 max-w-xl text-sm sm:text-base">
-          31 public repositories on GitHub &mdash; mostly native iOS and Android apps built as
+          34 public repositories on GitHub &mdash; mostly native iOS and Android apps built as
           separate platform-specific codebases. Highlights below; the rest are grouped by area.
         </p>
       </div>
 
       <!-- Featured -->
       <div class="mt-12 grid sm:grid-cols-2 gap-4">
+
+        <!-- YÜKÜM — featured full-stack project (case study: yukum.html) -->
+        <article class="card card-hover rounded-2xl p-6 sm:col-span-2 yk-card" id="yukum">
+          <div class="yk-anim" aria-hidden="true" data-yk-truck><img class="yk-fallback" src="yukum-truck.png" alt="" loading="lazy" decoding="async"></div>
+          <div class="yk-content">
+            <div class="flex items-start justify-between">
+              <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 grid place-items-center">
+                <i data-lucide="truck" class="w-5 h-5 text-accentSoft"></i>
+              </div>
+              <span class="yk-badge">Featured · Full-stack</span>
+            </div>
+            <h3 class="mt-4 text-lg font-semibold text-zinc-100">Yüküm — Freight Marketplace · SwiftUI + .NET 10 + SQL Server</h3>
+            <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+              An open marketplace where <span class="text-zinc-300">shippers post loads</span> and <span class="text-zinc-300">carriers bid</span> on them &mdash;
+              born from my family's farm in Mersin, where carriers price in the risk of driving home empty.
+              I designed and built the whole stack: a native <span class="text-zinc-300">SwiftUI</span> app (MVVM, protocol-based DI, actor-based token refresh, Keychain auto-login, APNs push)
+              on a <span class="text-zinc-300">.NET 10 Web API</span> (Clean Architecture, CQRS-lite, EF Core 10 with Repository + Unit of Work, JWT with rotating refresh tokens)
+              backed by <span class="text-zinc-300">SQL Server</span> &mdash; with bidding, job tracking, chat, ratings, e-mail verification, report &amp; block, and CI.
+            </p>
+            <div class="yk-stats">
+              <div class="yk-stat"><b>65</b><span>REST endpoints</span></div>
+              <div class="yk-stat"><b>449</b><span>backend tests · 96.7% cov.</span></div>
+              <div class="yk-stat"><b>200</b><span>iOS unit + UI tests</span></div>
+              <div class="yk-stat"><b>30</b><span>SwiftUI screens</span></div>
+            </div>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="chip rounded-md px-2 py-1">SwiftUI</span>
+              <span class="chip rounded-md px-2 py-1">Swift 6 · async/await</span>
+              <span class="chip rounded-md px-2 py-1">MVVM · @Observable</span>
+              <span class="chip rounded-md px-2 py-1">.NET 10 Web API</span>
+              <span class="chip rounded-md px-2 py-1">EF Core 10</span>
+              <span class="chip rounded-md px-2 py-1">SQL Server</span>
+              <span class="chip rounded-md px-2 py-1">Clean Architecture</span>
+              <span class="chip rounded-md px-2 py-1">JWT · Refresh Rotation</span>
+              <span class="chip rounded-md px-2 py-1">APNs</span>
+              <span class="chip rounded-md px-2 py-1">Testcontainers</span>
+              <span class="chip rounded-md px-2 py-1">XCUITest</span>
+              <span class="chip rounded-md px-2 py-1">GitHub Actions · Docker</span>
+            </div>
+            <div class="yk-links">
+              <a href="yukum.html" class="yk-btn primary">Read the case study <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+              <a href="https://github.com/isaanilkoca/yukum" target="_blank" rel="noopener" class="yk-btn"><i data-lucide="github" class="w-4 h-4"></i> Source &amp; README</a>
+            </div>
+            <p class="yk-credit">3D model: &ldquo;Truck&rdquo; by ROY (Sketchfab), <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> &mdash; recoloured, glass cargo box and load added.</p>
+          </div>
+        </article>
 
         <article class="card card-hover rounded-2xl p-6">
           <div class="flex items-start justify-between">
@@ -1344,5 +1490,18 @@
     }, { rootMargin: '-45% 0px -50% 0px' });
     sections.forEach(s => s && spy.observe(s));
   </script>
+  <script>
+    // Yüküm card: play the truck-loading animation ONCE when the card scrolls into view, then it stays loaded.
+    (function () {
+      var truck = document.querySelector('#yukum .yk-truck');
+      if (!truck) return;
+      if (!('IntersectionObserver' in window)) { truck.classList.add('play'); return; }
+      var seen = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) { truck.classList.add('play'); seen.disconnect(); } });
+      }, { threshold: 0.35 });
+      seen.observe(truck);
+    })();
+  </script>
+  <script type="module" src="yukum-truck.js"></script>
 </body>
 </html>
