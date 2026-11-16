@@ -1,0 +1,242 @@
+{
+  "_about": "Static content for intro-3d.js. Edit text here; the scene reads it once at load.",
+  "lights": {
+    "exposure": 1,
+    "key": 30,
+    "monitor": 0.5,
+    "faceFill": 12,
+    "hairLight": 24,
+    "wallWash": 3.2,
+    "neon": 0.6,
+    "lampBar": "#d8b48c",
+    "bloom": {
+      "strength": 0.16,
+      "radius": 0.55,
+      "threshold": 0.92
+    }
+  },
+  "editor": {
+    "file": "Portfolio.swift",
+    "lines": [
+      [
+        [
+          "import ",
+          "kw"
+        ],
+        [
+          "SwiftUI",
+          "ty"
+        ]
+      ],
+      [],
+      [
+        [
+          "struct ",
+          "kw"
+        ],
+        [
+          "Portfolio",
+          "ty"
+        ],
+        [
+          ": ",
+          ""
+        ],
+        [
+          "View",
+          "ty"
+        ],
+        [
+          " {",
+          ""
+        ]
+      ],
+      [
+        [
+          "    let ",
+          "kw"
+        ],
+        [
+          "developer = ",
+          ""
+        ],
+        [
+          "\"İsa Anıl Koca\"",
+          "st"
+        ]
+      ],
+      [
+        [
+          "    let ",
+          "kw"
+        ],
+        [
+          "role = ",
+          ""
+        ],
+        [
+          "\"iOS & Mobile Developer\"",
+          "st"
+        ]
+      ],
+      [],
+      [
+        [
+          "    var ",
+          "kw"
+        ],
+        [
+          "body: ",
+          ""
+        ],
+        [
+          "some ",
+          "kw"
+        ],
+        [
+          "View",
+          "ty"
+        ],
+        [
+          " {",
+          ""
+        ]
+      ],
+      [
+        [
+          "        Hero",
+          "ty"
+        ],
+        [
+          "(developer, role)",
+          ""
+        ]
+      ],
+      [
+        [
+          "            .",
+          ""
+        ],
+        [
+          "projects",
+          "fn"
+        ],
+        [
+          "(",
+          ""
+        ],
+        [
+          "34",
+          "nu"
+        ],
+        [
+          ")",
+          ""
+        ]
+      ],
+      [
+        [
+          "            .",
+          ""
+        ],
+        [
+          "onScroll",
+          "fn"
+        ],
+        [
+          " { ",
+          ""
+        ],
+        [
+          "stepInside",
+          "fn"
+        ],
+        [
+          "() }",
+          ""
+        ]
+      ],
+      [
+        [
+          "    }",
+          ""
+        ]
+      ],
+      [
+        [
+          "}",
+          ""
+        ]
+      ]
+    ]
+  },
+  "panels": {
+    "code": [
+      {
+        "title": "TokenStore.swift",
+        "src": "actor TokenStore {\n  private var refreshTask: Task<Token, Error>?\n\n  func validToken() async throws -> Token {\n    if let task = refreshTask {\n      return try await task.value\n    }\n    let task = Task { try await refresh() }\n    refreshTask = task\n    defer { refreshTask = nil }\n    return try await task.value\n  }\n}"
+      },
+      {
+        "title": "LoadsViewModel.swift",
+        "src": "@Observable final class LoadsViewModel {\n  private let service: LoadService\n  var loads: [Load] = []\n  var state: ViewState = .idle\n\n  func fetch() async {\n    state = .loading\n    do {\n      loads = try await service.loads()\n      state = .loaded\n    } catch {\n      state = .failed(error)\n    }\n  }\n}"
+      },
+      {
+        "title": "NetworkService.swift",
+        "src": "protocol NetworkService {\n  func download<T: Decodable>(\n    _ resource: Resource<T>\n  ) async throws -> T\n}\n\nstruct WebService: NetworkService { }\nstruct LocalService: NetworkService { }\n\nlet service: NetworkService =\n  useMock ? LocalService() : WebService()"
+      }
+    ],
+    "terminal": {
+      "title": "zsh — isa@mac",
+      "lines": [
+        [
+          "$ swift build",
+          "#f1e8da"
+        ],
+        [
+          "Compiling Yukum",
+          "#9a8c78"
+        ],
+        [
+          "Linking Yukum",
+          "#9a8c78"
+        ],
+        [
+          "Build complete!",
+          "#cdb896"
+        ],
+        [
+          "",
+          ""
+        ],
+        [
+          "$ git log --oneline -3",
+          "#f1e8da"
+        ],
+        [
+          "85e8a0f Merge pull request #4",
+          "#d8c4a4"
+        ],
+        [
+          "c106876 Add SwiftUI Bootcamp certificate",
+          "#d8c4a4"
+        ],
+        [
+          "9310672 Yukum: multi-agent build",
+          "#d8c4a4"
+        ],
+        [
+          "",
+          ""
+        ],
+        [
+          "$ claude",
+          "#f1e8da"
+        ],
+        [
+          "> plan the next slice_",
+          "#e2aa5c"
+        ]
+      ]
+    }
+  }
+}
