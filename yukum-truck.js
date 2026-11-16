@@ -67,7 +67,7 @@ async function loadTruck() {
 
   const paint = new THREE.MeshPhysicalMaterial({ color: 0xf0a31c, metalness: 0.5, roughness: 0.26, clearcoat: 1, clearcoatRoughness: 0.05, envMapIntensity: 1.3 });
   const tint = new THREE.MeshPhysicalMaterial({ color: 0x0c1522, metalness: 0.7, roughness: 0.04, clearcoat: 1, envMapIntensity: 2, transparent: true, opacity: 0.88 });
-  const shellGlass = new THREE.MeshPhysicalMaterial({ color: 0xf3e6cf, metalness: 0, roughness: 0.06, transparent: true, opacity: 0.12,
+  const shellGlass = new THREE.MeshPhysicalMaterial({ color: 0xd6e6ff, metalness: 0, roughness: 0.06, transparent: true, opacity: 0.12,
     side: THREE.DoubleSide, depthWrite: false, envMapIntensity: 1.8 });
   const lamp = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xdfe9ff, emissiveIntensity: 0 });   // headlights: switched on while driving in
   let shell = null, floorTop = null, lampMesh = null;
@@ -118,7 +118,7 @@ async function loadTruck() {
                  z0: sb.min.z - o.z + 0.12, z1: sb.max.z - o.z - 0.12 };
     shell.material = shellGlass; shell.renderOrder = 10; shell.castShadow = false;
     shell.add(new THREE.LineSegments(new THREE.EdgesGeometry(shell.geometry, 28),
-      new THREE.LineBasicMaterial({ color: 0xeadcc4, transparent: true, opacity: 0.55 })));
+      new THREE.LineBasicMaterial({ color: 0xcfe0ff, transparent: true, opacity: 0.55 })));
   }
   return { truck, bounds, interior, wheels, lamp, flares };
 }
@@ -160,24 +160,24 @@ function stage(renderer, bounds) {
   const cx = (bounds.min.x + bounds.max.x) / 2, len = bounds.max.x - bounds.min.x, top = bounds.max.y;
 
   const floor = new THREE.Mesh(new THREE.PlaneGeometry(len * 2.8, len * 2.8),
-    new THREE.MeshStandardMaterial({ color: 0x0c0a08, metalness: 0.25, roughness: 0.55, transparent: true, alphaMap: radialAlpha(0.02, 0.42) }));
+    new THREE.MeshStandardMaterial({ color: 0x060a12, metalness: 0.25, roughness: 0.55, transparent: true, alphaMap: radialAlpha(0.02, 0.42) }));
   floor.rotation.x = -Math.PI / 2; floor.position.set(cx, 0, 0); floor.receiveShadow = true; scene.add(floor);
   const pts = [];
   for (let i = 0; i < 420; i++) { const a = r() * Math.PI * 2, d = 3 + r() * len; pts.push(cx + Math.cos(a) * d * 1.2, 0.01, Math.sin(a) * d * 0.7); }
   const specks = new THREE.BufferGeometry(); specks.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
-  scene.add(new THREE.Points(specks, new THREE.PointsMaterial({ color: 0xe2aa5c, size: 0.05, transparent: true, opacity: 0.55, depthWrite: false })));
+  scene.add(new THREE.Points(specks, new THREE.PointsMaterial({ color: 0x4f8dff, size: 0.05, transparent: true, opacity: 0.55, depthWrite: false })));
   const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex('rgba(40,110,255,0.9)'), transparent: true, opacity: 0.55, blending: THREE.AdditiveBlending, depthWrite: false }));
   glow.material.opacity = 0.4; glow.scale.set(6, 3.6, 1); glow.position.set(bounds.max.x - 0.6, top * 0.62, -2.2); scene.add(glow);   // rim glow hugging the rear top corner
   const under = new THREE.Mesh(new THREE.PlaneGeometry(len * 1.1, 6), new THREE.MeshBasicMaterial({ map: glowTex('rgba(30,90,255,0.55)'), transparent: true, blending: THREE.AdditiveBlending, depthWrite: false }));
   under.rotation.x = -Math.PI / 2; under.position.set(cx, 0.02, 0); scene.add(under);
 
-  scene.add(new THREE.HemisphereLight(0xe6d6bf, 0x0c0a08, 0.6));
+  scene.add(new THREE.HemisphereLight(0x9fb8ff, 0x0a0c12, 0.6));
   const key = new THREE.DirectionalLight(0xfff1dc, 2.6); key.position.set(cx - 12, 14, 12); key.target.position.set(cx, 0, 0);
   key.castShadow = true; key.shadow.mapSize.set(2048, 2048);
   Object.assign(key.shadow.camera, { left: -len, right: len, top: len * 0.6, bottom: -len * 0.6, near: 1, far: 60 }); key.shadow.bias = -0.0004;
   scene.add(key, key.target);
-  const rim = new THREE.PointLight(0xe2aa5c, 55, 30, 1.6); rim.name = 'rim'; rim.position.set(bounds.max.x + 1.5, top + 1.5, -3.5); scene.add(rim);
-  const rim2 = new THREE.PointLight(0xc8925a, 30, 22, 1.8); rim2.position.set(cx - 1, top + 1.8, -4); scene.add(rim2);
+  const rim = new THREE.PointLight(0x2f6bff, 70, 30, 1.6); rim.name = 'rim'; rim.position.set(bounds.max.x + 1.5, top + 1.5, -3.5); scene.add(rim);
+  const rim2 = new THREE.PointLight(0x3a7bff, 40, 22, 1.8); rim2.position.set(cx - 1, top + 1.8, -4); scene.add(rim2);
   const inside = new THREE.PointLight(0xffd6a0, 16, 12, 2); inside.position.set(cx + len * 0.15, top * 0.8, 0.5); scene.add(inside);
   return scene;
 }
@@ -322,4 +322,8 @@ async function start(container) {
   }, { threshold: 0.3 }).observe(container);
 }
 
-document.querySelectorAll('[data-yk-truck]').forEach((el) => { start(el); });
+// Download the 1 MB model only when the card is within ~1.5 screens of the viewport (not on page load).
+const near = new IntersectionObserver((entries) => {
+  for (const e of entries) if (e.isIntersecting) { near.unobserve(e.target); start(e.target); }
+}, { rootMargin: '150% 0px' });
+document.querySelectorAll('[data-yk-truck]').forEach((el) => near.observe(el));

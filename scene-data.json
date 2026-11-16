@@ -8,7 +8,7 @@
     "hairLight": 24,
     "wallWash": 3.2,
     "neon": 0.6,
-    "lampBar": "#d8b48c",
+    "lampBar": "#cfe0ff",
     "bloom": {
       "strength": 0.16,
       "radius": 0.55,
@@ -190,19 +190,19 @@
       "lines": [
         [
           "$ swift build",
-          "#f1e8da"
+          "#e9eefa"
         ],
         [
           "Compiling Yukum",
-          "#9a8c78"
+          "#7d8bab"
         ],
         [
           "Linking Yukum",
-          "#9a8c78"
+          "#7d8bab"
         ],
         [
           "Build complete!",
-          "#cdb896"
+          "#8fa6d6"
         ],
         [
           "",
@@ -210,19 +210,19 @@
         ],
         [
           "$ git log --oneline -3",
-          "#f1e8da"
+          "#e9eefa"
         ],
         [
           "85e8a0f Merge pull request #4",
-          "#d8c4a4"
+          "#b7c6e6"
         ],
         [
           "c106876 Add SwiftUI Bootcamp certificate",
-          "#d8c4a4"
+          "#b7c6e6"
         ],
         [
           "9310672 Yukum: multi-agent build",
-          "#d8c4a4"
+          "#b7c6e6"
         ],
         [
           "",
@@ -230,11 +230,11 @@
         ],
         [
           "$ claude",
-          "#f1e8da"
+          "#e9eefa"
         ],
         [
           "> plan the next slice_",
-          "#e2aa5c"
+          "#3d7bff"
         ]
       ]
     }
