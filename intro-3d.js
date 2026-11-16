@@ -112,9 +112,9 @@ glow(room, 'rgba(120,170,255,0.9)', 2.4, 1.6, 0, SCREEN_Y, -0.6, 0.1);
 put(room, box(0.3, 0.012, 0.012), new THREE.MeshBasicMaterial({ color: 0x2f6bff }), 0, SCREEN_Y, -0.292);   // light bar on the back of the monitor
 
 // screen: a live code editor drawn on a canvas
-const SW = 1280, SH = 742;
-const scr = document.createElement('canvas'); scr.width = SW; scr.height = SH;
-const sg = scr.getContext('2d');
+const SW = 1280, SH = 742, SCR = 0.75;                          // drawn in 1280×742 units, uploaded at 75% (960×557)
+const scr = document.createElement('canvas'); scr.width = Math.round(SW * SCR); scr.height = Math.round(SH * SCR);
+const sg = scr.getContext('2d'); sg.scale(SCR, SCR);
 const screenTex = new THREE.CanvasTexture(scr); screenTex.colorSpace = THREE.SRGBColorSpace; screenTex.anisotropy = 8;
 const screen = new THREE.Mesh(new THREE.PlaneGeometry(SCREEN_W, SCREEN_H), new THREE.MeshBasicMaterial({ map: screenTex, toneMapped: false }));
 screen.position.set(0, SCREEN_Y, SCREEN_Z); room.add(screen);
@@ -321,7 +321,7 @@ function poseSeated(model) {
   model.position.x += kid.position.x - _a.x; model.position.y += 0.555 - _a.y; model.position.z += kid.position.z + 0.07 - _a.z;
   for (const n of Object.keys(B)) AV.rest.set(n, B[n].quaternion.clone());
 }
-new GLTFLoader().load(new URL('isa-avatar.glb', import.meta.url).href, (gltf) => {
+new GLTFLoader().load(new URL('isa-avatar.glb?v=2', import.meta.url).href, (gltf) => {
   const model = gltf.scene; model.rotation.y = Math.PI; kid.add(model);
   model.traverse((o) => {
     if (o.isBone) AV.b[o.name] = o;
@@ -621,7 +621,7 @@ function frame(now) {
   }
   if (inRoom) {
     updateRoom(dt);
-    if (++frameN % 6 === 0) renderer.shadowMap.needsUpdate = true;
+    if (++frameN % 10 === 0) renderer.shadowMap.needsUpdate = true;
     draw(room, roomCam);
   } else {
     // background behind the portfolio: full rate while scrolling or moving the mouse, half rate when idle

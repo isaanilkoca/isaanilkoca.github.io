@@ -590,7 +590,6 @@
               <a href="yukum.html" class="yk-btn primary">Read the case study <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
               <a href="https://github.com/isaanilkoca/yukum" target="_blank" rel="noopener" class="yk-btn"><i data-lucide="github" class="w-4 h-4"></i> Source &amp; README</a>
             </div>
-            <p class="yk-credit">3D model: &ldquo;Truck&rdquo; by ROY (Sketchfab), <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> &mdash; recoloured, glass cargo box and load added.</p>
           </div>
         </article>
 
@@ -1111,7 +1110,7 @@
 
       <!-- isa × Claude: real footage of two hands reaching (Pexels, Anna Shvets), graded gold -->
       <div class="hs-card rounded-2xl mt-12 reveal" id="pair">
-        <video class="hs-video" src="handshake.mp4?v=3" muted playsinline preload="auto" aria-hidden="true"></video>
+        <video class="hs-video" data-src="handshake.mp4?v=3" muted playsinline preload="none" aria-hidden="true"></video>
         <div class="hs-spark" aria-hidden="true"></div>
         <div class="hs-smoke" aria-hidden="true"><i></i><i></i><i></i></div>
         <div class="hs-shade" aria-hidden="true"></div>
@@ -1563,6 +1562,7 @@
     <div class="mx-auto max-w-5xl px-5 sm:px-8 py-8 flex flex-wrap items-center justify-between gap-3 text-xs text-zinc-600 font-mono">
       <span>© 2026 İsa Anıl Koca</span>
       <span>Ataşehir, İstanbul, Türkiye</span>
+      <span class="text-[11px] text-zinc-600" style="width:100%">3D truck: &ldquo;Truck&rdquo; by ROY (Sketchfab), <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener" class="underline decoration-white/20">CC BY 4.0</a>, modified</span>
     </div>
   </footer>
 
@@ -1645,9 +1645,9 @@
   </script>
   <script type="module">
     // 3D world. If WebGL or the CDN is unavailable, drop the intro and show the portfolio directly.
-    import('./intro-3d.js?v=20261117a').catch(function (err) { console.warn('3D world unavailable:', err); document.documentElement.classList.add('no-intro'); });
+    import('./intro-3d.js?v=20261117b').catch(function (err) { console.warn('3D world unavailable:', err); document.documentElement.classList.add('no-intro'); });
   </script>
-  <script type="module" src="yukum-truck.js?v=3"></script>
+  <script type="module" src="yukum-truck.js?v=4"></script>
   <script>
     // Robot × human fingertips: the clip plays once when the card comes into view; the fingertips meet on camera,
     // a warm spark lights at the contact, and it holds on the last frame. Leaving and re-entering replays it.
@@ -1655,18 +1655,21 @@
       var card = document.getElementById('pair'), v = card && card.querySelector('.hs-video');
       if (!v) return;
       var CONTACT = 2.4, shown = false;                    // clip second at which the fingertips touch
+      var fetchClip = function () { if (!v.src) { v.preload = 'auto'; v.src = v.dataset.src; } };   // 1.7 MB: only when near
       var touch = function () { card.classList.add('touched'); };
       v.addEventListener('timeupdate', function () { if (v.currentTime >= CONTACT) touch(); });
       v.addEventListener('ended', touch);
       if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {   // still frame, touching
+        fetchClip();
         v.addEventListener('loadedmetadata', function () { try { v.currentTime = v.duration - 0.05; } catch (e) {} touch(); }); return;
       }
       new IntersectionObserver(function (es) {
         es.forEach(function (e) {
-          if (e.isIntersecting && !shown) { shown = true; card.classList.remove('touched'); try { v.currentTime = 0; } catch (err) {} v.playbackRate = 0.8; v.play().catch(function () {}); }
+          if (e.isIntersecting && !shown) { shown = true; fetchClip(); card.classList.remove('touched'); try { v.currentTime = 0; } catch (err) {} v.playbackRate = 0.8; v.play().catch(function () {}); }
           else if (!e.isIntersecting && shown) { shown = false; v.pause(); }
         });
       }, { threshold: 0.45 }).observe(v);
+      new IntersectionObserver(function (es, o) { if (es[0].isIntersecting) { fetchClip(); o.disconnect(); } }, { rootMargin: '120% 0px' }).observe(v);
     })();
   </script>
 </body>

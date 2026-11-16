@@ -322,4 +322,8 @@ async function start(container) {
   }, { threshold: 0.3 }).observe(container);
 }
 
-document.querySelectorAll('[data-yk-truck]').forEach((el) => { start(el); });
+// Download the 1 MB model only when the card is within ~1.5 screens of the viewport (not on page load).
+const near = new IntersectionObserver((entries) => {
+  for (const e of entries) if (e.isIntersecting) { near.unobserve(e.target); start(e.target); }
+}, { rootMargin: '150% 0px' });
+document.querySelectorAll('[data-yk-truck]').forEach((el) => near.observe(el));
