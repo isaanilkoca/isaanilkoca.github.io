@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>İsa Anıl Koca — iOS & Mobile Developer</title>
-  <meta name="description" content="İsa Anıl Koca — Computer Engineer and iOS developer. Native iOS & Android apps in Swift, SwiftUI and Kotlin: MVVM, VIPER, RxSwift, SpriteKit games, Core ML, and agentic development with the Claude Code CLI." />
+  <meta name="description" content="İsa Anıl Koca — Computer Engineer and iOS developer. Native iOS & Android apps in Swift, SwiftUI and Kotlin, built with a multi-agent AI workflow (Claude Code, Codex, Antigravity, OpenCode): MVVM, VIPER, RxSwift, SpriteKit games, Core ML, and agentic development with the Claude Code CLI." />
 
   <link rel="stylesheet" href="tailwind.css?v=20260929" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -19,20 +19,12 @@
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
     body {
-      background-color: #08080b;
+      background-color: #0a0908;
       color: #e4e4e7;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
     }
 
-    #matrix {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -2;
-      pointer-events: none;
-    }
 
     .aurora {
       position: fixed;
@@ -42,9 +34,9 @@
       transform: translateZ(0);
       will-change: transform;
       background:
-        radial-gradient(680px circle at 78% -8%, rgba(10, 132, 255, 0.16), transparent 60%),
-        radial-gradient(560px circle at 8% 8%, rgba(56, 152, 255, 0.08), transparent 55%),
-        radial-gradient(900px circle at 50% 120%, rgba(10, 132, 255, 0.07), transparent 60%);
+        radial-gradient(680px circle at 78% -8%, rgba(226,170,92,0.07), transparent 60%),
+        radial-gradient(560px circle at 8% 8%, rgba(226,170,92,0.035), transparent 55%),
+        radial-gradient(900px circle at 50% 120%, rgba(226,170,92,0.07), transparent 60%);
     }
     .eyebrow {
       font-family: 'JetBrains Mono', monospace;
@@ -64,7 +56,7 @@
     }
     .card-hover { transition: border-color .35s ease, background .35s ease, transform .35s ease; }
     .card-hover:hover {
-      border-color: rgba(10, 132, 255, 0.35);
+      border-color: rgba(226,170,92,0.35);
       background: rgba(13, 19, 30, 0.9);
       transform: translateY(-3px);
     }
@@ -77,11 +69,11 @@
       background: rgba(255, 255, 255, 0.02);
       color: #b8b8c2;
     }
-    a.chip:hover { border-color: rgba(10,132,255,0.4); color: #dfe7f0; }
+    a.chip:hover { border-color: rgba(226,170,92,0.4); color: #dfe7f0; }
 
     .nav-link { transition: color .2s ease; }
     .nav-link:hover, .nav-link.active { color: #fafafa; }
-    .nav-link.active { text-shadow: 0 0 20px rgba(10,132,255,0.5); }
+    .nav-link.active { text-shadow: 0 0 20px rgba(226,170,92,0.5); }
 
     .js .reveal { opacity: 0; transform: translateY(16px); }
     .js .reveal.in { opacity: 1; transform: none; transition: opacity .7s ease, transform .7s cubic-bezier(0.22, 1, 0.36, 1); }
@@ -89,18 +81,18 @@
       .js .reveal { opacity: 1 !important; transform: none !important; }
     }
 
-    ::selection { background: rgba(10, 132, 255, 0.3); color: #fff; }
+    ::selection { background: rgba(226,170,92,0.3); color: #fff; }
 
     a:focus-visible, button:focus-visible, summary:focus-visible {
-      outline: 2px solid #0A84FF;
+      outline: 2px solid #E2AA5C;
       outline-offset: 3px;
       border-radius: 4px;
     }
 
-    .swift .kw { color: #ff7ab2; }
-    .swift .ty { color: #6bd4ff; }
-    .swift .st { color: #ff8170; }
-    .swift .fn { color: #82d9d0; }
+    .swift .kw { color: #e2aa5c; }
+    .swift .ty { color: #ecd8b6; }
+    .swift .st { color: #d4906a; }
+    .swift .fn { color: #cdb896; }
     .swift .cm { color: #7f8c98; }
     .swift .nu { color: #d9c97c; }
 
@@ -112,8 +104,8 @@
       width: 11px;
       height: 11px;
       border-radius: 9999px;
-      background: #0A84FF;
-      box-shadow: 0 0 0 4px rgba(10, 132, 255, 0.15);
+      background: #E2AA5C;
+      box-shadow: 0 0 0 4px rgba(226,170,92,0.15);
     }
 
     details > summary { list-style: none; cursor: pointer; }
@@ -125,11 +117,11 @@
     .post > summary::-webkit-details-marker { display: none; }
     .post[open] .chev { transform: rotate(180deg); }
     .post { transition: border-color .35s ease; }
-    .post:hover, .post[open] { border-color: rgba(10, 132, 255, 0.35); }
+    .post:hover, .post[open] { border-color: rgba(226,170,92,0.35); }
     .post-body { padding: 1.25rem 1.5rem 1.5rem; }
     .post-tabs { display: inline-flex; gap: 4px; padding: 3px; border-radius: 9999px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); }
     .post-tabs button { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; padding: 0.3rem 0.85rem; border-radius: 9999px; color: #8a8a96; transition: color .2s ease, background .2s ease; }
-    .post-tabs button[aria-selected="true"] { background: rgba(10,132,255,0.18); color: #e4e4e7; }
+    .post-tabs button[aria-selected="true"] { background: rgba(226,170,92,0.18); color: #e4e4e7; }
     .post-scroll { margin-top: 1rem; max-height: 60vh; overflow-y: auto; overscroll-behavior: contain; padding-right: 0.5rem; }
     .post-note { font-size: 0.75rem; font-style: italic; color: #6b6b78; margin-bottom: 1rem; }
     .prose-post { color: #b8b8c2; font-size: 0.95rem; line-height: 1.75; }
@@ -139,9 +131,9 @@
     .prose-post ul { list-style: disc; padding-left: 1.25rem; }
     .prose-post ol { list-style: decimal; padding-left: 1.25rem; }
     .prose-post li + li { margin-top: 0.4rem; }
-    .prose-post li::marker { color: #0A84FF; }
-    .prose-post pre { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: #82d9d0; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 0.6rem; padding: 0.7rem 1rem; overflow-x: auto; }
-    .prose-post blockquote { border-left: 2px solid #0A84FF; padding-left: 1rem; color: #d4d4d8; }
+    .prose-post li::marker { color: #E2AA5C; }
+    .prose-post pre { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: #cdb896; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 0.6rem; padding: 0.7rem 1rem; overflow-x: auto; }
+    .prose-post blockquote { border-left: 2px solid #E2AA5C; padding-left: 1rem; color: #d4d4d8; }
     .post-link { margin-top: 1.25rem; }
 
     /* ── Yüküm featured card + truck-loading animation ──
@@ -169,9 +161,9 @@
     .yk-links { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.25rem; }
     .yk-btn { display: inline-flex; align-items: center; gap: .45rem; font-size: .85rem; font-weight: 600; border-radius: 9999px; padding: .5rem 1rem;
       border: 1px solid rgba(255,255,255,.1); color: #e4e4e7; transition: border-color .2s ease, background .2s ease; }
-    .yk-btn:hover { border-color: rgba(10,132,255,.5); background: rgba(10,132,255,.08); }
-    .yk-btn.primary { background: #0A84FF; border-color: #0A84FF; color: #fff; }
-    .yk-btn.primary:hover { background: #2a95ff; }
+    .yk-btn:hover { border-color: rgba(226,170,92,.5); background: rgba(226,170,92,.08); }
+    .yk-btn.primary { background: #f3ece0; border-color: #f3ece0; color: #14110d; }
+    .yk-btn.primary:hover { background: #ffffff; }
 
     /* ── Yüküm card background: isometric logistics scene ──
        Inspired by Spline's 3D vehicle showcases (soft gradients, glass, depth) and logistics-SaaS UI motion
@@ -181,12 +173,12 @@
     .yk-iso .iso-grid line { stroke: rgba(255,255,255,.045); stroke-width: 1; }
     .yk-iso .iso-route-base { fill: none; stroke: rgba(255,255,255,.06); stroke-width: 3; }
     .yk-iso .iso-route { fill: none; stroke: url(#ykRoute); stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 100; opacity: .9; }
-    .yk-iso .pin-dot { fill: #0A84FF; } .yk-iso .pin-b .pin-dot { fill: #F26B1D; }
-    .yk-iso .pin-pulse { fill: none; stroke: rgba(10,132,255,.45); stroke-width: 1.5; opacity: 0; transform-box: fill-box; transform-origin: center; }
+    .yk-iso .pin-dot { fill: #E2AA5C; } .yk-iso .pin-b .pin-dot { fill: #F26B1D; }
+    .yk-iso .pin-pulse { fill: none; stroke: rgba(226,170,92,.45); stroke-width: 1.5; opacity: 0; transform-box: fill-box; transform-origin: center; }
     .yk-iso .pin-b .pin-pulse { stroke: rgba(242,107,29,.5); }
     .yk-iso .pin-label { font: 600 9px 'JetBrains Mono', monospace; letter-spacing: .08em; fill: #8a8a96; }
     .yk-iso .iso-shadow { fill: rgba(0,0,0,.35); filter: blur(6px); }
-    .yk-iso .glass-back { fill: rgba(10,132,255,.05); stroke: rgba(90,169,255,.18); stroke-width: 1; }
+    .yk-iso .glass-back { fill: rgba(226,170,92,.05); stroke: rgba(90,169,255,.18); stroke-width: 1; }
     .yk-iso .deck { fill: rgba(255,255,255,.04); stroke: rgba(255,255,255,.12); stroke-width: 1; }
     .yk-iso .glass-front { fill: url(#ykGlass); stroke: rgba(120,185,255,.55); stroke-width: 1.2; }
     .yk-iso .glass-rim { fill: none; stroke: rgba(120,185,255,.6); stroke-width: 1.2; }
@@ -204,7 +196,7 @@
     .yk-iso .ui-sub { font: 500 9px Inter, sans-serif; fill: #8a8a96; }
     .yk-iso .ui-track { fill: rgba(255,255,255,.08); }
     .yk-iso .ui-bar { fill: url(#ykRoute); transform-box: fill-box; transform-origin: left center; transform: scaleX(.08); }
-    .yk-iso .av { stroke: #161a24; stroke-width: 2; } .yk-iso .av1 { fill: #0A84FF; } .yk-iso .av2 { fill: #F26B1D; } .yk-iso .av3 { fill: #34c759; }
+    .yk-iso .av { stroke: #161a24; stroke-width: 2; } .yk-iso .av1 { fill: #E2AA5C; } .yk-iso .av2 { fill: #F26B1D; } .yk-iso .av3 { fill: #34c759; }
     .yk-iso .ok { fill: rgba(52,199,89,.2); stroke: #34c759; stroke-width: 1.2; }
     .yk-iso .ok-tick { fill: none; stroke: #34c759; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
@@ -242,19 +234,159 @@
     .yk-credit { margin-top: .9rem; font-size: .68rem; color: #5f5f6b; }
     .yk-credit a { color: #7b8796; text-decoration: underline; text-underline-offset: 2px; }
     .yk-fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+
+    /* ══ 3D world + intro (intro-3d.js) ══ */
+    #world { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -2; display: block; pointer-events: none; }
+    /* calm column behind the text so the animated background stays at the edges */
+    #scrim { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 1; transition: opacity .6s ease;
+      background: linear-gradient(90deg, transparent 0%, rgba(8,8,11,.78) 20%, rgba(8,8,11,.86) 50%, rgba(8,8,11,.78) 80%, transparent 100%); }
+    .intro-on:not(.no-intro) #scrim { opacity: 0; }
+    @media (max-width: 900px) { #scrim { background: rgba(8,8,11,.72); } }
+    #flash { position: fixed; inset: 0; z-index: 40; pointer-events: none; opacity: 0;
+      background: radial-gradient(circle at 50% 50%, #ffffff 0%, #fbf1e1 20%, #e2aa5c 55%, #0a0908 100%); }
+    #progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 60; transform-origin: 0 50%; transform: scaleX(0);
+      background: linear-gradient(90deg, #8a6a3e, #e2aa5c 55%, #f3e6cf); pointer-events: none; }
+
+    #intro { position: relative; height: 620vh; }
+    .no-intro #intro { display: none; }
+    .intro-stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+    .intro-stage::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(180deg, rgba(10,9,8,.55) 0%, transparent 22%, transparent 55%, rgba(10,9,8,.82) 100%); }
+    .cap { position: absolute; z-index: 2; left: clamp(1.25rem, 6vw, 5rem); right: 1.25rem; bottom: clamp(5.5rem, 15vh, 9rem); max-width: 34rem;
+      opacity: 0; transform: translateY(28px); filter: blur(6px); transition: opacity .6s ease, transform .7s cubic-bezier(.22,1,.36,1), filter .6s ease; pointer-events: none; }
+    .cap.on { opacity: 1; transform: none; filter: none; }
+    .cap .num { font-family: 'JetBrains Mono', monospace; font-size: .75rem; letter-spacing: .22em; color: #e2aa5c; }
+    .cap h3, .cap .name { margin-top: .5rem; font-weight: 800; letter-spacing: -.03em; line-height: 1.02; color: #fafafa;
+      font-size: clamp(2.2rem, 6.2vw, 4.6rem); text-shadow: 0 6px 40px rgba(0,0,0,.6); }
+    .cap .name { background: linear-gradient(100deg, #fffaf2 20%, #ecd8b6 62%, #e2aa5c 100%); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: none; }
+    .cap p.sub { margin-top: .9rem; color: #c3c8d6; font-size: clamp(.95rem, 1.6vw, 1.15rem); line-height: 1.6; max-width: 30rem; text-shadow: 0 2px 18px rgba(0,0,0,.8); }
+    .cap.center { left: 1.25rem; right: 1.25rem; max-width: none; text-align: center; bottom: 42vh; }
+    .cap.center h3 { font-size: clamp(2.6rem, 9vw, 7rem); }
+    .intro-hint { position: absolute; z-index: 2; left: 50%; bottom: 1.6rem; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: .55rem;
+      font-family: 'JetBrains Mono', monospace; font-size: .68rem; letter-spacing: .24em; text-transform: uppercase; color: #9aa3b8; transition: opacity .5s ease; }
+    .intro-hint i { width: 22px; height: 34px; border: 1.5px solid rgba(255,255,255,.4); border-radius: 12px; position: relative; display: block; }
+    .intro-hint i::after { content: ""; position: absolute; left: 50%; top: 6px; width: 3px; height: 7px; margin-left: -1.5px; border-radius: 2px; background: #E2AA5C; animation: wheel 1.6s ease-in-out infinite; }
+    @keyframes wheel { 0% { transform: translateY(0); opacity: 1; } 70% { transform: translateY(11px); opacity: 0; } 100% { opacity: 0; } }
+    .intro-skip { position: absolute; z-index: 3; top: 1.25rem; right: clamp(1.25rem, 4vw, 2.5rem); font-family: 'JetBrains Mono', monospace; font-size: .72rem; letter-spacing: .08em;
+      color: #d7dbe6; padding: .5rem .95rem; border-radius: 9999px; border: 1px solid rgba(255,255,255,.16); background: rgba(8,8,11,.45); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: border-color .2s ease, background .2s ease; }
+    .intro-skip:hover { border-color: rgba(226,170,92,.7); background: rgba(226,170,92,.16); }
+    .intro-brand { position: absolute; z-index: 3; top: 1.6rem; left: clamp(1.25rem, 4vw, 2.5rem); font-family: 'JetBrains Mono', monospace; font-size: .85rem; font-weight: 600; color: #f4f4f5; }
+
+    header { transition: transform .5s cubic-bezier(.22,1,.36,1), opacity .4s ease; }
+    .intro-on:not(.no-intro) header { transform: translateY(-100%); opacity: 0; pointer-events: none; }
+
+    /* the portfolio flies out of the screen: --e goes 0 → 1 as the hero enters the viewport */
+    #hero { perspective: 1400px; }
+    #hero > * { opacity: var(--e, 1); transform-origin: 50% 30%;
+      transform: translate3d(0, calc((1 - var(--e, 1)) * 60px), calc((1 - var(--e, 1)) * -520px)) rotateX(calc((1 - var(--e, 1)) * 26deg)); will-change: transform, opacity; }
+    #hero h1 { font-size: clamp(3rem, 8.4vw, 5.6rem); line-height: .98; letter-spacing: -.04em; padding-bottom: .08em;
+      background: linear-gradient(100deg, #fffaf2 20%, #ecd8b6 62%, #e2aa5c 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+    /* depth for everything below: 3D reveal + pointer tilt + glare */
+    .js .reveal { opacity: 0; transform: perspective(1100px) translateY(46px) rotateX(16deg) scale(.96); transform-origin: 50% 100%; }
+    .js .reveal.in { opacity: 1; transform: none; transition: opacity .8s ease, transform .9s cubic-bezier(.22,1,.36,1); }
+    .card-hover { position: relative; transform-style: preserve-3d; }
+    .card-hover::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .3s ease; z-index: 2;
+      background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(120,185,255,.14), transparent 60%); }
+    .card-hover:hover::before { opacity: 1; }
+    .js .card-hover.tilting.tilting { transition: border-color .35s ease, background .35s ease, transform .12s ease-out; box-shadow: 0 30px 60px -30px rgba(226,170,92,.35); }
+    @media (prefers-reduced-motion: reduce) {
+      .js .reveal { opacity: 1 !important; transform: none !important; }
+      #hero > * { opacity: 1; transform: none; }
+      #intro { display: none; }
+    }
+
+    /* isa × Claude: cinematic hands card */
+    .hs-card { position: relative; overflow: hidden; min-height: clamp(560px, 72vw, 720px); border: 1px solid rgba(226,180,110,.16); background: #070605; isolation: isolate; }
+    /* robot finger meets human finger (Pexels, cottonbro studio). Landscape clip placed so the contact point sits under the
+       copy; the light studio backdrop is graded down to the card's dark gold and melts into it at the edges. */
+    .hs-video { position: absolute; top: 36%; left: 50%; height: 100%; width: auto; max-width: none; aspect-ratio: 1366 / 720; object-fit: cover; transform: translateX(-47%); z-index: -3;
+      filter: grayscale(.35) sepia(.55) brightness(.5) contrast(1.45) saturate(1.15);
+      -webkit-mask-image: radial-gradient(50% 41% at 47% 42%, #000 40%, transparent 100%); mask-image: radial-gradient(50% 41% at 47% 42%, #000 40%, transparent 100%); }
+    @media (max-width: 640px) { .hs-video { height: 78%; top: 44%; } .hs-spark { top: calc(44% + 78% * .42); } }
+    .hs-spark { position: absolute; left: 50%; top: calc(36% + 42%); width: 150px; height: 150px; margin: -75px 0 0 -75px; z-index: -1; pointer-events: none; border-radius: 50%; opacity: 0; transform: scale(.4);
+      background: radial-gradient(closest-side, rgba(255,232,190,.85), rgba(240,180,100,.35) 40%, transparent 72%); mix-blend-mode: screen; }
+    .hs-card.touched .hs-spark { animation: hsSpark 1.8s cubic-bezier(.2,.7,.2,1) forwards; }
+    @keyframes hsSpark { 0% { opacity: 0; transform: scale(.3); } 18% { opacity: 1; transform: scale(1); } 100% { opacity: .38; transform: scale(1.25); } }
+    .hs-smoke { position: absolute; inset: -20%; z-index: -2; opacity: .6; pointer-events: none; }
+    .hs-smoke i { position: absolute; border-radius: 50%; will-change: transform; background: radial-gradient(closest-side, rgba(205,150,70,.34), rgba(120,80,30,.12) 60%, transparent); animation: hsDrift 26s ease-in-out infinite alternate; }
+    .hs-smoke i:nth-child(1) { left: 2%; top: 30%; width: 46%; height: 60%; }
+    .hs-smoke i:nth-child(2) { right: 0; top: 22%; width: 44%; height: 66%; animation-duration: 34s; animation-direction: alternate-reverse; background: radial-gradient(closest-side, rgba(70,84,110,.34), rgba(40,50,70,.12) 60%, transparent); }
+    .hs-smoke i:nth-child(3) { left: 30%; top: 0; width: 40%; height: 46%; animation-duration: 40s; opacity: .7; }
+    @keyframes hsDrift { from { transform: translate3d(-5%, 3%, 0) scale(1); } to { transform: translate3d(6%, -4%, 0) scale(1.18); } }
+    .hs-shade { position: absolute; inset: 0; z-index: -1; pointer-events: none;
+      background: linear-gradient(180deg, rgba(7,6,5,.7) 0%, transparent 38%, transparent 82%, rgba(7,6,5,.85) 100%); }
+    .hs-top { display: flex; align-items: center; justify-content: space-between; padding: 1.4rem 1.6rem 0; font-family: 'JetBrains Mono', monospace; font-size: .72rem; letter-spacing: .3em; text-transform: uppercase; color: #efe6d6; }
+    .hs-pill { letter-spacing: .08em; text-transform: none; color: #d8ccb8; padding: .5rem 1.1rem; border-radius: 9999px; border: 1px solid rgba(255,255,255,.1); background: rgba(12,10,8,.55); }
+    @media (max-width: 560px) { .hs-pill { display: none; } }
+    .hs-copy { text-align: center; max-width: 44rem; margin: 0 auto; padding: clamp(1.4rem, 3.4vw, 2.4rem) 1.5rem 0; }
+    .hs-copy h3 { font-family: 'JetBrains Mono', monospace; font-weight: 400; letter-spacing: -.01em; line-height: 1.25; color: #f7f1e6; font-size: clamp(1.45rem, 4.2vw, 2.9rem); text-shadow: 0 2px 30px rgba(0,0,0,.6); }
+    .hs-copy p { margin: 1.1rem auto 0; max-width: 31rem; font-size: .9rem; line-height: 1.65; color: #d9cfbf; text-shadow: 0 1px 14px rgba(0,0,0,.8); }
+    .hs-btn { display: inline-block; margin-top: 1.6rem; padding: .8rem 1.7rem; border-radius: 9999px; background: #fff; color: #14110d; font-size: .88rem; font-weight: 600; transition: transform .2s ease, box-shadow .2s ease; box-shadow: 0 10px 40px -10px rgba(240,190,110,.55); }
+    .hs-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 50px -10px rgba(240,190,110,.75); }
+    .hs-foot { position: absolute; left: 0; right: 0; bottom: 1.1rem; text-align: center; font-size: .72rem; color: #b9ad9a; }
+    @media (prefers-reduced-motion: reduce) { .hs-smoke i { animation: none; } }
+
+    /* ══ unified palette: graphite + cream + amber (matches the cinematic hands footage) ══
+       overrides the accent colours compiled into tailwind.css */
+    .text-accent, .group:hover .group-hover\:text-accent { color: #e2aa5c; }
+    .text-accentSoft, .hover\:text-accentSoft:hover { color: #ecc58c; }
+    .bg-accent { background-color: #f3ece0; color: #14110d !important; }
+    .hover\:bg-accentSoft:hover { background-color: #ffffff; }
+    .bg-accent\/10 { background-color: rgba(226,170,92,.1); } .bg-accent\/\[0\.03\] { background-color: rgba(226,170,92,.03); }
+    .hover\:bg-accent\/20:hover { background-color: rgba(226,170,92,.18); }
+    .border-accent\/15 { border-color: rgba(226,170,92,.15); } .border-accent\/20 { border-color: rgba(226,170,92,.2); } .border-accent\/40 { border-color: rgba(226,170,92,.4); }
+    .text-zinc-50, .text-zinc-100 { color: #f6f1e8; } .text-zinc-200 { color: #e9e2d6; } .text-zinc-300 { color: #d8d0c3; }
+    .text-zinc-400 { color: #a69e92; } .text-zinc-500 { color: #7c766d; } .text-zinc-600 { color: #5c574f; }
+    .card { background: rgba(18,16,14,.86); border-color: rgba(255,240,220,.07); }
+    .card-hover:hover { background: rgba(26,22,18,.92); }
+    .chip { color: #c9c0b2; border-color: rgba(255,240,220,.09); }
+    .hairline { border-color: rgba(255,240,220,.07); }
   </style>
   <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }</script>
 </head>
 <body class="font-sans antialiased">
-  <script>document.documentElement.classList.remove('dark'); document.documentElement.classList.add('dark','js');</script>
-  <canvas id="matrix" aria-hidden="true"></canvas>
+  <script>document.documentElement.classList.remove('dark'); document.documentElement.classList.add('dark','js'); if (scrollY < innerHeight && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('intro-on');</script>
+  <canvas id="world" aria-hidden="true"></canvas>
   <div class="aurora"></div>
+  <div id="scrim" aria-hidden="true"></div>
+  <div id="flash" aria-hidden="true"></div>
+  <div id="progress" aria-hidden="true"></div>
+
+  <!-- INTRO: scroll-driven 3D scene (intro-3d.js). The kid sits down, codes, and the camera dives into the monitor. -->
+  <section id="intro" aria-label="Animated introduction">
+    <div class="intro-stage">
+      <span class="intro-brand">isa<span class="text-accent">.</span></span>
+      <a href="#top" class="intro-skip">Skip intro &rarr;</a>
+
+      <div class="cap" data-from="0" data-to="0.13">
+        <p class="num">// Portfolio.swift &mdash; booting</p>
+        <p class="name">İsa Anıl Koca</p>
+        <p class="sub">iOS &amp; Mobile Developer. Scroll, and step into the machine.</p>
+      </div>
+      <div class="cap" data-from="0.17" data-to="0.33">
+        <p class="num">01 &mdash; The blank file</p>
+        <h3>Every app starts at a desk like this.</h3>
+        <p class="sub">Swift, SwiftUI and Kotlin &mdash; native on both platforms, typed late into the night.</p>
+      </div>
+      <div class="cap" data-from="0.37" data-to="0.54">
+        <p class="num">02 &mdash; The build</p>
+        <h3>Architecture before pixels.</h3>
+        <p class="sub">MVVM, VIPER, RxSwift &mdash; and a swarm of AI agents: Claude Code, Codex, Antigravity and OpenCode.</p>
+      </div>
+      <div class="cap center" data-from="0.66" data-to="0.8">
+        <h3>Step inside.</h3>
+      </div>
+
+      <div class="intro-hint"><i></i>Scroll</div>
+    </div>
+  </section>
 
   <!-- NAV -->
-  <header class="fixed top-0 inset-x-0 z-50 border-b hairline bg-[#08080b]/90">
+  <header class="fixed top-0 inset-x-0 z-50 border-b hairline bg-[#0a0908]/90">
     <div class="mx-auto max-w-5xl px-5 sm:px-8 h-16 flex items-center justify-between">
       <a href="#top" class="font-mono text-sm font-semibold tracking-tight text-zinc-100">
-        İ<span class="text-accent">.</span>A<span class="text-accent">.</span>K
+        isa<span class="text-accent">.</span>
       </a>
       <nav class="hidden md:flex items-center gap-8 text-sm text-zinc-500">
         <a href="#experience" class="nav-link">Experience</a>
@@ -271,7 +403,7 @@
         <i data-lucide="menu" class="w-6 h-6"></i>
       </button>
     </div>
-    <div id="mobileMenu" class="hidden md:hidden border-t hairline bg-[#08080b]/95">
+    <div id="mobileMenu" class="hidden md:hidden border-t hairline bg-[#0a0908]/95">
       <nav class="mx-auto max-w-5xl px-5 py-4 flex flex-col gap-4 text-sm text-zinc-400">
         <a href="#experience" class="mobile-link">Experience</a>
         <a href="#projects" class="mobile-link">Projects</a>
@@ -287,7 +419,7 @@
   <main id="top" class="mx-auto max-w-5xl px-5 sm:px-8">
 
     <!-- HERO -->
-    <section class="pt-32 sm:pt-40 pb-20 sm:pb-28">
+    <section id="hero" class="pt-32 sm:pt-40 pb-20 sm:pb-28">
       <p class="eyebrow mb-6">// iOS &amp; Mobile Application Developer</p>
       <div class="grid lg:grid-cols-[1.15fr_0.85fr] gap-12 lg:gap-10 items-start">
         <div>
@@ -298,8 +430,9 @@
             Computer Engineer and iOS developer. I build native iOS and Android apps in
             <span class="text-zinc-200">Swift, SwiftUI and Kotlin</span> &mdash; across
             <span class="text-zinc-200">MVVM, VIPER and RxSwift</span> architectures,
-            <span class="text-zinc-200">SpriteKit</span> games, Core ML, and an
-            agent-driven workflow with the <span class="text-zinc-200">Claude Code CLI</span>.
+            <span class="text-zinc-200">SpriteKit</span> games and Core ML &mdash; with a
+            <span class="text-zinc-200">multi-agent workflow</span>: Claude Code, Codex (ChatGPT), Antigravity and OpenCode,
+            as a swarm or one at a time.
           </p>
 
           <div class="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-zinc-500 font-mono">
@@ -702,21 +835,25 @@
       </div>
 
       <!-- AGENTIC / CLI -->
-      <div class="mt-8 rounded-3xl border hairline bg-white/[0.02] p-6 sm:p-8">
+      <div id="agentic" class="mt-8 rounded-3xl border hairline bg-white/[0.02] p-6 sm:p-8 scroll-mt-24">
         <div class="flex items-center gap-3 reveal">
           <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 grid place-items-center">
             <i data-lucide="terminal" class="w-5 h-5 text-accentSoft"></i>
           </div>
           <div>
             <p class="eyebrow">Agentic Development</p>
-            <h3 class="text-xl font-semibold text-zinc-100">Shipping apps through the Claude Code CLI</h3>
+            <h3 class="text-xl font-semibold text-zinc-100">Shipping apps with a swarm of AI agents</h3>
           </div>
         </div>
         <p class="mt-4 text-sm text-zinc-400 leading-relaxed max-w-2xl reveal">
-          I work with Claude through the <span class="text-zinc-300">Claude Code CLI</span> in an agent-driven workflow &mdash;
-          not autocomplete. I set the architecture and direction, and the agent explores the codebase, edits across
-          many files, compiles, runs and validates, then iterates. Some of my apps are planned, implemented and
-          published <span class="text-zinc-300">end-to-end this way, working only from the terminal</span>.
+          I don't work with a single assistant &mdash; I direct a team of coding agents:
+          <span class="text-zinc-300">Claude Code</span> (usually the main agent), <span class="text-zinc-300">Codex (ChatGPT)</span>,
+          <span class="text-zinc-300">Antigravity</span> and <span class="text-zinc-300">OpenCode</span>.
+          Sometimes they run <span class="text-zinc-300">together as a swarm</span>, each owning a slice of the work in parallel;
+          sometimes I use <span class="text-zinc-300">just one</span> for a focused task. Each agent in turn
+          <span class="text-zinc-300">splits its work into sub-agents</span> that explore, implement, test and review.
+          I set the architecture and direction, review every slice and make the final call. Some of my apps are
+          planned, implemented and published <span class="text-zinc-300">end-to-end this way, working only from the terminal</span>.
         </p>
 
         <div class="mt-6 grid sm:grid-cols-2 gap-4">
@@ -972,7 +1109,22 @@
         <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-50">Technical Skills</h2>
       </div>
 
-      <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- isa × Claude: real footage of two hands reaching (Pexels, Anna Shvets), graded gold -->
+      <div class="hs-card rounded-2xl mt-12 reveal" id="pair">
+        <video class="hs-video" src="handshake.mp4?v=3" muted playsinline preload="auto" aria-hidden="true"></video>
+        <div class="hs-spark" aria-hidden="true"></div>
+        <div class="hs-smoke" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="hs-shade" aria-hidden="true"></div>
+        <div class="hs-top"><span>isa</span><span class="hs-pill">Claude Code &middot; Codex &middot; Antigravity &middot; OpenCode</span><span>Agents</span></div>
+        <div class="hs-copy">
+          <h3>One Developer, A Swarm of Agents<br>&ndash; Built Together</h3>
+          <p>I plan, review and decide. Claude Code, Codex (ChatGPT), Antigravity and OpenCode build beside me &mdash; sometimes as a swarm working in parallel, sometimes one agent at a time &mdash; and each one splits its work across its own sub-agents.</p>
+          <a href="#agentic" class="hs-btn">See How We Work</a>
+        </div>
+        <p class="hs-foot">Swarm mode &nbsp;&middot;&nbsp; single agent &nbsp;&middot;&nbsp; sub-agents</p>
+      </div>
+
+      <div class="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <div class="card rounded-2xl p-6 reveal">
           <div class="flex items-center gap-2.5 text-zinc-200">
             <i data-lucide="code-2" class="w-4 h-4 text-accent"></i>
@@ -1415,73 +1567,6 @@
   </footer>
 
   <script>
-    // Matrix code rain background
-    (() => {
-      const canvas = document.getElementById('matrix');
-      const ctx = canvas.getContext('2d');
-      const glyphs = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF<>/{}=+*';
-      const fontSize = 16;
-      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      let columns = 0, drops = [], width = 0, height = 0;
-
-      function resize() {
-        width = window.innerWidth;
-        height = window.innerHeight;
-        canvas.width = width;
-        canvas.height = height;
-        ctx.font = fontSize + "px 'JetBrains Mono', monospace";
-        columns = Math.ceil(width / fontSize);
-        drops = Array.from({ length: columns }, () => Math.random() * -height / fontSize);
-      }
-
-      function draw() {
-        ctx.fillStyle = 'rgba(8, 8, 11, 0.08)';
-        ctx.fillRect(0, 0, width, height);
-        for (let i = 0; i < columns; i++) {
-          const ch = glyphs[Math.floor(Math.random() * glyphs.length)];
-          const x = i * fontSize, y = drops[i] * fontSize;
-          ctx.fillStyle = Math.random() > 0.975 ? '#4a5e4f' : '#104426';
-          ctx.fillText(ch, x, y);
-          if (y > height && Math.random() > 0.975) drops[i] = 0;
-          drops[i]++;
-        }
-      }
-
-      resize();
-      let resizeTimer, lastW = width;
-      window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-          // Mobile address bar toggles only change height; skip the reset to avoid flicker
-          if (window.innerWidth !== lastW || window.innerHeight > height) { lastW = window.innerWidth; resize(); }
-        }, 150);
-      });
-
-      if (reduceMotion) {
-        for (let i = 0; i < 60; i++) draw();
-        return;
-      }
-
-      let last = 0;
-      let running = true, scrolling = false, scrollTimer;
-      // Freeze the rain while the page scrolls so scrolling stays smooth
-      window.addEventListener('scroll', () => {
-        scrolling = true;
-        clearTimeout(scrollTimer);
-        scrollTimer = setTimeout(() => { scrolling = false; }, 200);
-      }, { passive: true });
-      function loop(t) {
-        if (!running) return;
-        if (!scrolling && t - last > 66) { draw(); last = t; }
-        requestAnimationFrame(loop);
-      }
-      requestAnimationFrame(loop);
-      document.addEventListener('visibilitychange', () => {
-        running = !document.hidden;
-        if (running) requestAnimationFrame(loop);
-      });
-    })();
-
     lucide.createIcons();
 
     const menuBtn = document.getElementById('menuBtn');
@@ -1538,6 +1623,51 @@
       seen.observe(truck);
     })();
   </script>
-  <script type="module" src="yukum-truck.js"></script>
+  <script>
+    // Scroll progress bar + pointer tilt on cards
+    (function () {
+      var bar = document.getElementById('progress'), ticking = false;
+      function upd() { ticking = false; var m = document.documentElement.scrollHeight - innerHeight; bar.style.transform = 'scaleX(' + (m > 0 ? scrollY / m : 0) + ')'; }
+      addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(upd); } }, { passive: true });
+      upd();
+      if (!matchMedia('(hover: hover) and (pointer: fine)').matches || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      document.querySelectorAll('.card-hover').forEach(function (el) {
+        var max = el.offsetWidth > 600 ? 2.5 : 6;
+        el.addEventListener('pointermove', function (e) {
+          var r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+          el.classList.add('tilting');
+          el.style.setProperty('--mx', (x * 100) + '%'); el.style.setProperty('--my', (y * 100) + '%');
+          el.style.transform = 'perspective(900px) rotateX(' + ((0.5 - y) * max).toFixed(2) + 'deg) rotateY(' + ((x - 0.5) * max).toFixed(2) + 'deg) translateY(-4px)';
+        });
+        el.addEventListener('pointerleave', function () { el.classList.remove('tilting'); el.style.transform = ''; });
+      });
+    })();
+  </script>
+  <script type="module">
+    // 3D world. If WebGL or the CDN is unavailable, drop the intro and show the portfolio directly.
+    import('./intro-3d.js?v=20261116m').catch(function (err) { console.warn('3D world unavailable:', err); document.documentElement.classList.add('no-intro'); });
+  </script>
+  <script type="module" src="yukum-truck.js?v=2"></script>
+  <script>
+    // Robot × human fingertips: the clip plays once when the card comes into view; the fingertips meet on camera,
+    // a warm spark lights at the contact, and it holds on the last frame. Leaving and re-entering replays it.
+    (function () {
+      var card = document.getElementById('pair'), v = card && card.querySelector('.hs-video');
+      if (!v) return;
+      var CONTACT = 2.4, shown = false;                    // clip second at which the fingertips touch
+      var touch = function () { card.classList.add('touched'); };
+      v.addEventListener('timeupdate', function () { if (v.currentTime >= CONTACT) touch(); });
+      v.addEventListener('ended', touch);
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {   // still frame, touching
+        v.addEventListener('loadedmetadata', function () { try { v.currentTime = v.duration - 0.05; } catch (e) {} touch(); }); return;
+      }
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          if (e.isIntersecting && !shown) { shown = true; card.classList.remove('touched'); try { v.currentTime = 0; } catch (err) {} v.playbackRate = 0.8; v.play().catch(function () {}); }
+          else if (!e.isIntersecting && shown) { shown = false; v.pause(); }
+        });
+      }, { threshold: 0.45 }).observe(v);
+    })();
+  </script>
 </body>
 </html>
